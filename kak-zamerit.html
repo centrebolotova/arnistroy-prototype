@@ -1,0 +1,1021 @@
+<!doctype html>
+<html lang="ru"><head><meta name="robots" content="noindex, nofollow"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Как замерить дверной проём АрниСтрой</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600&display=swap">
+<style>
+/* Layout: по мотивам Rimadesio + DRE — белый фон, крупные двери из каталога на белом, плотные заголовки,
+   тёплый молочный только у двух блоков (калькулятор, как мы работаем). Двери открываются со стороны ручки. */
+:root{
+  --bg:#FFFFFF;
+  --tint:#F5F0E9;       /* тёплый молочный — только калькулятор и «как мы работаем» */
+  --soft:#F6F6F5;       /* нейтральная подложка под фото */
+  --g1:#D6DFE9;         /* градиент выделенных блоков: белый → цвет книзу (по умолчанию сизый) */
+  --g2:#EDF1F5;
+  --ink:#151515;
+  --muted:#6F6B65;
+  --line:#E6E3DE;
+  --accent:#8A6A45;
+  --todo:#FFF1A8; --todo-ink:#3A3000;
+  --font:"Onest","Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+  --gutter:clamp(16px,4vw,56px);
+  --max:1360px;
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+body[data-pal="blue"]{--g1:#C5D1E2;--g2:#E6ECF4}
+body[data-pal="powder"]{--g1:#EBD6CB;--g2:#F6ECE6}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#111110; --g1:#2A241D; --g2:#1B1815; --tint:#1D1B18; --soft:#191918; --ink:#EEEBE6; --muted:#A39E96; --line:#2E2C29; --accent:#C9A877;
+  --todo:#5E5214; --todo-ink:#FFF6C9; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#111110; --g1:#2A241D; --g2:#1B1815; --tint:#1D1B18; --soft:#191918; --ink:#EEEBE6; --muted:#A39E96; --line:#2E2C29; --accent:#C9A877;
+  --todo:#5E5214; --todo-ink:#FFF6C9; color-scheme:dark}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{overflow-x:clip}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.6;margin:0;font-weight:400}
+a{color:inherit}
+img{max-width:100%;display:block}
+.wrap{max-width:var(--max);margin:0 auto;padding-inline:var(--gutter)}
+h1,h2,h3{margin:0;text-wrap:balance}
+h1{font-size:clamp(34px,4.6vw,66px);font-weight:500;letter-spacing:-.035em;line-height:1.02}
+h2{font-size:clamp(30px,3.4vw,50px);font-weight:500;letter-spacing:-.03em;line-height:1.06}
+h3{font-size:19px;font-weight:500;letter-spacing:-.01em;line-height:1.3}
+p{margin:0}
+.muted{color:var(--muted)}
+.num{font-variant-numeric:tabular-nums}
+section{padding-block:clamp(72px,9vw,128px)}
+.tint{background:var(--tint)}
+.grad,.grad-r{background:linear-gradient(180deg,var(--bg) 0%,var(--g2) 22%,var(--g1) 55%,var(--g2) 82%,var(--bg) 100%)}
+.head{display:grid;gap:16px;margin-bottom:clamp(36px,4.5vw,64px)}
+.head.split{grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:24px}
+@media (max-width:760px){.head.split{grid-template-columns:1fr}}
+.lead{font-size:clamp(16px,1.3vw,18px);color:var(--muted);max-width:56ch}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:52px;padding:0 28px;background:var(--ink);color:var(--bg);border:1px solid var(--ink);font:500 13px/1 var(--font);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;cursor:pointer;transition:background .3s,color .3s;white-space:nowrap}
+.btn:hover{background:transparent;color:var(--ink)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.ghost:hover{background:var(--ink);color:var(--bg)}
+.arrow{display:inline-flex;align-items:center;gap:12px;font:500 13px/1 var(--font);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;background:none;border:0;color:inherit;cursor:pointer;padding:8px 0}
+.arrow::after{content:"";width:28px;height:1px;background:currentColor;transition:width .35s var(--ease)}
+.arrow:hover::after{width:48px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+mark.todo{background:var(--todo);color:var(--todo-ink);padding:0 .15em}
+.todo-note{display:inline-block;background:var(--todo);color:var(--todo-ink);font-size:12px;line-height:1.4;padding:4px 8px}
+body.clean mark.todo{background:none;color:inherit;padding:0}
+body.clean .todo-note{display:none}
+
+/* ===== шапка: всегда видна, две строки ===== */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:var(--bg);border-bottom:1px solid var(--line)}
+.bar1{border-bottom:1px solid var(--line);font-size:13px;color:var(--muted)}
+.bar1 .wrap{display:flex;align-items:center;gap:24px;min-height:38px;flex-wrap:wrap}
+.bar1 .links{display:flex;gap:22px}
+.bar1 a{text-decoration:none}
+.bar1 a:hover{color:var(--ink)}
+.bar1 .ph{margin-left:auto;display:flex;gap:22px;color:var(--ink)}
+.bar2 .wrap{display:flex;align-items:center;gap:32px;min-height:72px}
+.logo{font-size:17px;letter-spacing:.24em;text-transform:uppercase;font-weight:600;text-decoration:none;white-space:nowrap}
+.nav{display:flex;gap:26px;font-size:15px}
+.nav a{text-decoration:none}
+.nav a:hover{color:var(--accent)}
+.bar2 .acts{margin-left:auto;display:flex;gap:8px}
+.bar2 .btn{min-height:44px;padding:0 18px;font-size:12px}
+.burger{display:none;margin-left:auto;background:none;border:1px solid var(--line);width:46px;height:46px;cursor:pointer;color:var(--ink);font-size:20px;line-height:1}
+.mnav{display:none}
+@media (max-width:1240px){.nav{gap:18px;font-size:14px}}
+@media (max-width:1100px){.nav{display:none}.burger{display:block}.mnav.open{display:grid;gap:4px;padding:8px var(--gutter) 24px;border-top:1px solid var(--line);font-size:18px}.mnav a{text-decoration:none;padding:10px 0;border-bottom:1px solid var(--line)}.mnav .ph{display:grid;gap:6px;padding-top:14px;font-size:15px;color:var(--muted)}}
+@media (max-width:900px){.bar1>.wrap>span{display:none}}
+@media (max-width:700px){.bar1{display:none}.bar2 .acts{display:none}.burger{display:block}
+  .mnav.open{display:grid;gap:4px;padding:8px var(--gutter) 24px;border-top:1px solid var(--line);font-size:18px}
+  .mnav a{text-decoration:none;padding:10px 0;border-bottom:1px solid var(--line)}
+  .mnav .ph{display:grid;gap:6px;padding-top:14px;font-size:15px;color:var(--muted)}}
+
+/* ===== первый экран: фото на всю ширину, текст слева ===== */
+.hero{position:relative;color:#fff;overflow:hidden;padding:0;min-height:clamp(560px,78vh,820px);display:grid;align-items:center}
+.hero .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:62% 50%;animation:zoom 18s var(--ease) both;display:none}
+.hero .bg.flip{transform:scaleX(-1);animation-name:zoomflip}
+@keyframes zoomflip{from{transform:scale(-1.07,1.07)}to{transform:scale(-1,1)}}
+body[data-hero="corr"] .bg[data-v="corr"],body[data-hero="min"] .bg[data-v="min"],body[data-hero="hall"] .bg[data-v="hall"],body[data-hero="night"] .bg[data-v="night"]{display:block}
+.bg[data-v="corr"]{object-position:50% 50%}.bg[data-v="min"]{object-position:40% 50%}.bg[data-v="hall"]{object-position:60% 50%}
+/* светлые фото: тёмный текст на белой дымке слева */
+body:not([data-hero="night"]) .hero{color:#151515}
+body:not([data-hero="night"]) .hero::after{background:linear-gradient(90deg,rgba(255,255,255,.92) 0%,rgba(255,255,255,.72) 38%,rgba(255,255,255,0) 68%)}
+body:not([data-hero="night"]) .hero .lead{color:#4d4943}
+body:not([data-hero="night"]) .hero .facts li{border-top-color:rgba(0,0,0,.2)}
+body:not([data-hero="night"]) .hero .facts span{color:#6f6b65}
+body:not([data-hero="night"]) .hero .btn{background:#151515;color:#fff;border-color:#151515}
+body:not([data-hero="night"]) .hero .btn:hover{background:transparent;color:#151515}
+body:not([data-hero="night"]) .hero .btn.ghost{background:transparent;color:#151515;border-color:#151515}
+body:not([data-hero="night"]) .hero .btn.ghost:hover{background:#151515;color:#fff}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(12,10,8,.78) 0%,rgba(12,10,8,.55) 40%,rgba(12,10,8,.05) 75%)}
+@keyframes zoom{from{transform:scale(1.07)}to{transform:scale(1)}}
+.hero .wrap{position:relative;z-index:1;width:100%;padding-block:clamp(56px,7vw,96px)}
+.hero .txt{display:grid;gap:26px;max-width:640px}
+.hero .lead{font-size:clamp(17px,1.5vw,20px);color:rgba(255,255,255,.85)}
+.hero .facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px 24px;margin:6px 0 4px;padding:0;list-style:none}
+.hero .facts li{display:grid;gap:2px;border-top:1px solid rgba(255,255,255,.35);padding-top:12px}
+.hero .facts b{font-size:24px;font-weight:500;letter-spacing:-.02em}
+.hero .facts span{font-size:13px;color:rgba(255,255,255,.75);line-height:1.35}
+.hero .cta{display:flex;flex-wrap:wrap;gap:12px}
+.hero .btn{background:#fff;color:#151515;border-color:#fff}
+.hero .btn:hover{background:transparent;color:#fff}
+.hero .btn.ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.7)}
+.hero .btn.ghost:hover{background:#fff;color:#151515}
+.rise{animation:rise 1s var(--ease) both}.d2{animation-delay:.12s}.d3{animation-delay:.24s}.d4{animation-delay:.36s}
+@keyframes rise{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@media (max-width:760px){.hero .facts{grid-template-columns:repeat(2,minmax(0,1fr))}.hero::after{background:linear-gradient(180deg,rgba(12,10,8,.55),rgba(12,10,8,.8))}body:not([data-hero="night"]) .hero::after{background:linear-gradient(180deg,rgba(255,255,255,.7),rgba(255,255,255,.92))}}
+@media (prefers-reduced-motion:reduce){.rise,.hero .bg{animation:none}}
+
+/* ===== проём с дверью (общий для героя, каталога, моделей) ===== */
+.op{display:block;position:relative;aspect-ratio:9/20;perspective:1200px;background:#e8e4de;box-shadow:0 0 0 5px #fff,0 0 0 6px var(--line);max-width:100%}
+.op .room{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.op .lf{display:block;position:absolute;inset:0;transform-origin:right center;transition:transform 1.1s var(--ease);background:#fff;box-shadow:0 26px 26px -22px rgba(0,0,0,.35)}
+.op .lf img{width:100%;height:100%;object-fit:fill}
+/* у всех моделей здесь ручка слева, петли справа — полотно поворачивается на правых петлях, ручкой к нам */
+.opener:hover .op .lf,.opener:focus-visible .op .lf,.op.open .lf{transform:rotateY(55deg)}
+/* раздвижная: полотно уезжает вдоль направляющей */
+.op.slide{perspective:none;overflow:visible}
+.op.slide::before{content:"";position:absolute;left:-4%;right:-60%;top:-10px;height:5px;background:#9b9690;border-radius:2px;z-index:2}
+.op.slide .lf{transform-origin:center;transition:transform 1.1s var(--ease)}
+.opener:hover .op.slide .lf,.opener:focus-visible .op.slide .lf,.op.slide.open .lf{transform:translateX(72%)}
+@media (prefers-reduced-motion:reduce){.op .lf{transition:none}}
+
+/* ===== боли ===== */
+.pains{border-top:1px solid var(--ink)}
+.grad .pain{border-bottom-color:color-mix(in srgb,var(--ink) 12%,transparent)}
+.grad .rev{border-top-color:var(--ink)}
+.pain{display:grid;grid-template-columns:56px minmax(0,1fr) minmax(0,1.15fr);gap:clamp(16px,3vw,48px);padding:28px 0;border-bottom:1px solid var(--line);align-items:start}
+.pain .n{font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums;padding-top:4px}
+.pain .p{font-size:clamp(19px,1.7vw,24px);letter-spacing:-.015em;line-height:1.3;color:var(--muted)}
+.pain .s{display:grid;gap:6px}
+.pain .s h3{font-size:clamp(19px,1.7vw,24px);letter-spacing:-.015em}
+.pain .s p{color:var(--muted)}
+@media (max-width:760px){.pain{grid-template-columns:1fr;gap:10px}.pain .n{display:none}}
+
+/* ===== почему мы: цифры + фабрики ===== */
+.why{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(20px,3vw,48px)}
+.why div{display:grid;gap:8px;align-content:start}
+.why b{font-size:clamp(40px,4.4vw,64px);font-weight:400;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
+.why span{color:var(--muted);font-size:15px;max-width:26ch}
+.brands{margin-top:clamp(48px,6vw,80px);display:grid;gap:22px}
+.brands p{font-size:15px;color:var(--ink);font-weight:500}
+.marquee{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.track{display:flex;align-items:center;gap:clamp(48px,6vw,96px);width:max-content;animation:run 28s linear infinite}
+.marquee:hover .track{animation-play-state:paused}
+@keyframes run{to{transform:translateX(-50%)}}
+.track .lg{display:flex;align-items:center;height:56px;transition:transform .4s var(--ease)}
+.track .lg:hover{transform:scale(1.12)}
+.track img{height:44px;width:auto;mix-blend-mode:multiply}
+.track .t{font-size:30px;font-weight:600;letter-spacing:-.02em;color:#151515;white-space:nowrap}
+@media (prefers-reduced-motion:reduce){.track{animation:none;flex-wrap:wrap;width:auto}}
+@media (max-width:900px){.why{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* ===== каталог: крупные карточки, одна дверь на белом ===== */
+.cats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,1.6vw,24px)}
+.cat-wrap{display:grid;gap:8px;align-content:start;min-width:0}
+.calc-link{justify-self:start;background:none;border:0;border-bottom:1px solid currentColor;padding:2px 0;font:500 13px var(--font);color:var(--ink);cursor:pointer}
+.calc-link:hover{color:var(--accent)}
+.cat{display:grid;gap:12px;text-decoration:none;align-content:start;min-width:0}
+.cat .box{border:1px solid var(--line);aspect-ratio:4/5;display:flex;align-items:center;justify-content:center;padding:8% 0;max-width:100%;background:#fff;transition:box-shadow .5s var(--ease)}
+.cat:hover .box{box-shadow:0 24px 40px -26px rgba(0,0,0,.3)}
+.cat .box .op{height:100%;width:auto;box-shadow:none}
+.cat .box.solo img{width:62%;transition:transform .9s var(--ease)}
+.cat:hover .box.solo img{transform:scale(1.05) rotate(-3deg)}
+.cat .row{display:flex;justify-content:space-between;gap:12px;align-items:baseline;flex-wrap:wrap}
+.cat .n{font-size:20px;font-weight:500;letter-spacing:-.01em}
+.cat .pr{font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--muted)}
+.cat .m{font-size:14px;color:var(--muted);margin-top:-6px}
+/* складная: полотно складывается гармошкой к левому краю */
+.op.fold .lf{transform-origin:left center}
+.opener:hover .op.fold .lf,.opener:focus-visible .op.fold .lf,.op.fold.open .lf{transform:scaleX(.22)}
+@media (max-width:980px){.cats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.cats{gap:10px}.cat .n{font-size:17px}}
+
+/* ===== популярные модели ===== */
+.hits{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(12px,1.6vw,24px)}
+.card{display:grid;gap:12px;text-decoration:none;align-content:start;min-width:0}
+.card .box{border:1px solid var(--line);aspect-ratio:3/5;display:flex;align-items:center;justify-content:center;padding:7% 0;max-width:100%;background:#fff;transition:box-shadow .5s var(--ease)}
+.card:hover .box{box-shadow:0 24px 40px -26px rgba(0,0,0,.3)}
+.card .box .op{height:100%;width:auto;box-shadow:none}
+.card .row{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+.card .n{font-size:17px;font-weight:500}
+.card .pr{font-variant-numeric:tabular-nums;white-space:nowrap}
+.card .m{font-size:14px;color:var(--muted);margin-top:-6px}
+@media (max-width:980px){.hits{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* ===== калькулятор ===== */
+.calc{display:grid;grid-template-columns:1fr 1fr;gap:clamp(36px,6vw,100px);align-items:center}
+.calc .t{display:grid;gap:24px;align-content:start}
+.bill{list-style:none;margin:0;padding:0;border-top:1px solid color-mix(in srgb,var(--ink) 18%,transparent)}
+.bill li{display:flex;justify-content:space-between;gap:16px;padding:15px 0;border-bottom:1px solid color-mix(in srgb,var(--ink) 10%,transparent);font-size:15px}
+.bill li span:last-child{color:var(--muted);font-variant-numeric:tabular-nums;text-align:right}
+.bill li.sum{border-bottom:0;font-size:20px;font-weight:500;padding-top:22px}
+.bill li.sum span:last-child{color:var(--ink)}
+@media (max-width:860px){.calc{grid-template-columns:1fr}}
+
+/* ===== линейки ===== */
+.tw{overflow-x:auto}
+.tiers{width:100%;border-collapse:collapse;min-width:680px}
+.tiers th,.tiers td{text-align:left;vertical-align:top;padding:20px 24px 20px 0;border-bottom:1px solid var(--line);font-weight:400}
+.tiers thead th{font-size:clamp(22px,2.2vw,30px);font-weight:500;letter-spacing:-.02em;border-bottom-color:var(--ink)}
+.tiers tbody th{width:18%;color:var(--muted);font-size:14px}
+.tiers .pr{font-size:22px;font-variant-numeric:tabular-nums}
+.tiers .sub{display:block;font-size:14px;color:var(--muted);margin-top:4px}
+.note{margin-top:22px;color:var(--muted);font-size:15px;max-width:68ch}
+
+/* ===== объекты ===== */
+.works{display:grid;grid-template-columns:1.25fr 1fr;gap:12px}
+.works .col{display:grid;gap:12px}
+.work{position:relative;overflow:hidden;margin:0}
+.work img{width:100%;height:100%;object-fit:cover;filter:saturate(.82);transition:transform 1.4s var(--ease)}
+.work:hover img{transform:scale(1.04)}
+.work figcaption{position:absolute;left:0;right:0;bottom:0;padding:18px 20px;color:#fff;font-size:14px;background:linear-gradient(transparent,rgba(0,0,0,.55))}
+.work.a{height:clamp(380px,46vw,680px)}
+.work.b{height:clamp(184px,22.6vw,334px)}
+@media (max-width:760px){.works{grid-template-columns:1fr}.work.a{height:380px}.work.b{height:260px}}
+
+/* ===== шаги ===== */
+.steps{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:clamp(20px,2.4vw,36px);list-style:none;margin:0;padding:0;counter-reset:s}
+.steps li{display:grid;gap:12px;align-content:start}
+.steps li::before{counter-increment:s;content:"0" counter(s);font-size:clamp(36px,3.6vw,52px);font-weight:300;line-height:1;color:var(--accent);padding-bottom:16px;border-bottom:1px solid var(--line)}
+.steps p{color:var(--muted);font-size:15px}
+@media (max-width:1000px){.steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.steps{grid-template-columns:1fr}}
+
+/* ===== отзывы ===== */
+.revs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,2vw,28px)}
+.rev{margin:0;display:grid;gap:18px;align-content:space-between;border-top:1px solid var(--ink);padding-top:22px}
+.rev q{quotes:"«" "»";font-size:clamp(18px,1.6vw,22px);letter-spacing:-.01em;line-height:1.35}
+.rev figcaption{font-size:14px;color:var(--muted)}
+.scores{display:flex;gap:48px;flex-wrap:wrap;align-items:end}
+.score b{display:block;font-size:48px;font-weight:400;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
+.score span{font-size:14px;color:var(--muted)}
+@media (max-width:900px){.revs{grid-template-columns:1fr}}
+
+/* ===== салоны ===== */
+.shops{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--ink)}
+.shop{display:grid;gap:20px;padding:36px clamp(0px,3vw,48px) 0 0}
+.shop+.shop{border-left:1px solid var(--line);padding-left:clamp(20px,3vw,48px)}
+.shop .addr{font-size:clamp(24px,2.4vw,34px);font-weight:500;letter-spacing:-.025em;line-height:1.1}
+.shop dl{display:grid;grid-template-columns:auto 1fr;gap:10px 28px;margin:0;font-size:15px}
+.shop dt{color:var(--muted)}
+.shop dd{margin:0;font-variant-numeric:tabular-nums}
+@media (max-width:760px){.shops{grid-template-columns:1fr}.shop+.shop{border-left:0;padding-left:0;border-top:1px solid var(--line);margin-top:36px}}
+
+/* ===== текст о салоне ===== */
+.about{display:grid;grid-template-columns:1fr 1.5fr;gap:clamp(36px,6vw,100px)}
+.about .txt{display:grid;gap:18px;max-width:64ch;color:var(--muted)}
+.about .txt b{color:var(--ink);font-weight:500}
+@media (max-width:900px){.about{grid-template-columns:1fr}}
+
+/* ===== форма ===== */
+.final{border-top:1px solid var(--line)}
+.final .wrap{display:grid;grid-template-columns:1fr 1fr;gap:clamp(36px,6vw,100px);align-items:start}
+@media (max-width:860px){.final .wrap{grid-template-columns:1fr}}
+form.lf-form{display:grid;grid-template-columns:1fr 1fr;gap:22px 24px}
+.f{display:grid;gap:6px}
+.f.full{grid-column:1/-1}
+.f label{font-size:13px;color:var(--muted)}
+.f input{font:400 17px var(--font);color:var(--ink);background:transparent;border:0;border-bottom:1px solid var(--ink);padding:10px 0;width:100%;border-radius:0}
+.f input:focus{outline:none;border-bottom-width:2px}
+.legal{grid-column:1/-1;font-size:12px;color:var(--muted)}
+.ok{grid-column:1/-1}
+@media (max-width:480px){form.lf-form{grid-template-columns:1fr}}
+
+
+/* ===== калькулятор: всплывающее окно-мастер ===== */
+dialog.calc-dlg{max-width:min(980px,calc(100vw - 24px));padding:0}
+.cd{display:grid;grid-template-columns:minmax(0,1fr) 300px;min-height:min(640px,calc(100vh - 48px))}
+.cd-main{padding:clamp(22px,3.5vw,40px);display:grid;grid-template-rows:auto auto 1fr auto;gap:20px;min-width:0}
+.cd-top{display:flex;justify-content:space-between;align-items:center;gap:16px}
+.cd-top .x{position:static;background:none;border:0;font-size:28px;line-height:1;cursor:pointer;color:var(--muted);padding:4px}
+.cd-prog{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.cd-prog i{height:3px;background:var(--line);transition:background .4s}
+.cd-prog i.on{background:var(--ink)}
+.cd-step{display:none;align-content:start;gap:18px}
+.cd-step.on{display:grid;animation:pop .35s var(--ease)}
+.cd-step h3{font-size:clamp(22px,2.2vw,28px);letter-spacing:-.02em}
+.cd-step .hint{color:var(--muted);font-size:14px;margin-top:-10px}
+.cnt{display:grid;gap:8px}
+.cnt .r{display:grid;grid-template-columns:52px minmax(0,1fr) auto;gap:14px;align-items:center;border:1px solid var(--line);padding:10px 12px;background:var(--bg)}
+.cnt .r img{height:64px;width:auto;margin:0 auto}
+.cnt .r b{font-weight:500;display:block}
+.cnt .r small{color:var(--muted);font-size:13px}
+.stp{display:flex;align-items:center;border:1px solid var(--line)}
+.stp button{width:42px;height:42px;border:0;background:transparent;font-size:20px;cursor:pointer;color:var(--ink)}
+.stp button:hover{background:var(--soft)}
+.stp output{min-width:30px;text-align:center;font-variant-numeric:tabular-nums;font-weight:500}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px}
+.opt{position:relative;display:grid;gap:4px;border:1px solid var(--line);padding:14px 16px;cursor:pointer;background:var(--bg);transition:border-color .2s}
+.opt input{position:absolute;opacity:0;pointer-events:none}
+.opt b{font-weight:500}
+.opt small{color:var(--muted);font-size:13px;line-height:1.4}
+.opt:has(input:checked){border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.opt:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:2px}
+.opt.idk{border-style:dashed}
+.chk{display:grid;gap:8px}
+.chk label{display:grid;grid-template-columns:22px minmax(0,1fr) auto;gap:12px;align-items:center;border:1px solid var(--line);padding:12px 14px;cursor:pointer}
+.chk input{width:18px;height:18px;accent-color:#151515}
+.chk small{color:var(--muted);font-size:13px;display:block}
+.chk .pr{color:var(--muted);font-size:13px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.city{display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:14px}
+.city input{width:min(320px,100%);font:400 15px var(--font);padding:10px 12px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+.city .vp{color:var(--muted);font-size:14px}
+.city select{font:400 15px var(--font);padding:10px 12px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+.cd-nav{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.cd-nav .btn{min-height:48px}
+.cd-side{background:linear-gradient(180deg,var(--g2),var(--g1));padding:clamp(22px,3vw,32px);display:grid;align-content:space-between;gap:20px}
+.cd-side .lbl{font-size:13px;color:var(--muted)}
+.cd-sum{font-size:clamp(22px,2.1vw,28px);font-weight:500;letter-spacing:-.03em;line-height:1.1;font-variant-numeric:tabular-nums}
+.cd-lines{list-style:none;margin:0;padding:0;display:grid;gap:8px;font-size:14px}
+.cd-lines li{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid color-mix(in srgb,var(--ink) 10%,transparent);padding-bottom:6px}
+.cd-lines li span:last-child{font-variant-numeric:tabular-nums;color:var(--muted);white-space:nowrap}
+.cd-note{font-size:12px;color:var(--muted);line-height:1.45}
+.res{display:grid;gap:14px}
+.res .big{font-size:clamp(30px,3.4vw,44px);font-weight:500;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.res form{display:grid;grid-template-columns:1fr 1fr;gap:16px 20px}
+.res .ways{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px}
+.res .ways .opt{padding:10px 14px}
+@media (max-width:820px){
+  dialog.calc-dlg{max-width:100vw;width:100vw;height:100%;max-height:100%;margin:0}
+  .cd{grid-template-columns:1fr;min-height:100%;grid-template-rows:1fr auto}
+  .cd-side{position:sticky;bottom:0;padding:14px 18px;grid-template-columns:1fr auto;align-items:center}
+  .cd-side .cd-lines,.cd-side .cd-note{display:none}
+  .cd-side:not(.fin){display:none}
+  .cd-sum{font-size:22px}
+  .res form{grid-template-columns:1fr}
+}
+/* блок калькулятора на странице */
+.mini{display:grid;gap:10px}
+.mini .cnt .r{background:#fff}
+.mini .go{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-top:8px}
+.mini .go .est{font-size:15px;color:var(--muted)}
+.mini .go .est b{color:var(--ink);font-size:20px;font-weight:500}
+
+dialog{border:0;padding:0;max-width:min(560px,calc(100vw - 32px));width:100%;background:var(--bg);color:var(--ink)}
+dialog::backdrop{background:rgba(10,10,10,.5);backdrop-filter:blur(3px)}
+dialog[open]{animation:pop .4s var(--ease)}
+@keyframes pop{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.dlg{position:relative;padding:clamp(28px,5vw,44px);display:grid;gap:22px}
+.dlg .x{position:absolute;top:12px;right:14px;background:none;border:0;font-size:28px;line-height:1;cursor:pointer;color:var(--muted);padding:6px}
+.dlg h2{font-size:clamp(26px,3vw,34px)}
+
+footer{border-top:1px solid var(--line);font-size:14px;color:var(--muted);padding-block:44px 110px}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px 40px}
+footer .fnav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px 40px;padding-bottom:36px;margin-bottom:28px;border-bottom:1px solid var(--line)}
+footer .fnav div{display:grid;gap:8px;align-content:start}
+footer .fnav b{color:var(--ink);font-weight:500;margin-bottom:4px}
+footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
+@media (max-width:760px){footer .fnav{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* плавающие элементы */
+.float{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:35;display:flex;flex-direction:column;gap:8px;align-items:flex-end}
+.chat{display:inline-flex;align-items:center;gap:10px;background:var(--ink);color:var(--bg);text-decoration:none;font-size:13px;padding:12px 18px;border-radius:40px;box-shadow:0 10px 30px -10px rgba(0,0,0,.4)}
+.chat i{width:8px;height:8px;border-radius:50%;background:#3DBB61}
+.variants{position:fixed;left:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:35;background:#fff;color:#151515;border:1px solid var(--line);box-shadow:0 18px 40px -20px rgba(0,0,0,.35);padding:14px 16px;display:grid;gap:10px;font-size:13px;max-width:calc(100vw - 36px)}
+.variants b{font-weight:600;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+.variants .grp{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.variants .grp>span{color:#6f6b65;min-width:118px}
+.variants button{font:500 12px var(--font);border:1px solid #d9d5ce;background:#fff;color:#151515;padding:6px 10px;cursor:pointer}
+.variants button[aria-pressed="true"]{background:#151515;color:#fff;border-color:#151515}
+.variants .tgl{display:block;font-weight:600}
+.variants:not(.open) .body{display:none!important}
+.variants:not(.open){padding:0;border:0;background:transparent;box-shadow:none}
+.variants:not(.open) .tgl{background:#151515;color:#fff;border-color:#151515;padding:10px 14px;box-shadow:0 10px 30px -10px rgba(0,0,0,.4)}
+.variants .sw{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:6px;vertical-align:-1px;border:1px solid rgba(0,0,0,.1)}
+@media (max-width:760px){.variants{bottom:calc(80px + env(safe-area-inset-bottom,0px));left:12px;padding:10px 12px}.variants .tgl{display:block}.variants:not(.open) .body{display:none}.variants .grp>span{min-width:0;flex-basis:100%}}
+.mbar{display:none}
+@media (max-width:700px){
+  .float{bottom:calc(80px + env(safe-area-inset-bottom,0px))}
+  .chat span{display:none}
+  .mbar{display:grid;grid-template-columns:1fr 1fr;gap:8px;position:fixed;left:0;right:0;bottom:0;z-index:36;background:var(--bg);border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px))}
+  .mbar .btn{min-height:46px;padding:0 8px;font-size:11px}
+}
+
+/* появление при прокрутке — только для блоков ниже первого экрана */
+.js .rv.pre{opacity:0;transform:translateY(24px)}
+.js .rv{transition:opacity .9s var(--ease),transform .9s var(--ease)}
+@media (prefers-reduced-motion:reduce){.js .rv.pre{opacity:1;transform:none}}
+
+/* ===== страница каталога ===== */
+.crumbs{font-size:13px;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap;padding-top:28px}
+.crumbs a{text-decoration:none}
+.crumbs a:hover{color:var(--ink)}
+.c-head{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:end;padding-block:18px 28px}
+.c-head .lead{max-width:62ch}
+.c-head .meta{display:flex;gap:28px;flex-wrap:wrap}
+.c-head .meta b{display:block;font-size:26px;font-weight:500;letter-spacing:-.02em}
+.c-head .meta span{font-size:13px;color:var(--muted)}
+@media (max-width:860px){.c-head{grid-template-columns:1fr}}
+.chips{display:flex;gap:8px;flex-wrap:wrap;padding-bottom:28px;border-bottom:1px solid var(--line)}
+.chip{border:1px solid var(--line);background:var(--bg);color:var(--ink);font:400 14px var(--font);padding:8px 14px;cursor:pointer;white-space:nowrap;text-decoration:none}
+.chip small{color:var(--muted);margin-left:4px}
+.chip:hover{border-color:var(--ink)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chip[aria-pressed="true"] small{color:inherit;opacity:.7}
+.c-body{display:grid;grid-template-columns:260px minmax(0,1fr);gap:clamp(24px,3vw,48px);padding-top:28px}
+.flt{display:grid;gap:4px;align-content:start;position:sticky;top:130px;max-height:calc(100vh - 150px);overflow:auto;padding-right:6px}
+.flt details{border-bottom:1px solid var(--line);padding:14px 0}
+.flt summary{cursor:pointer;font-weight:500;list-style:none;display:flex;justify-content:space-between}
+.flt summary::after{content:"+";color:var(--muted)}
+.flt details[open] summary::after{content:"−"}
+.flt .opts2{display:grid;gap:8px;padding-top:12px}
+.flt label{display:flex;gap:10px;align-items:center;font-size:15px;cursor:pointer}
+.flt label small{color:var(--muted);margin-left:auto;font-variant-numeric:tabular-nums}
+.flt input[type=checkbox]{width:17px;height:17px;accent-color:#151515}
+.price-in{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding-top:12px}
+.price-in input{font:400 15px var(--font);border:1px solid var(--line);padding:9px 10px;width:100%;background:var(--bg);color:var(--ink)}
+.sw-row{display:flex;flex-wrap:wrap;gap:8px;padding-top:12px}
+.swb{display:grid;justify-items:center;gap:4px;font-size:12px;background:none;border:0;cursor:pointer;color:var(--ink);width:56px}
+.swb i{width:30px;height:30px;border-radius:50%;border:1px solid rgba(0,0,0,.12);box-shadow:0 0 0 3px var(--bg),0 0 0 4px transparent}
+.swb[aria-pressed="true"] i{box-shadow:0 0 0 3px var(--bg),0 0 0 4px var(--ink)}
+.flt .reset{margin-top:14px;justify-self:start;background:none;border:0;border-bottom:1px solid currentColor;font:500 13px var(--font);cursor:pointer;color:var(--ink);padding:2px 0}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.bar .cnt-txt{color:var(--muted);font-size:15px}
+.bar select{font:400 15px var(--font);border:1px solid var(--line);padding:9px 10px;background:var(--bg);color:var(--ink)}
+.bar .fbtn{display:none}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,1.6vw,22px)}
+.pc{display:grid;gap:10px;align-content:start;min-width:0}
+.pc .box{position:relative;border:1px solid var(--line);aspect-ratio:4/5;display:flex;align-items:center;justify-content:center;padding:7% 0;background:#fff;transition:box-shadow .5s var(--ease);text-decoration:none}
+.pc:hover .box{box-shadow:0 24px 40px -26px rgba(0,0,0,.3)}
+.pc .box .op{height:100%;width:auto;box-shadow:none}
+.spr{display:block;width:100%;height:100%;background-repeat:no-repeat;background-size:1000% 1000%;background-color:#fff}
+.pc .tag{position:absolute;z-index:3;left:10px;top:10px;font-size:12px;background:var(--bg);border:1px solid var(--line);padding:3px 8px}
+.pc .sws{display:flex;gap:6px;align-items:center;flex-wrap:wrap;min-height:22px}
+.pc .sws button{width:20px;height:20px;border-radius:50%;border:1px solid rgba(0,0,0,.15);padding:0;cursor:pointer;box-shadow:0 0 0 2px var(--bg),0 0 0 3px transparent}
+.pc .sws button[aria-pressed="true"]{box-shadow:0 0 0 2px var(--bg),0 0 0 3px var(--ink)}
+.pc .sws span{font-size:12px;color:var(--muted)}
+.pc .row{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.pc .n{font-weight:500;font-size:17px;text-decoration:none}
+.pc .pr{white-space:nowrap;font-variant-numeric:tabular-nums}
+.pc .m{font-size:13px;color:var(--muted);margin-top:-6px}
+.pc .cl{font-size:13px;color:var(--muted)}
+.promo{grid-column:span 1;background:linear-gradient(180deg,var(--g2),var(--g1));padding:28px;display:grid;align-content:space-between;gap:20px;min-height:100%}
+.promo h3{font-size:24px;letter-spacing:-.02em}
+.promo p{color:var(--muted)}
+.more{display:flex;justify-content:center;margin-top:36px}
+.empty{grid-column:1/-1;padding:48px 0;color:var(--muted)}
+@media (max-width:1100px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:900px){
+  .c-body{grid-template-columns:1fr}
+  .flt{position:fixed;inset:0 0 0 auto;width:min(360px,92vw);max-height:none;background:var(--bg);z-index:60;padding:20px 22px 90px;transform:translateX(100%);transition:transform .35s var(--ease);box-shadow:-20px 0 40px -20px rgba(0,0,0,.3)}
+  .flt.open{transform:none}
+  .flt .close{display:block}
+  .bar .fbtn{display:inline-flex}
+}
+.op.fold.fr .lf{transform-origin:right center}
+.flt .close{display:none;justify-self:end;background:none;border:0;font-size:28px;cursor:pointer;color:var(--ink)}
+@media (max-width:520px){.grid{gap:10px}.pc .n{font-size:15px}.pc .m{display:none}}
+.svc{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,2.4vw,36px)}
+.svc div{display:grid;gap:8px;align-content:start;border-top:1px solid var(--ink);padding-top:18px}
+.svc p{color:var(--muted);font-size:15px}
+@media (max-width:820px){.svc{grid-template-columns:1fr}}
+.seo{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:clamp(32px,5vw,80px)}
+.seo .txt{display:grid;gap:16px;max-width:72ch}
+.seo .txt h2{font-size:clamp(24px,2.4vw,32px);margin-top:18px}
+.seo .txt h2:first-child{margin-top:0}
+.seo .txt p,.seo .txt li{color:var(--muted)}
+.seo .txt b{color:var(--ink);font-weight:500}
+.seo .txt ul{margin:0;padding-left:20px;display:grid;gap:6px}
+.seo aside{position:sticky;top:130px;align-self:start;display:grid;gap:12px;border:1px solid var(--line);padding:22px}
+.seo aside a{text-decoration:none}
+.seo aside a:hover{color:var(--accent)}
+.covt{width:100%;border-collapse:collapse;font-size:15px;min-width:600px}
+.covt th,.covt td{text-align:left;vertical-align:top;padding:12px 16px 12px 0;border-bottom:1px solid var(--line);font-weight:400}
+.covt th{font-weight:500;border-bottom-color:var(--ink)}
+.covt td:last-child{white-space:nowrap;font-variant-numeric:tabular-nums}
+@media (max-width:900px){.seo{grid-template-columns:1fr}.seo aside{position:static}}
+.faq{display:grid;gap:0;border-top:1px solid var(--ink)}
+.faq details{border-bottom:1px solid var(--line);padding:20px 0}
+.faq summary{cursor:pointer;font-size:clamp(17px,1.5vw,20px);font-weight:500;list-style:none;display:flex;justify-content:space-between;gap:20px}
+.faq summary::after{content:"+";color:var(--muted);font-weight:300}
+.faq details[open] summary::after{content:"−"}
+.faq p{color:var(--muted);margin-top:12px;max-width:72ch}
+
+/* ===== страницы услуг ===== */
+.u-head{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(28px,5vw,80px);align-items:center;padding-block:20px clamp(48px,6vw,88px)}
+.u-head .txt{display:grid;gap:22px}
+.u-head h1{font-size:clamp(32px,3.8vw,54px)}
+.u-head .ph{position:relative;aspect-ratio:4/3.4;overflow:hidden}
+.u-head .ph img{width:100%;height:100%;object-fit:cover}
+.u-head .ph img.flip{transform:scaleX(-1)}
+.facts2{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px 22px;list-style:none;margin:0;padding:0}
+.facts2 li{display:grid;gap:2px;border-top:1px solid var(--line);padding-top:12px}
+.facts2 b{font-size:22px;font-weight:500;letter-spacing:-.02em}
+.facts2 span{font-size:13px;color:var(--muted);line-height:1.35}
+.u-cta{display:flex;gap:10px;flex-wrap:wrap}
+@media (max-width:900px){.u-head{grid-template-columns:1fr}.u-head .ph{order:-1;aspect-ratio:16/10}.facts2{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.prt{width:100%;border-collapse:collapse;min-width:620px}
+.prt th,.prt td{text-align:left;vertical-align:top;padding:16px 20px 16px 0;border-bottom:1px solid var(--line);font-weight:400}
+.prt thead th{font-weight:500;border-bottom-color:var(--ink);font-size:14px;color:var(--muted)}
+.prt td:first-child{font-weight:500;width:30%}
+.prt td:nth-child(2){color:var(--muted);font-size:15px}
+.prt td:last-child{white-space:nowrap;font-variant-numeric:tabular-nums;text-align:right;padding-right:0}
+.prt tr.grp td{text-align:left;width:auto;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500;padding-top:28px;border-bottom-color:var(--ink)}
+.inc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,5vw,80px)}
+.inc ul{list-style:none;margin:0;padding:0;border-top:1px solid var(--ink)}
+.inc li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:8px;padding:14px 0;border-bottom:1px solid var(--line)}
+.inc li::before{content:"✓";color:var(--accent);font-weight:500}
+.inc .ex li::before{content:"+";color:var(--muted)}
+.inc li small{display:block;color:var(--muted);font-size:14px}
+.inc h3{margin-bottom:16px}
+@media (max-width:820px){.inc{grid-template-columns:1fr}}
+.guar{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:clamp(28px,5vw,80px);align-items:start}
+.guar b.big{font-size:clamp(56px,7vw,96px);font-weight:300;letter-spacing:-.04em;line-height:1}
+.guar ul{margin:0;padding-left:20px;display:grid;gap:8px;color:var(--muted)}
+@media (max-width:820px){.guar{grid-template-columns:1fr}}
+.types{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(12px,1.6vw,22px)}
+.types a{display:grid;gap:10px;text-decoration:none;border:1px solid var(--line);padding:24px;transition:box-shadow .4s var(--ease)}
+.types a:hover{box-shadow:0 24px 40px -26px rgba(0,0,0,.3)}
+.types a span{color:var(--muted);font-size:15px}
+.types a b{font-weight:500;font-size:20px;letter-spacing:-.01em}
+@media (max-width:700px){.types{grid-template-columns:1fr}}
+
+.zf{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:clamp(28px,5vw,80px);align-items:start}
+.zf form{display:grid;grid-template-columns:1fr 1fr;gap:22px 24px;border:1px solid var(--line);padding:clamp(22px,3vw,36px);background:var(--bg)}
+.zf .slots{grid-column:1/-1;display:grid;gap:8px}
+.zf .slots>span{font-size:13px;color:var(--muted)}
+.zf .row{display:flex;flex-wrap:wrap;gap:6px}
+.zf .row label{border:1px solid var(--line);padding:8px 12px;cursor:pointer;font-size:14px;display:grid;justify-items:center;line-height:1.25}
+.zf .row label small{color:var(--muted);font-size:12px}
+.zf .row input{position:absolute;opacity:0;pointer-events:none}
+.zf .row label:has(input:checked){border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.zf .file{grid-column:1/-1;display:grid;gap:6px;font-size:13px;color:var(--muted)}
+.zf .file input{font:400 14px var(--font)}
+.zf .side{display:grid;gap:22px}
+.zf ol{margin:0;padding-left:20px;display:grid;gap:8px;color:var(--muted)}
+@media (max-width:860px){.zf{grid-template-columns:minmax(0,1fr)}.zf form{grid-template-columns:minmax(0,1fr)}}
+.zf .file input{max-width:100%}
+.zone{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,2.4vw,36px)}
+.zone div{display:grid;gap:8px;align-content:start;border-top:1px solid var(--ink);padding-top:18px}
+.zone p{color:var(--muted);font-size:15px}
+@media (max-width:820px){.zone{grid-template-columns:1fr}}
+.dl-bar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:18px}
+.dl-bar input{font:400 16px var(--font);border:1px solid var(--line);padding:12px 14px;width:min(420px,100%);background:var(--bg);color:var(--ink)}
+.dl-bar select{font:400 15px var(--font);border:1px solid var(--line);padding:11px 10px;background:var(--bg);color:var(--ink)}
+.dl-bar span{color:var(--muted);font-size:14px}
+.dl{columns:3 260px;column-gap:clamp(20px,3vw,48px);list-style:none;margin:0;padding:0}
+.dl li{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);break-inside:avoid;font-size:15px}
+.dl li b{font-weight:400;font-variant-numeric:tabular-nums;white-space:nowrap}
+.dl li.hit{background:color-mix(in srgb,var(--todo) 50%,transparent)}
+.kc{border:1px solid var(--line);background:var(--bg)}
+.kc .cd{min-height:0}
+#kcHost dialog.calc-dlg{position:static;display:block;width:100%;max-width:none;height:auto;max-height:none;margin:0;animation:none;border:0}
+.parts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(14px,2vw,28px)}
+.parts div{display:grid;gap:6px;align-content:start;border-top:1px solid var(--ink);padding-top:16px}
+.parts b{font-weight:500}
+.parts span{color:var(--muted);font-size:14px}
+@media (max-width:900px){.parts{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+.shops2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(16px,2.4vw,32px)}
+.shop2{display:grid;gap:18px;align-content:start;border:1px solid var(--line);padding:clamp(22px,3vw,36px);background:var(--bg)}
+.shop2 .addr{font-size:clamp(22px,2.2vw,30px);font-weight:500;letter-spacing:-.02em;line-height:1.15}
+.shop2 dl{display:grid;grid-template-columns:auto 1fr;gap:10px 24px;margin:0;font-size:15px}
+.shop2 dt{color:var(--muted)}.shop2 dd{margin:0;font-variant-numeric:tabular-nums}
+.shop2 .acts3{display:flex;gap:10px;flex-wrap:wrap}
+.shop2 .rate{display:flex;gap:10px;align-items:baseline}.shop2 .rate b{font-size:32px;font-weight:400;letter-spacing:-.02em}.shop2 .rate span{color:var(--muted);font-size:14px}
+@media (max-width:820px){.shops2{grid-template-columns:1fr}}
+.mapph{display:grid;place-items:center;gap:12px;text-align:center;aspect-ratio:16/7;background:repeating-linear-gradient(45deg,#f2f0ec 0 14px,#ebe8e3 14px 28px);border:1px solid var(--line);padding:24px}
+.mapph p{color:var(--muted);max-width:44ch}
+.pop{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(12px,1.6vw,22px)}
+.pop .pc{text-decoration:none}
+.pop .box{display:flex}
+@media (max-width:900px){.pop{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.revs2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(16px,2vw,28px)}
+.revs2 figure{margin:0;display:grid;gap:14px;border-top:1px solid var(--ink);padding-top:20px}
+.revs2 q{quotes:"«" "»";font-size:clamp(18px,1.6vw,22px);letter-spacing:-.01em;line-height:1.35}
+.revs2 figcaption{font-size:14px;color:var(--muted)}
+@media (max-width:760px){.revs2{grid-template-columns:1fr}}
+.kv{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,5vw,80px)}
+.kv dl{display:grid;grid-template-columns:auto 1fr;gap:12px 28px;margin:0}
+.kv dt{color:var(--muted)}.kv dd{margin:0}
+@media (max-width:820px){.kv{grid-template-columns:1fr}}
+
+.wchips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+.wgal{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,1.6vw,22px)}
+.wcard{margin:0;display:grid;gap:10px;align-content:start}
+.wcard .ph{aspect-ratio:4/3;overflow:hidden;background:var(--soft)}
+.wcard .ph img{width:100%;height:100%;object-fit:cover;filter:saturate(.85);transition:transform 1.2s var(--ease)}
+.wcard:hover .ph img{transform:scale(1.04)}
+.wcard b{font-weight:500}
+.wcard span{font-size:14px;color:var(--muted)}
+.wcard[hidden]{display:none}
+@media (max-width:900px){.wgal{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.wgal{grid-template-columns:1fr}}
+.scores2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(16px,2.4vw,32px)}
+.scores2 .sc{border:1px solid var(--line);padding:clamp(22px,3vw,32px);display:grid;gap:12px;align-content:start;background:var(--bg)}
+.scores2 .sc b{font-size:clamp(44px,5vw,64px);font-weight:400;letter-spacing:-.04em;line-height:1}
+.scores2 .sc .acts3{display:flex;gap:10px;flex-wrap:wrap}
+@media (max-width:760px){.scores2{grid-template-columns:1fr}}
+.gt{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;min-width:520px}
+.gt th,.gt td{text-align:left;padding:12px 16px 12px 0;border-bottom:1px solid var(--line);font-weight:400;vertical-align:top}
+.gt th{font-weight:500;border-bottom-color:var(--ink)}
+.mcalc{display:grid;gap:18px;border:1px solid var(--line);padding:clamp(22px,3vw,32px);background:var(--bg)}
+.mcalc .in{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.mcalc label{display:grid;gap:6px;font-size:13px;color:var(--muted)}
+.mcalc input{font:400 17px var(--font);color:var(--ink);background:transparent;border:0;border-bottom:1px solid var(--ink);padding:10px 0;width:100%;border-radius:0}
+.mcalc .out{display:grid;gap:8px;list-style:none;margin:0;padding:0;border-top:1px solid var(--ink)}
+.mcalc .out li{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid var(--line);font-size:15px}
+.mcalc .out li span:last-child{font-weight:500;text-align:right}
+@media (max-width:560px){.mcalc .in{grid-template-columns:1fr}}
+.steps2{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(20px,2.4vw,36px);list-style:none;margin:0;padding:0;counter-reset:s}
+.steps2 li{display:grid;gap:10px;align-content:start}
+.steps2 li::before{counter-increment:s;content:"0" counter(s);font-size:clamp(32px,3.2vw,46px);font-weight:300;line-height:1;color:var(--accent);padding-bottom:14px;border-bottom:1px solid var(--line)}
+.steps2 p{color:var(--muted);font-size:15px}
+@media (max-width:900px){.steps2{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+</style>
+
+<header class="top">
+  <div class="bar1">
+    <div class="wrap">
+      <span>Серпухов, Московское ш., 49 · Ивановское, ул. Пролетарская, 51</span>
+      <div class="ph num"><span>Московское ш. · <mark class="todo">+7 (991) 595-81-86</mark></span><span>Ивановское · +7 (985) 155-52-23</span></div>
+    </div>
+  </div>
+  <div class="bar2">
+    <div class="wrap">
+      <a class="logo" href="index.html">АрниСтрой</a>
+      <nav class="nav" aria-label="Меню">
+        <a href="index.html#catalog">Каталог</a><a href="#calc" class="js-calc">Калькулятор</a><a href="ustanovka.html">Установка</a><a href="obekty.html">Наши работы</a><a href="otzyvy.html">Отзывы</a><a href="stati.html">Статьи</a><a href="o-nas.html">О нас</a><a href="kontakty.html">Контакты</a>
+      </nav>
+      <div class="acts"><button class="btn js-zamer" type="button">Вызвать замерщика</button></div>
+      <button class="burger" type="button" aria-expanded="false" aria-controls="mnav" aria-label="Меню">☰</button>
+    </div>
+    <nav class="mnav" id="mnav" aria-label="Меню">
+      <a href="index.html#catalog">Каталог</a><a href="#calc" class="js-calc">Калькулятор</a><a href="ustanovka.html">Установка</a><a href="obekty.html">Наши работы</a><a href="otzyvy.html">Отзывы</a><a href="stati.html">Статьи</a><a href="o-nas.html">О нас</a><a href="kontakty.html">Контакты</a>
+      <div class="ph num"><span>Московское ш. · <mark class="todo">+7 (991) 595-81-86</mark></span><span>Ивановское · +7 (985) 155-52-23</span></div>
+    </nav>
+  </div>
+</header>
+
+<main>
+<div class="wrap">
+  <nav class="crumbs" aria-label="Навигация"><a href="index.html">Главная</a><span>/</span><span>Как замерить проём</span></nav>
+  <div class="u-head">
+    <div class="txt"><h1>Как замерить дверной проём</h1><p class="lead">Перед покупкой двери нужно знать три размера проёма: ширину, высоту и толщину стены. Покажем, как их измерить, какой проём нужен для двери и когда понадобятся доборы. Точный замер сделает замерщик.</p><ul class="facts2"><li><b>3 размера</b><span>ширина, высота, стена</span></li><li><b>70–100 мм</b><span>проём шире полотна</span></li><li><b>75 мм</b><span>стена без доборов</span></li><li><b><mark class="todo">0 ₽</mark></b><span>замер по Серпухову</span></li></ul><div class="u-cta"><button class="btn js-zamer" type="button">Вызвать замерщика</button><a class="btn ghost" href="#mcalc">Подобрать размер</a></div></div>
+    <div class="ph"><img src="img/hero-min.jpg" alt="Коридор с дверными проёмами" class="flip"></div>
+  </div>
+</div>
+<section class="grad" style="padding-top:clamp(40px,5vw,72px)"><div class="wrap kv">
+  <div class="rv" style="display:grid;gap:16px"><h2 style="font-size:clamp(26px,2.6vw,36px)">Как измерить проём</h2>
+    <ol style="margin:0;padding-left:20px;display:grid;gap:10px;color:var(--muted)"><li><b style="color:var(--ink);font-weight:500">Ширину</b> — в трёх местах: сверху, посередине и снизу. Берите меньшее значение.</li><li><b style="color:var(--ink);font-weight:500">Высоту</b> — от чистого пола до верха проёма, слева и справа. Если пола ещё нет — учтите его толщину.</li><li><b style="color:var(--ink);font-weight:500">Толщину стены</b> — по краю проёма, в нескольких местах. От неё зависят доборы.</li></ol>
+    <p class="muted">Меряйте рулеткой по стене, а не по старой коробке: если дверь меняете, снимите наличник — под ним видно реальный проём.</p></div>
+  <div class="rv measure" style="border:1px solid var(--line);padding:22px;display:grid;gap:14px;background:var(--bg)"><svg viewBox="0 0 360 260" role="img" aria-label="Схема замера проёма: ширина, высота и толщина стены" style="width:100%;max-width:360px;height:auto">
+        <rect x="40" y="20" width="160" height="220" fill="none" stroke="#151515" stroke-width="2"/>
+        <rect x="200" y="20" width="40" height="220" fill="#e6e2db" stroke="#151515" stroke-width="2"/>
+        <line x1="40" y1="250" x2="200" y2="250" stroke="#8A6A45" stroke-width="2"/><text x="120" y="246" font-size="13" text-anchor="middle" fill="#151515">ширина</text>
+        <line x1="28" y1="20" x2="28" y2="240" stroke="#8A6A45" stroke-width="2"/><text x="22" y="130" font-size="13" text-anchor="middle" fill="#151515" transform="rotate(-90 22 130)">высота</text>
+        <line x1="200" y1="12" x2="240" y2="12" stroke="#8A6A45" stroke-width="2"/><text x="296" y="16" font-size="13" text-anchor="middle" fill="#151515">толщина стены</text>
+      </svg><span class="todo-note" style="justify-self:start">Здесь можно разместить видео замера — если снимете</span></div>
+</div></section>
+<section id="mcalc"><div class="wrap kv">
+  <div class="rv" style="display:grid;gap:16px"><h2 style="font-size:clamp(26px,2.6vw,36px)">Какой проём нужен для двери: таблица</h2>
+    <div class="tw"><table class="gt"><thead><tr><th>Полотно, мм</th><th>Проём, мм</th><th>Куда обычно</th></tr></thead><tbody><tr><td>600 × 2000</td><td>670–700 × 2070–2100</td><td>ванная, туалет, кладовая</td></tr><tr><td>700 × 2000</td><td>770–800 × 2070–2100</td><td>кухня, ванная в новых домах</td></tr><tr><td>800 × 2000</td><td>870–900 × 2070–2100</td><td>комнаты</td></tr><tr><td>900 × 2000</td><td>970–1000 × 2070–2100</td><td>широкие проёмы, гостиная</td></tr></tbody></table></div>
+    <p class="muted">Дверной проём шире полотна на 70–100 мм: место занимает коробка и монтажный зазор. Проём для входной двери больше дверного блока на 20–40 мм по ширине и высоте — под монтажную пену.</p></div>
+  <div class="mcalc rv"><b style="font-weight:500;font-size:20px">Подобрать полотно и доборы</b>
+    <div class="in"><label>Ширина проёма, мм<input id="mw" inputmode="numeric" placeholder="870"></label><label>Высота проёма, мм<input id="mh" inputmode="numeric" placeholder="2080"></label><label>Толщина стены, мм<input id="md" inputmode="numeric" placeholder="120"></label></div>
+    <ul class="out" id="mout"></ul>
+    <p class="muted" style="font-size:14px">Это ориентир для межкомнатной двери. Точные размеры коробки и доборов определит замерщик.</p>
+    <button class="btn js-zamer" type="button" style="justify-self:start">Вызвать замерщика</button></div>
+</div></section>
+<section class="grad" aria-labelledby="seo-h"><div class="wrap seo"><div class="txt rv"><h2 id="seo-h">Дверной проём: размеры и частые вопросы</h2>
+      <p><b>Какой проём оставлять под дверь.</b> Если вы строите перегородку или делаете проём в стене, ориентируйтесь на таблицу: под полотно 800 мм — проём 870–900 мм, высота 2070–2100 мм. Дверной проём в ванную и туалет обычно делают под полотно 600 мм, в комнату — под 800 мм.</p>
+      <p><b>Если межкомнатная дверь меньше проёма.</b> Небольшой запас закроют коробка и наличники. Если проём заметно шире, его уменьшают или подбирают нестандартное полотно — замерщик подскажет вариант.</p>
+      <p><b>Толщина стены и доборы.</b> Стандартная коробка закрывает стену толщиной около 75 мм. Если стена толще, ставят добор — планку, которая закрывает торец проёма до края стены.</p>
+      <p><b>Дверной проём без двери.</b> Его можно обрамить порталом — 3 000 ₽ за монтаж — или сделать арку. Для широкого проёма подойдут <a href="mezhkomnatnye-dveri-razdvizhnye.html">раздвижные</a> или <a href="mezhkomnatnye-dveri-dvustvorchatye.html">двустворчатые двери</a>.</p>
+      <p><b>Сделать или расширить дверной проём.</b> Проём в несущей стене панельного дома без согласования делать нельзя. Расширение проёма в перегородке — <mark class="todo">делаете ли и цена — уточнить</mark>.</p></div><aside class="rv" aria-label="Услуги">
+      <b style="font-weight:500">Услуги</b>
+      <a href="ustanovka.html">Установка дверей</a><a href="ustanovka-mezhkomnatnyh.html">Установка межкомнатных дверей</a><a href="ustanovka-vhodnyh.html">Установка входных дверей</a><a href="zamena-dverey.html">Замена дверей</a><a href="vrezka-zamkov.html">Врезка и замена замков</a><a href="zamer.html">Вызов замерщика</a><a href="dostavka.html">Доставка по району</a><a href="kalkulyator.html">Калькулятор стоимости</a>
+      <b style="font-weight:500;margin-top:14px">Каталог</b>
+      <a href="mezhkomnatnye-dveri.html">Межкомнатные двери</a><a href="vhodnye-dveri.html">Входные двери</a>
+    </aside></div></section>
+<section aria-labelledby="faq-h"><div class="wrap"><div class="head rv"><h2 id="faq-h">Вопросы о замере</h2></div><div class="faq rv"><details><summary>Сколько стоит замер?</summary><p><mark class="todo">По Серпухову — бесплатно</mark>. Выезд в район — <mark class="todo">уточнить</mark>.</p></details><details><summary>Можно ли заказать дверь по своим замерам?</summary><p>Да, но за ошибку в размерах отвечаете вы. Замерщик учтёт кривизну стен, уровень пола и толщину стены — так надёжнее.</p></details><details><summary>Когда вызывать замерщика?</summary><p>После выравнивания стен и до укладки чистового пола — или когда пол уже готов: тогда высоту измерим точно.</p></details></div></div></section>
+<section class="final" id="form" aria-labelledby="form-h">
+  <div class="wrap">
+    <div style="display:grid;gap:18px" class="rv">
+      <h2 id="form-h">Вызвать замерщика</h2>
+      <p class="lead"><mark class="todo">По Серпухову замер бесплатный</mark>. Оставьте телефон — менеджер перезвонит и согласует удобное время выезда.</p>
+    </div>
+    <form class="lf-form rv" novalidate data-form>
+      <div class="f"><label for="f-name">Имя</label><input id="f-name" autocomplete="name"></div>
+      <div class="f"><label for="f-phone">Телефон</label><input id="f-phone" type="tel" autocomplete="tel" placeholder="+7"></div>
+      <div class="f full"><label for="f-town">Город или посёлок</label><input id="f-town"></div>
+      <div class="f full"><button class="btn" type="submit">Отправить заявку</button></div>
+      <p class="legal">Нажимая кнопку, вы соглашаетесь с политикой обработки персональных данных.</p>
+      <p class="ok" hidden>Спасибо. Менеджер свяжется с вами в рабочее время салона.</p>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap fnav">
+    <div><b>Каталог</b><a href="mezhkomnatnye-dveri.html">Межкомнатные двери</a><a href="vhodnye-dveri.html">Входные двери</a><a href="vhodnye-dveri-v-kvartiru.html">Входные в квартиру</a><a href="vhodnye-dveri-v-dom.html">Входные в дом</a><a href="mezhkomnatnye-dveri-nedorogie.html">Недорогие двери</a><a href="mezhkomnatnye-dveri-skrytye.html">Скрытые двери</a><a href="mezhkomnatnye-dveri-razdvizhnye.html">Раздвижные двери</a><a href="mezhkomnatnye-dveri-skladnye.html">Складные двери</a><a href="furnitura.html">Фурнитура</a></div>
+    <div><b>Услуги</b><a href="ustanovka.html">Установка дверей</a><a href="zamena-dverey.html">Замена дверей</a><a href="vrezka-zamkov.html">Врезка замков</a><a href="zamer.html">Вызов замерщика</a><a href="dostavka.html">Доставка</a><a href="kalkulyator.html">Калькулятор</a><a href="ceny.html">Цены</a></div>
+    <div><b>Покупателям</b><a href="magaziny.html">Магазины</a><a href="o-nas.html">О компании</a><a href="kontakty.html">Контакты</a><a href="obekty.html">Наши работы</a><a href="otzyvy.html">Отзывы</a><a href="garantiya.html">Гарантия и возврат</a><a href="kak-zamerit.html">Как замерить проём</a></div>
+    <div><b>Доставка и установка</b><a href="chehov.html">Чехов</a><a href="stupino.html">Ступино</a><a href="protvino.html">Протвино</a><a href="pushchino.html">Пущино</a><a href="zaokskiy.html">Заокский</a><a href="tarusa.html">Таруса</a><a href="kremenki.html">Кременки</a><a href="obolensk.html">Оболенск</a></div>
+  </div>
+  <div class="wrap">
+    <span class="logo" style="color:var(--ink)">АрниСтрой</span>
+    <span>Московское шоссе, 49 · <mark class="todo">+7 (991) 595-81-86</mark></span>
+    <span>Ивановское, Пролетарская, 51 · +7 (985) 155-52-23</span>
+    <span>Фото интерьеров в прототипе — Unsplash</span>
+  </div>
+</footer>
+
+<dialog id="zamer" aria-labelledby="dlg-h">
+  <div class="dlg">
+    <button class="x" type="button" aria-label="Закрыть" data-close>×</button>
+    <h2 id="dlg-h">Вызвать замерщика</h2>
+    <p class="muted"><mark class="todo">По Серпухову замер бесплатный</mark>. Оставьте телефон — менеджер перезвонит и согласует удобное время выезда.</p>
+    <form class="lf-form" novalidate data-form>
+      <div class="f"><label for="d-name">Имя</label><input id="d-name" autocomplete="name"></div>
+      <div class="f"><label for="d-phone">Телефон</label><input id="d-phone" type="tel" autocomplete="tel" placeholder="+7"></div>
+      <div class="f full"><label for="d-town">Город или посёлок</label><input id="d-town"></div>
+      <div class="f full"><button class="btn" type="submit">Отправить заявку</button></div>
+      <p class="legal">Нажимая кнопку, вы соглашаетесь с политикой обработки персональных данных.</p>
+      <p class="ok" hidden>Спасибо. Менеджер свяжется с вами в рабочее время салона.</p>
+    </form>
+  </div>
+</dialog>
+
+
+<dialog id="calcDlg" class="calc-dlg" aria-labelledby="cd-title">
+  <div class="cd">
+    <div class="cd-main">
+      <div class="cd-top"><b id="cd-title" style="font-weight:500">Калькулятор двери · шаг <span id="cdN">1</span> из 5</b><button class="x" type="button" aria-label="Закрыть" data-close>×</button></div>
+      <div class="cd-prog" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+
+      <div class="cd-step" data-step="1">
+        <h3>Какие двери нужны?</h3>
+        <p class="hint">Укажите количество — можно сразу на всю квартиру.</p>
+        <div class="cnt" id="cdCnt"></div>
+      </div>
+
+      <div class="cd-step" data-step="2">
+        <h3>Какой уровень отделки?</h3>
+        <p class="hint">Цены за полотно — из нашего каталога.</p>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="tier" value="eco"><b>Эконом</b><small>Флекс-покрытие, экошпон. Межкомнатные от 1 800 ₽</small></label>
+          <label class="opt"><input type="radio" name="tier" value="std" checked><b>Стандарт</b><small>Экошпон, винил, эмалит, шпон. От 4 200 ₽</small></label>
+          <label class="opt"><input type="radio" name="tier" value="prem"><b>Премиум</b><small>Эмаль, натуральный шпон, массив. От 8 000 ₽</small></label>
+          <label class="opt idk"><input type="radio" name="tier" value="idk"><b>Не знаю</b><small>Посчитаем по среднему, подберём в салоне</small></label>
+        </div>
+      </div>
+
+      <div class="cd-step" data-step="3">
+        <h3>Размер проёма и толщина стены</h3>
+        <p class="hint">От толщины стены зависит, нужны ли доборы. Точно измерит замерщик.</p>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="size" value="std" checked><b>Стандартный проём</b><small>Полотно 600–900 × 2000 мм</small></label>
+          <label class="opt"><input type="radio" name="size" value="nonstd"><b>Нестандартный</b><small>Шире 900 или выше 2000 мм</small></label>
+          <label class="opt idk"><input type="radio" name="size" value="idk"><b>Не знаю</b><small>Измерит замерщик</small></label>
+        </div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="wall" value="thin" checked><b>Стена до 7,5 см</b><small>Доборы не нужны</small></label>
+          <label class="opt"><input type="radio" name="wall" value="mid"><b>7,5–15 см</b><small>Нужен добор с одной стороны</small></label>
+          <label class="opt"><input type="radio" name="wall" value="thick"><b>Толще 15 см</b><small>Широкие доборы</small></label>
+          <label class="opt idk"><input type="radio" name="wall" value="idk"><b>Не знаю</b><small>Посчитаем с запасом</small></label>
+        </div>
+      </div>
+
+      <div class="cd-step" data-step="4">
+        <h3>Что включить в расчёт?</h3>
+        <div class="chk">
+          <label><input type="checkbox" name="kit" checked><span><b style="font-weight:500">Коробка и наличники</b><small>Для межкомнатных; у входных коробка уже в комплекте</small></span><span class="pr"></span></label>
+          <label><input type="checkbox" name="furn" checked><span><b style="font-weight:500">Фурнитура</b><small>Ручка, петли, защёлка или замок</small></span><span class="pr"></span></label>
+          <label><input type="checkbox" name="mount" checked><span><b style="font-weight:500">Монтаж</b><small>Установка коробки, полотна, наличников и доборов. Скрытые, раздвижные и нестандартные — дороже</small></span><span class="pr">межкомнатная — 4 000 ₽<br>входная — от 5 000 ₽</span></label>
+          <label><input type="checkbox" name="demont"><span><b style="font-weight:500">Демонтаж старой двери</b><small>Если меняете дверь</small></span><span class="pr"></span></label>
+          <label><input type="checkbox" name="deliv" checked><span><b style="font-weight:500">Доставка</b><small>По Серпуховскому району и соседним городам</small></span><span class="pr"></span></label>
+        </div>
+        <div class="city"><label for="cdCity">Населённый пункт:</label>
+          <input id="cdCity" list="cdVil" value="Серпухов" autocomplete="off" placeholder="Начните вводить название"><datalist id="cdVil"><option value="Серпухов"><option value="118 км ч Заокский"><option value="87 км"><option value="94 км"><option value="Авангард &quot;Воздвиженка&quot;"><option value="Авангард (дачи)"><option value="Авангард дом отдыха"><option value="Авдотьино"><option value="Автомобилист д/о"><option value="Автомосквич"><option value="Агаповка"><option value="Азаровка &quot;114 км&quot;"><option value="Акулово"><option value="Аладьино"><option value="Александровка"><option value="Арнеево"><option value="Байденки"><option value="Балково"><option value="Банино"><option value="Барыбино"><option value="Бегичево"><option value="Берег удачи"><option value="Березкино"><option value="Берендеево царство"><option value="Бобровый Остров"><option value="Болотово"><option value="Большая Городня"><option value="Большевик"><option value="Большое Грызлово"><option value="Бор"><option value="Борисово"><option value="Бутиково"><option value="Бутурлино"><option value="Васильевское"><option value="Васькино"><option value="Велегож"><option value="Велегож парк"><option value="Велеми Нижнее Верхнее"><option value="Веранда"><option value="Верхнее Велеми"><option value="Верхнее Пикалово"><option value="Верхнее Романово"><option value="Веселово"><option value="Вестфалия"><option value="Вечери"><option value="Вишенки"><option value="Воздвиженка"><option value="Волковичи"><option value="Волково"><option value="Волковское"><option value="Волосово"><option value="Волохово"><option value="Волшебная страна"><option value="Воронино"><option value="Вороново (Тул. Обл)"><option value="Воскресенки"><option value="Всходы"><option value="Выдумки"><option value="Высокие дворики"><option value="Высокиничи"><option value="Вяземские сады"><option value="Вязищи"><option value="Гавшино"><option value="Глазово"><option value="Глазово 2"><option value="Глубоково"><option value="Гришенки"><option value="Гурьево"><option value="Дали КП"><option value="Данки"><option value="Дачи МВД Дубачиео"><option value="Дашковка"><option value="Дернополье"><option value="Дикси склады"><option value="ДНТ Любава (Заокский)"><option value="ДНТ Свой дом (Чех. Р-н)"><option value="Дракино"><option value="Дубки (Лужки)"><option value="Дубки на наре"><option value="Дулово"><option value="Дятлово"><option value="Енино"><option value="Еськино"><option value="Жерновка"><option value="Живыя картина"><option value="Журавлево"><option value="Зайцево"><option value="Заокская долина"><option value="Заокские просторы"><option value="Заокский"><option value="Заокское лесничество"><option value="Заречье (Калуж. обл)"><option value="Заречье 2"><option value="Заречье 3"><option value="Зиброво"><option value="Злобино (Мос. Обл)"><option value="Злобино (Тул. Обл)"><option value="Ивановское"><option value="Ивантиново"><option value="Иваньково"><option value="Игнатьево"><option value="Игумново"><option value="Искань"><option value="Истомино (Калуж. Обл)"><option value="Калиново"><option value="Калиновские выселки"><option value="Калугино"><option value="Каменка"><option value="Каминищи (Ступ. Р-н)"><option value="Капитан"><option value="Капитанский мыс/Лэнд"><option value="Караулово"><option value="Каргашино"><option value="Карнищево"><option value="Карпищево (Заок. Р-н)"><option value="Карпова Поляна"><option value="Кирпичный завод"><option value="Клейменово"><option value="Конюшино"><option value="Коптево"><option value="Костино"><option value="Костино (Тул. Обл)"><option value="Кравцово"><option value="Кременки"><option value="Крюково (Тул. Обл)"><option value="Крюково (Чех. Р-н)"><option value="Кузьменки, ст Кузьменки"><option value="Кузьмищево"><option value="Кулаково"><option value="Курилово"><option value="Ладыжино"><option value="Ланьшино"><option value="Лаптево Заокский р--н"><option value="Левашово"><option value="Левашово озеро"><option value="Лесная долина"><option value="Лесная поляна (Чех. Р-н)"><option value="Лесная сказка"><option value="Лесное озеро"><option value="Лесные дали"><option value="Липицы"><option value="Лисинки"><option value="Лопатино Калужская обл."><option value="Лужки"><option value="Лукино"><option value="Лукьяново дорожный"><option value="Лукьяново заокская долина"><option value="Луч (Чех. Р-н)"><option value="Люблинский садовод"><option value="Малахово"><option value="Малахово 2"><option value="Манишки"><option value="Манушкино (Чехов)"><option value="Мартьяново"><option value="Матрешкино"><option value="Матюшино"><option value="Маяк"><option value="Мещериново"><option value="Мирный"><option value="Митино"><option value="Михайловка"><option value="Молоди"><option value="Московка"><option value="Мосолово"><option value="Мостовик"><option value="Мышинки"><option value="Небутово"><option value="Некрасово"><option value="Ненашево"><option value="Нефедово"><option value="Нижнее Романово"><option value="Нижняя Городня (Тул. Обл)"><option value="Никифорово"><option value="Никоновка"><option value="Новая деревня"><option value="Новиково (Капитан)"><option value="Новинки"><option value="Новоселки (Заокский р-н)"><option value="Новый быт"><option value="Оболенск"><option value="Окская слобода"><option value="Палихово (СНТ Палихово)"><option value="Паниково"><option value="Панькино"><option value="Паршино"><option value="Пахомово"><option value="Петрищево (Тарусский р-н)"><option value="Петрухино"><option value="Пирогово"><option value="Плешкино"><option value="Погари"><option value="Подмоклово"><option value="Подольск"><option value="Покровское южное"><option value="Поленово"><option value="Похвиснево Калужская обл."><option value="Приветливое"><option value="Прилуки"><option value="Приокская"><option value="Присады"><option value="Прокшино"><option value="Пролетарский"><option value="Прончищево"><option value="Протвино"><option value="Птицефабрика"><option value="Пущино"><option value="Пущино на Наре"><option value="Радионовка"><option value="Райсеменовское"><option value="Республика"><option value="Рогово"><option value="Родионовка"><option value="Родники"><option value="Родники (Калужская обл.)"><option value="Родники (Яковлево)"><option value="Рождествено (Туль. обл.)"><option value="Романовские дачи"><option value="Романовский парк"><option value="Рудаково"><option value="Русятино"><option value="Рыблово"><option value="Рыжиково"><option value="Савино"><option value="Салтыково"><option value="Сашкино"><option value="Светлая поляна"><option value="Свиненки"><option value="Свинская"><option value="Селино"><option value="Семеновское (Бол. Гор.)"><option value="Семеновское (Бол. Грызлово.)"><option value="Семеновское (Нов. Быт)"><option value="Сенино (Тул. Обл)"><option value="Сенино (Чех. Р-н)"><option value="Сенькино"><option value="Сераксеево"><option value="Сидоренки"><option value="Скинга (кирп. завод)"><option value="Скинга (Тул. Обл)"><option value="Скребухово"><option value="Скрипово"><option value="Скрылья"><option value="Скурыбино"><option value="Славное"><option value="СНТ Биоприборы Пущино"><option value="СНТ Лада"><option value="СНТ Надежда"><option value="СНТ Надежда (Лесная)"><option value="СНТ Нива"><option value="СНТ Ногина 3"><option value="СНТ Ногина 6"><option value="СНТ Ока"><option value="СНТ Приокский"><option value="СНТ Приокское"><option value="СНТ Речник"><option value="СНТ Родник"><option value="СНТ Северное"><option value="СНТ Сказка (Чех. Р-н)"><option value="СНТ Скнига"><option value="СНТ Славяне"><option value="СНТ Сосенки"><option value="СНТ Строитель Нива"><option value="СНТ Тарасовец"><option value="СНТ Твой дом"><option value="СНТ Трансгаз"><option value="СНТ Ясногорские дачи"><option value="Сосновка парк"><option value="Сосновый"><option value="Сосновый парк"><option value="Станки"><option value="Страхово"><option value="Студеное"><option value="Судимля"><option value="Сушки"><option value="Съяново"><option value="Съяново 2"><option value="Талеж"><option value="Таруса"><option value="Татарские хутора"><option value="Тверитино"><option value="Темьянь"><option value="Терхунь"><option value="Теряево (Заок. Р-н)"><option value="Тетерево"><option value="Трухачево"><option value="Тул. пост ГАИ"><option value="Тульчино"><option value="Турино 136 км"><option value="Турово"><option value="Турово поля аэродрома"><option value="Ушаковка"><option value="Фенино"><option value="Ферзиково (Калуж. обл)"><option value="Ферзиково (Мос. обл)"><option value="Царьград"><option value="Чепелево"><option value="Чехов"><option value="Чудо град"><option value="Шарапова охота"><option value="Шарапово (Чех. Р-н)"><option value="Шатово"><option value="Шахлово Верхнее ниж."><option value="Шахтер"><option value="Шахтер д/о"><option value="Шепилово"><option value="Щеблово (Тульская обл.)"><option value="Щеболово"><option value="Южные дачи"><option value="Юрятино"><option value="Яковлево"><option value="Якшино"><option value="Ярославцево (Заок. Р-н)"><option value="Ясногорск"><option value="Ящерки"><option value="Ящерово"></datalist><span class="vp" id="cdVp"></span>
+        </div>
+        <div class="f" id="cdAddrWrap" hidden><label for="cdAddr">Адрес или название посёлка</label><input id="cdAddr" placeholder="Например, д. Большое Грызлово, ул. Центральная"><span class="todo-note" style="justify-self:start;margin-top:6px">Нет в списке из 314 пунктов — стоимость доставки назовёт менеджер. На сайте здесь будет кнопка «Указать на карте» (Яндекс Карты)</span></div>
+      </div>
+
+      <div class="cd-step" data-step="5">
+        <div class="res">
+          <h3>Ваш ориентировочный расчёт</h3>
+          <div class="big" id="cdBig">—</div>
+          <p class="muted" style="font-size:14px">Это вилка по нашему каталогу. Точную сумму менеджер назовёт после замера: она зависит от модели, проёма и фурнитуры. <span class="todo-note">Монтаж, доборы, демонтаж и доставка — по прайсу arnistroy.ru; коробка, наличники и фурнитура — примерные, уточнить у владельца</span></p>
+          <form novalidate data-form>
+            <div class="f"><label for="c-name">Имя</label><input id="c-name" autocomplete="name"></div>
+            <div class="f"><label for="c-phone">Телефон</label><input id="c-phone" type="tel" autocomplete="tel" placeholder="+7"></div>
+            <div class="ways" role="radiogroup" aria-label="Как связаться">
+              <label class="opt"><input type="radio" name="way" value="call" checked><b>Позвонить</b></label>
+              <label class="opt"><input type="radio" name="way" value="wa"><b>WhatsApp</b></label>
+              <label class="opt"><input type="radio" name="way" value="tg"><b>Telegram</b></label>
+            </div>
+            <div class="f full" style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" type="submit">Получить точный расчёт</button><button class="btn ghost js-zamer" type="button">Вызвать замерщика</button></div>
+            <p class="legal">Нажимая кнопку, вы соглашаетесь с политикой обработки персональных данных.</p>
+            <p class="ok" hidden>Спасибо! Менеджер свяжется с вами и пришлёт расчёт.</p>
+          </form>
+        </div>
+      </div>
+
+      <div class="cd-nav">
+        <button class="btn ghost" type="button" id="cdBack">Назад</button>
+        <button class="btn" type="button" id="cdNext">Далее</button>
+      </div>
+    </div>
+    <aside class="cd-side" aria-live="polite">
+      <div style="display:grid;gap:6px"><span class="lbl" id="cdSideLbl">Вы выбрали</span><span class="cd-sum" id="cdSum" hidden>—</span></div>
+      <ul class="cd-lines" id="cdLines"></ul>
+      <p class="cd-note" id="cdNote">Стоимость покажем на последнем шаге — с учётом всех параметров.</p>
+    </aside>
+  </div>
+</dialog>
+<div class="variants" id="variants" role="group" aria-label="Варианты для согласования">
+  <button class="tgl" type="button" aria-expanded="false">Варианты оформления ▴</button>
+  <div class="body" style="display:grid;gap:10px">
+    <b>Варианты для согласования</b>
+    
+    <div class="grp"><span>Пометки «уточнить»</span><button type="button" id="marks" aria-pressed="true">Показывать</button></div>
+  </div>
+</div>
+<div class="float">
+  
+  <a class="chat" href="https://wa.me/79851555223"><i></i><span>Написать в WhatsApp</span></a>
+</div>
+<div class="mbar">
+  <button class="btn ghost js-calc" type="button">Рассчитать</button>
+  <button class="btn js-zamer" type="button">Вызвать замерщика</button>
+</div>
+
+<script>
+(function(){
+  var root=document.documentElement, body=document.body;
+  root.classList.add('js');
+
+  // меню на телефоне
+  var bg=document.querySelector('.burger'), mn=document.getElementById('mnav');
+  bg.addEventListener('click',function(){var o=mn.classList.toggle('open');bg.setAttribute('aria-expanded',o);bg.textContent=o?'×':'☰'});
+  mn.addEventListener('click',function(e){if(e.target.tagName==='A'){mn.classList.remove('open');bg.setAttribute('aria-expanded','false');bg.textContent='☰'}});
+
+  // появление блоков ниже первого экрана
+  var els=[].slice.call(document.querySelectorAll('.rv'));
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.remove('pre');io.unobserve(e.target)}})},{rootMargin:'0px 0px -6% 0px'});
+    els.forEach(function(el,i){if(el.getBoundingClientRect().top>window.innerHeight){el.classList.add('pre');el.style.transitionDelay=(i%4)*80+'ms';io.observe(el)}});
+  }
+
+  // двери на телефоне открываются по первому нажатию
+  document.querySelectorAll('.opener').forEach(function(a){
+    a.addEventListener('click',function(e){var op=a.querySelector('.op');if(matchMedia('(hover:none)').matches&&op&&!op.classList.contains('open')){e.preventDefault();op.classList.add('open');}});
+  });
+
+  // варианты для согласования: фото первого экрана, цвет блоков
+  body.setAttribute('data-hero','min');
+  function pick(attr){document.querySelectorAll('button[data-'+attr+']').forEach(function(b){b.addEventListener('click',function(){body.setAttribute('data-'+attr,b.dataset[attr]);document.querySelectorAll('button[data-'+attr+']').forEach(function(x){x.setAttribute('aria-pressed',x===b)})})})}
+  pick('hero');
+  var vt=document.querySelector('.variants .tgl');
+  vt.addEventListener('click',function(){var o=document.getElementById('variants').classList.toggle('open');vt.setAttribute('aria-expanded',o);vt.textContent=o?'Свернуть ▾':'Варианты оформления ▴'});
+  // переключатель цвета блоков (прототип)
+  document.querySelectorAll('button[data-pal]').forEach(function(b){b.addEventListener('click',function(){body.setAttribute('data-pal',b.dataset.pal);document.querySelectorAll('button[data-pal]').forEach(function(x){x.setAttribute('aria-pressed',x===b)})})});
+  // переключатель пометок
+  var m=document.getElementById('marks');
+  m.addEventListener('click',function(){var c=body.classList.toggle('clean');m.setAttribute('aria-pressed',!c);m.textContent=c?'Скрыты':'Показывать'});
+
+
+  // ===== калькулятор =====
+  // Цены полотна — из каталога (05.10.2026). Комплектующие, монтаж, доставка — ПРИМЕРНЫЕ, уточнить у владельца.
+  var TYPES=[
+    {id:'mezh',name:'Межкомнатные',img:'d-prima-white',note:'от 1 800 ₽ за полотно'},
+    {id:'vhod',name:'Входные',img:'d-vhod',note:'от 7 625 ₽'},
+    {id:'skr',name:'Скрытые',img:'d-hidden',note:'под покраску'},
+    {id:'razd',name:'Раздвижные',img:'d-bravo27',note:'купе и пеналы'},
+    {id:'skl',name:'Складные',img:'d-dsk',note:'от 1 900 ₽'}
+  ];
+  var P={ // [мин, макс] за 1 дверь
+    leaf:{mezh:{eco:[1800,3900],std:[4200,7900],prem:[8000,12600]},vhod:{eco:[7625,18100],std:[21900,34400],prem:[35100,49400]},
+          skr:{eco:[9000,14000],std:[14000,22000],prem:[22000,35000]},razd:{eco:[1800,3900],std:[4200,7900],prem:[8000,12600]},skl:{eco:[1900,3400],std:[3400,4500],prem:[4500,6900]}},
+    kit:{mezh:{eco:[2000,2800],std:[2800,3800],prem:[3800,6000]},vhod:[0,0],skr:[6000,12000],razd:[5500,11000],skl:[0,0]},
+    furn:{mezh:{eco:[1200,2500],std:[2000,4000],prem:[3500,7000]},vhod:[0,0],skr:[3000,6000],razd:[1000,3000],skl:[0,0]},
+    mount:{mezh:[4000,4000],vhod:[5000,6000],skr:[9000,12000],razd:[7000,9000],skl:[3000,4000]},
+    demont:{mezh:[500,1000],vhod:[1000,1000],skr:[500,1000],razd:[500,1000],skl:[300,600]},
+    dobor:{thin:[0,0],mid:[1100,1100],thick:[1100,1500],idk:[0,1500]},
+    deliv:{'Серпухов':[500,1000],'other':[1000,2500]}
+  };
+  // доставка по населённым пунктам — таблица с arnistroy.ru/delivery (06.10.2026)
+  var VIL={"118 км ч Заокский":2800,"87 км":2200,"94 км":1500,"Авангард \"Воздвиженка\"":1600,"Авангард (дачи)":1200,"Авангард дом отдыха":1500,"Авдотьино":2800,"Автомобилист д/о":1500,"Автомосквич":1700,"Агаповка":1900,"Азаровка \"114 км\"":2400,"Акулово":1900,"Аладьино":2300,"Александровка":3000,"Арнеево":1600,"Байденки":2200,"Балково":2100,"Банино":1500,"Барыбино":2200,"Бегичево":1900,"Берег удачи":2100,"Березкино":1900,"Берендеево царство":3100,"Бобровый Остров":2400,"Болотово":2400,"Большая Городня":2100,"Большевик":900,"Большое Грызлово":2100,"Бор":2800,"Борисово":800,"Бутиково":2700,"Бутурлино":800,"Васильевское":1700,"Васькино":3500,"Велегож":2900,"Велегож парк":2600,"Велеми Нижнее Верхнее":1200,"Веранда":1400,"Верхнее Велеми":2400,"Верхнее Пикалово":2300,"Верхнее Романово":1800,"Веселово":3100,"Вестфалия":2100,"Вечери":1400,"Вишенки":2000,"Воздвиженка":1600,"Волковичи":2400,"Волково":1900,"Волковское":2100,"Волосово":2100,"Волохово":2500,"Волшебная страна":2100,"Воронино":2100,"Вороново (Тул. Обл)":3600,"Воскресенки":2100,"Всходы":1800,"Выдумки":2800,"Высокие дворики":1800,"Высокиничи":3200,"Вяземские сады":2400,"Вязищи":2900,"Гавшино":1900,"Глазово":1400,"Глазово 2":2100,"Глубоково":2100,"Гришенки":2600,"Гурьево":2000,"Дали КП":2700,"Данки":1300,"Дачи МВД Дубачиео":2600,"Дашковка":1300,"Дернополье":1900,"Дикси склады":1700,"ДНТ Любава (Заокский)":2400,"ДНТ Свой дом (Чех. Р-н)":2600,"Дракино":1700,"Дубки (Лужки)":1300,"Дубки на наре":1600,"Дулово":3000,"Дятлово":2400,"Енино":2400,"Еськино":2300,"Жерновка":3000,"Живыя картина":3000,"Журавлево":2400,"Зайцево":1800,"Заокская долина":1400,"Заокские просторы":2500,"Заокский":2300,"Заокское лесничество":1700,"Заречье (Калуж. обл)":3500,"Заречье 2":3500,"Заречье 3":3900,"Зиброво":2500,"Злобино (Мос. Обл)":1800,"Злобино (Тул. Обл)":3300,"Ивановское":700,"Ивантиново":2100,"Иваньково":1600,"Игнатьево":2200,"Игумново":2000,"Искань":2700,"Истомино (Калуж. Обл)":3000,"Калиново":1300,"Калиновские выселки":1300,"Калугино":2400,"Каменка":1500,"Каминищи (Ступ. Р-н)":3400,"Капитан":2800,"Капитанский мыс/Лэнд":2800,"Караулово":2400,"Каргашино":2600,"Карнищево":2100,"Карпищево (Заок. Р-н)":2100,"Карпова Поляна":1000,"Кирпичный завод":1700,"Клейменово":2900,"Конюшино":2900,"Коптево":2100,"Костино":1400,"Костино (Тул. Обл)":2600,"Кравцово":3100,"Кременки":2600,"Крюково (Тул. Обл)":2100,"Крюково (Чех. Р-н)":2800,"Кузьменки, ст Кузьменки":2100,"Кузьмищево":2700,"Кулаково":2000,"Курилово":3300,"Ладыжино":3300,"Ланьшино":3300,"Лаптево Заокский р--н":3400,"Левашово":1400,"Левашово озеро":1500,"Лесная долина":2000,"Лесная поляна (Чех. Р-н)":2200,"Лесная сказка":2100,"Лесное озеро":2100,"Лесные дали":2400,"Липицы":1500,"Лисинки":2400,"Лопатино Калужская обл.":3200,"Лужки":1300,"Лукино":1600,"Лукьяново дорожный":1600,"Лукьяново заокская долина":1500,"Луч (Чех. Р-н)":2600,"Люблинский садовод":1400,"Малахово":2100,"Малахово 2":2100,"Манишки":1500,"Манушкино (Чехов)":2200,"Мартьяново":1500,"Матрешкино":2000,"Матюшино":2800,"Маяк":1900,"Мещериново":1600,"Мирный":800,"Митино":2800,"Михайловка":1400,"Молоди":4000,"Московка":2100,"Мосолово":3100,"Мостовик":1700,"Мышинки":2700,"Небутово":2800,"Некрасово":3000,"Ненашево":3300,"Нефедово":1100,"Нижнее Романово":1800,"Нижняя Городня (Тул. Обл)":2800,"Никифорово":2300,"Никоновка":3400,"Новая деревня":2700,"Новиково (Капитан)":2800,"Новинки":1900,"Новоселки (Заокский р-н)":2100,"Новый быт":2400,"Оболенск":2200,"Окская слобода":1400,"Палихово (СНТ Палихово)":900,"Паниково":1100,"Панькино":1600,"Паршино":3000,"Пахомово":3400,"Петрищево (Тарусский р-н)":3400,"Петрухино":1900,"Пирогово":2700,"Плешкино":2200,"Погари":2000,"Подмоклово":2000,"Подольск":6000,"Покровское южное":3200,"Поленово":3100,"Похвиснево Калужская обл.":3100,"Приветливое":1400,"Прилуки":2400,"Приокская":2200,"Присады":1800,"Прокшино":2400,"Пролетарский":2100,"Прончищево":2600,"Протвино":2000,"Птицефабрика":1900,"Пущино":2000,"Пущино на Наре":1400,"Радионовка":1900,"Райсеменовское":2000,"Республика":1800,"Рогово":2100,"Родионовка":2100,"Родники":1600,"Родники (Калужская обл.)":2800,"Родники (Яковлево)":1700,"Рождествено (Туль. обл.)":2800,"Романовские дачи":2000,"Романовский парк":2300,"Рудаково":3100,"Русятино":2800,"Рыблово":1700,"Рыжиково":2100,"Савино":2800,"Салтыково":2300,"Сашкино":3400,"Светлая поляна":2600,"Свиненки":2100,"Свинская":2600,"Селино":1600,"Семеновское (Бол. Гор.)":2100,"Семеновское (Бол. Грызлово.)":2200,"Семеновское (Нов. Быт)":2800,"Сенино (Тул. Обл)":2800,"Сенино (Чех. Р-н)":2600,"Сенькино":2600,"Сераксеево":1700,"Сидоренки":2800,"Скинга (кирп. завод)":1600,"Скинга (Тул. Обл)":2400,"Скребухово":2700,"Скрипово":2500,"Скрылья":1100,"Скурыбино":3500,"Славное":3100,"СНТ Биоприборы Пущино":2100,"СНТ Лада":3200,"СНТ Надежда":2200,"СНТ Надежда (Лесная)":1000,"СНТ Нива":1500,"СНТ Ногина 3":1100,"СНТ Ногина 6":1600,"СНТ Ока":1600,"СНТ Приокский":2600,"СНТ Приокское":2600,"СНТ Речник":1700,"СНТ Родник":2600,"СНТ Северное":1500,"СНТ Сказка (Чех. Р-н)":2600,"СНТ Скнига":1700,"СНТ Славяне":1700,"СНТ Сосенки":1600,"СНТ Строитель Нива":1600,"СНТ Тарасовец":3100,"СНТ Твой дом":2400,"СНТ Трансгаз":1700,"СНТ Ясногорские дачи":3100,"Сосновка парк":1600,"Сосновый":1800,"Сосновый парк":2600,"Станки":2300,"Страхово":2800,"Студеное":3400,"Судимля":1400,"Сушки":1100,"Съяново":1600,"Съяново 2":2600,"Талеж":3000,"Таруса":2900,"Татарские хутора":2500,"Тверитино":1800,"Темьянь":2600,"Терхунь":3100,"Теряево (Заок. Р-н)":3300,"Тетерево":2600,"Трухачево":2400,"Тул. пост ГАИ":2800,"Тульчино":2600,"Турино 136 км":3500,"Турово":2200,"Турово поля аэродрома":2700,"Ушаковка":3500,"Фенино":2200,"Ферзиково (Калуж. обл)":4500,"Ферзиково (Мос. обл)":2500,"Царьград":1700,"Чепелево":3400,"Чехов":2800,"Чудо град":1900,"Шарапова охота":2200,"Шарапово (Чех. Р-н)":3400,"Шатово":2200,"Шахлово Верхнее ниж.":2200,"Шахтер":1900,"Шахтер д/о":1900,"Шепилово":1600,"Щеблово (Тульская обл.)":4000,"Щеболово":1700,"Южные дачи":2100,"Юрятино":2100,"Яковлево":1700,"Якшино":1800,"Ярославцево (Заок. Р-н)":2600,"Ясногорск":4100,"Ящерки":1500,"Ящерово":1500};
+  function delivFor(c){c=(c||'').trim();if(VIL[c])return [VIL[c],VIL[c]];return c==='Серпухов'?P.deliv['Серпухов']:P.deliv.other}
+  var st={cnt:{mezh:1,vhod:0,skr:0,razd:0,skl:0},step:1};
+  function r100(x){return Math.round(x/100)*100}
+  function fmt(x){return r100(x).toLocaleString('ru-RU').replace(/\s/g,'\u00a0')}
+  function val(name){var e=document.querySelector('#calcDlg input[name="'+name+'"]:checked');return e?e.value:null}
+  function on(name){var e=document.querySelector('#calcDlg input[name="'+name+'"]');return e&&e.checked}
+  function pick2(v,tier){return Array.isArray(v)?v:v[tier]}
+  function calc(){
+    var tier=val('tier')||'std'; if(tier==='idk')tier='std';
+    var size=val('size')||'std', wall=val('wall')||'thin';
+    var L={leaf:[0,0],kit:[0,0],dobor:[0,0],furn:[0,0],mount:[0,0],demont:[0,0],deliv:[0,0]}, n=0;
+    TYPES.forEach(function(t){var c=st.cnt[t.id];if(!c)return;n+=c;
+      var lf=pick2(P.leaf[t.id],tier).slice(); if(size==='nonstd'){lf=[lf[0]*1.15,lf[1]*1.3]} if(size==='idk'){lf=[lf[0],lf[1]*1.15]}
+      add(L.leaf,lf,c);
+      if(on('kit'))add(L.kit,pick2(P.kit[t.id],tier),c);
+      if(on('kit')&&(t.id==='mezh'||t.id==='razd'))add(L.dobor,P.dobor[wall],c);
+      if(on('furn'))add(L.furn,pick2(P.furn[t.id],tier),c);
+      if(on('mount')){var mt=P.mount[t.id].slice();if(size==='nonstd'){mt=[mt[0]*1.2,mt[1]*1.4]}if(size==='idk'){mt=[mt[0],mt[1]*1.2]}add(L.mount,mt,c)}
+      if(on('demont'))add(L.demont,P.demont[t.id],c);
+    });
+    if(n&&on('deliv')){L.deliv=delivFor(document.getElementById('cdCity').value).slice()}
+    var lo=0,hi=0;Object.keys(L).forEach(function(k){lo+=L[k][0];hi+=L[k][1]});
+    return {L:L,lo:lo,hi:hi,n:n};
+  }
+  function add(acc,v,c){acc[0]+=v[0]*c;acc[1]+=v[1]*c}
+  var NAMES={leaf:'Полотна',kit:'Коробка и наличники',dobor:'Доборы',furn:'Фурнитура',mount:'Монтаж',demont:'Демонтаж',deliv:'Доставка'};
+  function range(lo,hi){return lo===hi?fmt(lo)+' ₽':fmt(lo)+' – '+fmt(hi)+' ₽'}
+  function render(){
+    var r=calc(), fin=st.step===5;
+    var sum=document.getElementById('cdSum');sum.hidden=!fin;sum.textContent=r.n?range(r.lo,r.hi):'—';
+    document.getElementById('cdSideLbl').textContent=fin?'Ориентировочно':'Вы выбрали';
+    document.getElementById('cdNote').textContent=fin?'Примерная стоимость. Точную назовём после замера.':'Стоимость покажем на последнем шаге — с учётом всех параметров.';
+    document.getElementById('cdBig').textContent=r.n?range(r.lo,r.hi):'—';
+    var ul=document.getElementById('cdLines');ul.innerHTML='';
+    function line(a,b){var li=document.createElement('li');li.innerHTML='<span>'+a+'</span><span>'+b+'</span>';ul.appendChild(li)}
+    if(fin){
+      Object.keys(r.L).forEach(function(k){var v=r.L[k];if(v[1])line(NAMES[k],range(v[0],v[1]))});
+    }else{
+      TYPES.forEach(function(t){if(st.cnt[t.id])line(t.name,st.cnt[t.id]+' шт.')});
+      if(!r.n)line('Двери','не выбраны');
+      var TN={eco:'Эконом',std:'Стандарт',prem:'Премиум',idk:'Подберём'}, SN={std:'Стандартный',nonstd:'Нестандартный',idk:'Измерит замерщик'}, WN={thin:'До 7,5 см',mid:'7,5–15 см',thick:'Толще 15 см',idk:'Измерит замерщик'};
+      if(st.step>=2)line('Отделка',TN[val('tier')||'std']);
+      if(st.step>=3){line('Проём',SN[val('size')||'std']);line('Стена',WN[val('wall')||'thin'])}
+      if(st.step>=4){var inc=[];if(on('kit'))inc.push('коробка');if(on('furn'))inc.push('фурнитура');if(on('mount'))inc.push('монтаж');if(on('demont'))inc.push('демонтаж');if(on('deliv'))inc.push('доставка');line('Включить',inc.join(', ')||'—')}
+    }
+    document.querySelectorAll('.cnt output[data-id]').forEach(function(o){o.textContent=st.cnt[o.dataset.id]});
+  }
+  function buildCnt(el){
+    TYPES.forEach(function(t){
+      var row=document.createElement('div');row.className='r';
+      row.innerHTML='<img src="img/'+t.img+'.jpg" alt=""><span><b>'+t.name+'</b><small>'+t.note+'</small></span>'+
+        '<span class="stp"><button type="button" data-d="-1" aria-label="Меньше: '+t.name+'">−</button><output data-id="'+t.id+'">0</output><button type="button" data-d="1" aria-label="Больше: '+t.name+'">+</button></span>';
+      row.querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){st.cnt[t.id]=Math.max(0,Math.min(30,st.cnt[t.id]+(+b.dataset.d)));render()})});
+      el.appendChild(row);
+    });
+  }
+  buildCnt(document.getElementById('cdCnt'));
+  var mini=document.getElementById('miniCnt'); if(mini)buildCnt(mini);
+  var cdlg=document.getElementById('calcDlg');
+  function go(n){
+    st.step=n;
+    document.querySelectorAll('.cd-step').forEach(function(e){e.classList.toggle('on',+e.dataset.step===n)});
+    document.querySelectorAll('.cd-prog i').forEach(function(e,i){e.classList.toggle('on',i<n)});
+    document.getElementById('cdN').textContent=n;document.querySelector('.cd-side').classList.toggle('fin',n===5);
+    document.getElementById('cdBack').style.visibility=n>1?'visible':'hidden';
+    var nx=document.getElementById('cdNext');nx.hidden=n===5;nx.textContent=n===4?'Показать расчёт':'Далее';
+    render();
+  }
+  document.getElementById('cdNext').addEventListener('click',function(){
+    if(st.step===1&&!calc().n){var f=document.querySelector('#cdCnt .stp button[data-d="1"]');if(f)f.focus();return}
+    go(Math.min(5,st.step+1))});
+  document.getElementById('cdBack').addEventListener('click',function(){go(Math.max(1,st.step-1))});
+  cdlg.addEventListener('change',render);
+  function cityUi(){var c=document.getElementById('cdCity').value.trim(),known=!!VIL[c]||c==='Серпухов';document.getElementById('cdAddrWrap').hidden=known||!c;
+    document.getElementById('cdVp').innerHTML=VIL[c]?'доставка — '+fmt(VIL[c])+' ₽':(c==='Серпухов'?'доставка по городу — <mark class="todo">уточнить</mark>':(c?'рассчитаем по адресу':''))}
+  document.getElementById('cdCity').addEventListener('input',function(){cityUi();render()});cityUi();
+  cdlg.querySelector('[data-close]').addEventListener('click',function(){cdlg.close()});
+  cdlg.addEventListener('click',function(e){if(e.target===cdlg)cdlg.close()});
+  document.querySelectorAll('.js-calc').forEach(function(b){b.addEventListener('click',function(e){
+    e.preventDefault();
+    var t=b.dataset.type; if(t){Object.keys(st.cnt).forEach(function(k){st.cnt[k]=0});st.cnt[t]=1}
+    var start=(b.dataset.from==='mini'&&calc().n)?2:1;
+    if(cdlg.showModal){cdlg.showModal();go(start)}
+  })});
+  // «Вызвать замерщика» из калькулятора: закрыть калькулятор, открыть замер
+  cdlg.querySelectorAll('.js-zamer').forEach(function(b){b.addEventListener('click',function(){cdlg.close()},true)});
+  render();
+
+  // всплывающее окно
+  var dlg=document.getElementById('zamer');
+  document.querySelectorAll('.js-zamer').forEach(function(b){b.addEventListener('click',function(){if(dlg.showModal)dlg.showModal()})});
+  dlg.querySelector('[data-close]').addEventListener('click',function(){dlg.close()});
+  dlg.addEventListener('click',function(e){if(e.target===dlg)dlg.close()});
+  document.querySelectorAll('[data-form]').forEach(function(f){
+    var ph=f.querySelector('input[type=tel]');
+    f.addEventListener('submit',function(e){e.preventDefault();if(ph.value.replace(/\D/g,'').length<10){ph.setCustomValidity('Введите номер телефона');ph.reportValidity();return}ph.setCustomValidity('');f.querySelector('.ok').hidden=false});
+    ph.addEventListener('input',function(){ph.setCustomValidity('')});
+  });
+  // мини-калькулятор: на странице услуги сразу отмечен нужный тип двери
+  (function(){var t='';if(!t)return;var rows=document.querySelectorAll('#miniCnt .r');var ids=['mezh','vhod','skr','razd','skl'];
+    rows.forEach(function(r,i){var o=r.querySelector('output');var want=ids[i]===t?1:0;var cur=+o.textContent;while(cur>want){r.querySelector('[data-d="-1"]').click();cur--}while(cur<want){r.querySelector('[data-d="1"]').click();cur++}})})();
+
+  // калькулятор: полотно и доборы по размерам проёма
+  (function(){var W=document.getElementById('mw'),H=document.getElementById('mh'),D=document.getElementById('md');if(!W)return;
+    function n(e){var v=parseInt((e.value||'').replace(/\D/g,''));return isNaN(v)?null:v}
+    function upd(){var w=n(W),h=n(H),d=n(D),out=[];
+      if(w){var leaf=[600,700,800,900].filter(function(x){return w>=x+70&&w<=x+100})[0];
+        out.push(['Ширина полотна',leaf?leaf+' мм':(w<670?'проём узкий — нестандарт, подберём':(w>1000?'шире 1000 мм — двустворчатая или нестандарт':'между размерами — подберём полотно и коробку'))])}
+      if(h){out.push(['Высота полотна',h>=2070&&h<=2100?'2000 мм':(h<2070?'проём низкий — нестандарт':'выше 2100 мм — нужен добор сверху или высокое полотно')])}
+      if(d){var b=d-75;out.push(['Доборы',b<=0?'не нужны — стена до 75 мм':'нужен добор около '+b+' мм'+(b>200?' (шире 200 мм — 1 500 ₽ за монтаж)':' (монтаж — 1 100 ₽)')])}
+      var ul=document.getElementById('mout');ul.innerHTML=out.length?out.map(function(r){return '<li><span>'+r[0]+'</span><span>'+r[1]+'</span></li>'}).join(''):'<li><span>Введите размеры проёма</span><span>—</span></li>'}
+    [W,H,D].forEach(function(e){e.addEventListener('input',upd)});upd()})();
+
+})();
+</script>
+
+</body></html>
