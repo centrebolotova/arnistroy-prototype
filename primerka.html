@@ -1520,6 +1520,9 @@ body.pk-picking .pk{padding-bottom:120px}
     g.drawImage(im,sx+b[0],sy+b[1],b[2],b[3],0,0,200,450);
     var lf=S.model.lf;if(lf){var u0=(lf[0]+1-b[0])/b[2]*200,u1=(lf[2]-1-b[0])/b[2]*200,v0=(lf[1]+3-b[1])/b[3]*450,v1=Math.min(450,(lf[3]-b[1])/b[3]*450);u0=Math.max(0,u0);u1=Math.min(200,u1);
       if(u1-u0>60&&v1-v0>200)c.leaf=S.flip?[200-u1,v0,200-u0,v1]:[u0,v0,u1,v1]}
+    // цвет торца — средний цвет полотна, чуть темнее
+    c.edge='#7a5a3c';try{var ed=g.getImageData(60,120,80,200).data,er=0,eg=0,eb=0,en=0;for(var q=0;q<ed.length;q+=16){er+=ed[q];eg+=ed[q+1];eb+=ed[q+2];en++}
+      c.edge='rgb('+Math.round(er/en*.72)+','+Math.round(eg/en*.72)+','+Math.round(eb/en*.72)+')'}catch(e){}
     texCache[key]=c;return c}
   // Фото двери (с коробкой и наличниками) ложится на стену по 4 углам проёма; сетка треугольников передаёт перспективу.
   // Открывание: полотно поворачивается на петлях. Камера — обычный телефон (угол обзора ~70° по длинной стороне),
@@ -1549,9 +1552,16 @@ body.pk-picking .pk{padding-bottom:120px}
     var panels=[],V=[],i,N,a,w;
     if(mode==='slide'){var d=S.p*(+$('slideMax').value/100)*lw*(S.slideDir==='right'?1:-1),zf=45;panels.push({L:[lx+d,zf],R:[lx+lw+d,zf],u0:tu0,u1:tu1})}
     else{if(mode==='swing'){a=S.p*(+$('tryMax').value)*Math.PI/180;V=[[hx,0],[hx+sg*lw*Math.cos(a),dir*lw*Math.sin(a)]];N=1}
-      else{N=S.model.sk==='gr'?6:2;a=S.p*78*Math.PI/180;w=lw/N;for(i=0;i<=N;i++)V.push([hx+sg*i*w*Math.cos(a),i%2?w*Math.sin(a):0])}
+      else{N=S.model.sk==='gr'?6:2;a=S.p*82*Math.PI/180;w=lw/N;for(i=0;i<=N;i++)V.push([hx+sg*i*w*Math.cos(a),i%2?w*Math.sin(a):0])}
       var du=(tu1-tu0)/N;for(i=0;i<N;i++)panels.push(sg>0?{L:V[i],R:V[i+1],u0:tu0+i*du,u1:tu0+(i+1)*du}:{L:V[i+1],R:V[i],u0:tu1-(i+1)*du,u1:tu1-i*du})}
-    function drawPanel(pn){var q=[P3(pn.L[0],ly,pn.L[1]),P3(pn.R[0],ly,pn.R[1]),P3(pn.R[0],ly+lh,pn.R[1]),P3(pn.L[0],ly+lh,pn.L[1])],
+    // у створки есть толщина: видна лицевая сторона, обращённая к камере, и торцы
+    var TH=38,Hb=homography(sortQuad(TRY.door),[[0,0],[OW,0],[OW,OH],[0,OH]]),camX=Hb?apply(Hb,c)[0]:OW/2;
+    function edgeQuad(A,B){return[P3(A[0],ly,A[1]),P3(B[0],ly,B[1]),P3(B[0],ly+lh,B[1]),P3(A[0],ly+lh,A[1])]}
+    function drawPanel(pn){var ex=pn.R[0]-pn.L[0],ez=pn.R[1]-pn.L[1],el=Math.hypot(ex,ez)||1,nx_=-ez/el,nz=ex/el,mx=(pn.L[0]+pn.R[0])/2,mz=(pn.L[1]+pn.R[1])/2;
+      if(nx_*(camX-mx)+nz*(D-mz)<0){nx_=-nx_;nz=-nz}var o=[nx_*TH/2,nz*TH/2],Lf=[pn.L[0]+o[0],pn.L[1]+o[1]],Rf=[pn.R[0]+o[0],pn.R[1]+o[1]],Lb=[pn.L[0]-o[0],pn.L[1]-o[1]],Rb=[pn.R[0]-o[0],pn.R[1]-o[1]];
+      ctx.save();ctx.fillStyle=tex.edge;ctx.strokeStyle='rgba(0,0,0,.35)';ctx.lineWidth=1/st.S;[[Lf,Lb],[Rf,Rb],[Lb,Rb]].forEach(function(e){ctx.beginPath();path(edgeQuad(e[0],e[1]));ctx.fill();ctx.stroke()});ctx.restore();
+      pn={L:Lf,R:Rf,u0:pn.u0,u1:pn.u1};
+      var q=[P3(pn.L[0],ly,pn.L[1]),P3(pn.R[0],ly,pn.R[1]),P3(pn.R[0],ly+lh,pn.R[1]),P3(pn.L[0],ly+lh,pn.L[1])],
         Hp=homography([[pn.u0,tv0],[pn.u1,tv0],[pn.u1,tv1],[pn.u0,tv1]],q);if(!Hp)return;
       mesh(function(u,v){return apply(Hp,[u,v])},pn.u0,tv0,pn.u1,tv1,Math.max(2,Math.round((fast?4:8)*(pn.u1-pn.u0)/(tu1-tu0))),fast?8:18);
       var dx=pn.R[0]-pn.L[0],dz=pn.R[1]-pn.L[1],sh=.3*Math.abs(dz)/(Math.hypot(dx,dz)||1);
