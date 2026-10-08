@@ -868,6 +868,7 @@ body.pk-picking .pk{padding-bottom:120px}
           </div>
           <div class="pk-open-opts" id="slideOpts" hidden>
             <div class="pk-radio" role="radiogroup" aria-label="Куда отъезжает"><span>Отъезжает</span><label><input type="radio" name="pkSlide" id="slideL" checked> влево</label><label><input type="radio" name="pkSlide" id="slideR"> вправо</label></div>
+            <p class="pk-note">Купе закрывается в сторону ручки и отъезжает в противоположную — сторона меняется вместе с ручкой.</p>
             <label for="slideMax" class="pk-range"><span>Отъезжает на <b id="slideMaxV">100%</b> ширины</span><input type="range" id="slideMax" min="20" max="100" step="5" value="100"></label>
           </div>
           <p class="pk-note" id="spaceNote" hidden></p>
@@ -1475,7 +1476,7 @@ body.pk-picking .pk{padding-bottom:120px}
   $('next1').addEventListener('click',function(){upd1();if(!S.dims){$('err1').hidden=false;$('err1').textContent='Нужны хотя бы ширина и высота проёма.';return}$('err1').hidden=true;
     S.committed=[Math.round(S.dims.W),Math.round(S.dims.H),Math.round(S.dims.T||0),S.dims.door].join();S.leaf=leafKind(S.dims.W).leaf;$('leafSel').value=S.leaf;$('optDemont').checked=!!S.dims.door;
     if(S.dims.method==='a4'&&a4Mixed())a4Swap();
-    if(S.dims.method==='a4'&&!A4.example){if(A4.blob)idbPut('tryimg',A4.blob);TRY.img=A4.img;TRY.door=A4.door.map(function(p){return p.slice()});TRY.example=false;TRY.space=A4.space||null}go(2)});
+    if(S.dims.method==='a4'&&!A4.example){if(A4.blob)idbPut('tryimg',A4.blob);TRY.img=A4.img;TRY.door=A4.door.map(function(p){return p.slice()});TRY.example=false;TRY.space=A4.space||null;S.slideAuto=S.slideTouched=S.swingTouched=false}go(2)});
 
   // ===== шаг 2: подбор =====
   function sprStyle(k){var v=SPR[k];return v?'background-image:url(img/sp'+v[0]+'.jpg);background-position:'+(v[1]/9*100)+'% '+(v[2]/9*100)+'%':''}
@@ -1527,7 +1528,7 @@ body.pk-picking .pk{padding-bottom:120px}
   // Фото двери (с коробкой и наличниками) ложится на стену по 4 углам проёма; сетка треугольников передаёт перспективу.
   // Открывание: полотно поворачивается на петлях. Камера — обычный телефон (угол обзора ~70° по длинной стороне),
   // расстояние до стены — из масштаба проёма на фото; точка ближе к камере отодвигается от центра кадра.
-  function overlay(ctx,st){if(!S.model||!S.dims)return;var tex=texture();if(!tex)return;var OW=S.dims.W,OH=S.dims.H,lw=S.leaf,lh=2000,lx=(OW-lw)/2,ly=OH-10-lh,U=75;
+  function overlay(ctx,st){if(!S.model||!S.dims)return;var tex=texture();if(!tex)return;var slide=!S.model.sk&&S.sys==='slide',OW=S.dims.W,OH=S.dims.H,lw=S.leaf,lh=slide?Math.max(2000,OH+40):2000,lx=(OW-lw)/2,ly=OH-10-lh,U=75;
     var x0=lx-U,x1=lx+lw+U,y0=ly-U,y1=OH;
     if(tex.leaf){var L=tex.leaf,kx=lw/(L[2]-L[0]),ky=lh/(L[3]-L[1]);x0=lx-L[0]*kx;x1=lx+(200-L[0])*kx;y0=ly-L[1]*ky;y1=ly+(450-L[1])*ky}
     var Hm=homography([[0,0],[OW,0],[OW,OH],[0,OH]],sortQuad(TRY.door));if(!Hm)return;
@@ -1552,7 +1553,7 @@ body.pk-picking .pk{padding-bottom:120px}
       var fq=[P3(ra,yT,zf),P3(rb,yT,zf),P3(rb,yB,zf),P3(ra,yB,zf)];face(fq,tex.base);
       var gr=ctx.createLinearGradient(fq[0][0],fq[0][1],fq[3][0],fq[3][1]);gr.addColorStop(0,'rgba(255,255,255,.18)');gr.addColorStop(.5,'rgba(255,255,255,0)');gr.addColorStop(1,'rgba(0,0,0,.18)');
       ctx.beginPath();path(fq);ctx.fillStyle=gr;ctx.fill();ctx.restore()}
-    if(S.p<.005){mesh(unitMap,0,0,200,450,nx,ny);if(mode==='slide')cornice();ctx.globalAlpha=1;return}
+    if(S.p<.005&&mode!=='slide'){mesh(unitMap,0,0,200,450,nx,ny);ctx.globalAlpha=1;return}
     var tu0=(lx-x0)/(x1-x0)*200,tu1=(lx+lw-x0)/(x1-x0)*200,tv0=(ly-y0)/(y1-y0)*450,tv1=(ly+lh-y0)/(y1-y0)*450;
     if(tex.leaf){tu0=tex.leaf[0];tv0=tex.leaf[1];tu1=tex.leaf[2];tv1=tex.leaf[3]}
     var hole=[[lx,ly],[lx+lw,ly],[lx+lw,ly+lh],[lx,ly+lh]].map(function(p){return apply(Hm,p)});
@@ -1577,8 +1578,9 @@ body.pk-picking .pk{padding-bottom:120px}
       ctx.beginPath();ctx.moveTo(q[0][0],q[0][1]);ctx.lineTo(q[3][0],q[3][1]);ctx.moveTo(q[1][0],q[1][1]);ctx.lineTo(q[2][0],q[2][1]);ctx.stroke();ctx.restore()}
     // за дверью — то, что на фото клиента; коробка и наличники рисуются вокруг проёма
     if(dir<0){ctx.save();ctx.beginPath();path(hole);ctx.clip();panels.forEach(drawPanel);ctx.restore()}
-    ctx.save();ctx.beginPath();ctx.rect(-1e5,-1e5,2e5,2e5);path(hole);ctx.clip('evenodd');mesh(unitMap,0,0,200,450,nx,ny);ctx.restore();
-    ctx.beginPath();path(hole);ctx.fillStyle='rgba(0,0,0,.08)';ctx.fill();
+    // купе висит на стене поверх проёма: коробка и наличники из каталога не рисуются, остаются наличники с фото клиента
+    if(mode!=='slide'){ctx.save();ctx.beginPath();ctx.rect(-1e5,-1e5,2e5,2e5);path(hole);ctx.clip('evenodd');mesh(unitMap,0,0,200,450,nx,ny);ctx.restore();
+      ctx.beginPath();path(hole);ctx.fillStyle='rgba(0,0,0,.08)';ctx.fill()}
     if(dir>0)panels.slice().sort(function(p1,p2){return(p1.L[1]+p1.R[1])-(p2.L[1]+p2.R[1])}).forEach(drawPanel);if(mode==='slide')cornice();ctx.globalAlpha=1}
   var tryStage=new Stage($('tryStage'),{sets:function(){return[{pts:TRY.door,color:'#2f8fd8',label:'Проём'}]},overlay:overlay,onTap:function(){toggleOpen()}});
   // плавное открывание до выбранного угла
@@ -1590,33 +1592,39 @@ body.pk-picking .pk{padding-bottom:120px}
   $('tryOpen').addEventListener('click',toggleOpen);
   $('tryMax').addEventListener('input',function(){$('tryMaxV').textContent=this.value+'°';tryStage.schedule()});
   $('slideMax').addEventListener('input',function(){$('slideMaxV').textContent=this.value+'%';tryStage.schedule()});
-  ['slideL','slideR'].forEach(function(i){$(i).addEventListener('change',function(){S.slideDir=$('slideR').checked?'right':'left';tryStage.schedule()})});
+  // ручка слева — купе закрывается влево и отъезжает вправо, и наоборот
+  function handleLeft(){return (S.model.h!=='R')!==S.flip}
+  function syncSlide(){if(!S.model||S.model.sk)return;S.slideDir=handleLeft()?'right':'left';$(S.slideDir==='right'?'slideR':'slideL').checked=true}
+  function setSlideDir(d){S.flip=(S.model.h!=='R')!==(d==='right');$('tryFlip').checked=S.flip;syncSlide()}
+  ['slideL','slideR'].forEach(function(i){$(i).addEventListener('change',function(){S.slideAuto=true;setSlideDir($('slideR').checked?'right':'left');spaceUI();tryStage.schedule()})});
   ['sysSwing','sysSlide'].forEach(function(i){$(i).addEventListener('change',function(){S.sys=$('sysSlide').checked?'slide':'swing';S.kind=S.sys;sysUI();tryStage.schedule()})});
   // система открывания: у складных моделей — своя, у остальных выбор распашная / купе
-  function sysUI(){var sk=S.model&&S.model.sk,mode=sk?'fold':S.sys;$('sysRow').hidden=!!sk;$('sysFold').hidden=!sk;
+  function sysUI(){var sk=S.model&&S.model.sk,mode=sk?'fold':S.sys;syncSlide();$('sysRow').hidden=!!sk;$('sysFold').hidden=!sk;
     if(sk)$('sysFold').textContent=sk==='gr'?'Дверь-гармошка: складывается узкими секциями в сторону. Сторону меняет «Ручка с другой стороны».':'Складная дверь-книжка: две створки складываются в сторону. Сторону меняет «Ручка с другой стороны».';
     $('swingOpts').hidden=mode!=='swing';$('slideOpts').hidden=mode!=='slide';spaceUI()}
   // сколько стены свободно (оценка ИИ по фото) — подсказка и значения по умолчанию
   function spaceUI(){var sp=TRY.space,el=$('spaceNote');if(!sp||TRY.example||!S.dims){el.hidden=true;return}
     var mode=S.model&&S.model.sk?'fold':S.sys,OW=S.dims.W,lw=S.leaf,mm=function(v){return Math.round(v*OW/10)*10},msg='';
-    if(mode==='slide'){var best=sp.right>sp.left?'right':'left',room=Math.min(1,sp[best]*OW/lw);
-      if(!S.slideTouched){S.slideDir=best;$(best==='right'?'slideR':'slideL').checked=true;var v=Math.max(20,Math.round(room*20)*5);$('slideMax').value=v;$('slideMaxV').textContent=v+'%'}
-      msg='Свободной стены по фото: слева около '+mm(sp.left)+' мм, справа около '+mm(sp.right)+' мм. '+(room>=.95?'Купе может отъехать '+(best==='right'?'вправо':'влево')+' полностью.':'Полностью купе отъехать не может — ход ограничен.')}
+    if(mode==='slide'){var rm=function(d){return Math.min(1,sp[d]*OW/lw)},nm=function(d){return d==='right'?'вправо':'влево'};syncSlide();
+      // в первый раз — в сторону, где больше свободной стены (ручка встаёт с другой стороны)
+      if(!S.slideAuto){S.slideAuto=true;var best=sp.right>sp.left?'right':'left';if(best!==S.slideDir)setSlideDir(best)}
+      var dn=S.slideDir,ot=dn==='right'?'left':'right',room=rm(dn);
+      if(!S.slideTouched){var v=room>=.95?100:Math.max(20,Math.round(room*20)*5);$('slideMax').value=v;$('slideMaxV').textContent=v+'%'}
+      msg='Свободной стены по фото: слева около '+mm(sp.left)+' мм, справа около '+mm(sp.right)+' мм. '+(room>=.95?'Купе отъедет '+nm(dn)+' полностью.':'Отъехать '+nm(dn)+' полностью мешает стена — ход примерно '+Math.round(room*100)+'% ширины.')+
+        (rm(ot)>room+.1?' '+(dn==='right'?'Влево':'Вправо')+' места больше — поставьте ручку с другой стороны.':'')}
     else if(mode==='swing'){var hr=(S.model.h!=='R')!==S.flip,hs=hr?sp.right:sp.left,ang=hs*OW>=lw?180:Math.round((90+90*Math.min(1,hs*OW/lw))/5)*5;
       if(!S.swingTouched){$('tryMax').value=ang;$('tryMaxV').textContent=ang+'°'}
       msg='Со стороны петель свободно около '+mm(hs)+' мм стены. '+(ang>=180?'Дверь может открыться полностью.':'Дверь откроется примерно на '+ang+'°.')}
     el.textContent=msg+' Оценка по фото — проверьте на месте.';el.hidden=!msg}
   $('tryMax').addEventListener('change',function(){S.swingTouched=true});$('slideMax').addEventListener('change',function(){S.slideTouched=true});
-  ['slideL','slideR'].forEach(function(i){$(i).addEventListener('change',function(){S.slideTouched=true})});
   ['swingOut','swingIn'].forEach(function(i){$(i).addEventListener('change',function(){S.swing=$('swingIn').checked?'in':'out';tryStage.schedule()})});
-  $('tryFlip').addEventListener('change',function(){spaceUI()});
-  loadFile($('tryPhoto'),function(img,f){TRY.blob=f;idbPut('tryimg',f);TRY.img=img;TRY.door=defaultPts(img.naturalWidth,img.naturalHeight).door;TRY.example=false;TRY.space=null;closeNow();tryStage.handles=true;$('tryHandles').textContent='Скрыть точки';render3();
+  loadFile($('tryPhoto'),function(img,f){TRY.blob=f;idbPut('tryimg',f);TRY.img=img;TRY.door=defaultPts(img.naturalWidth,img.naturalHeight).door;TRY.example=false;TRY.space=null;S.slideAuto=S.slideTouched=S.swingTouched=false;closeNow();tryStage.handles=true;$('tryHandles').textContent='Скрыть точки';render3();
     if(!DETECT)return;$('tryNote').textContent='Ищу углы проёма на фото — это займёт до 30 секунд.';
     autoDetect(img,$('tryStage'),function(r){if(TRY.img!==img)return;if(r){TRY.door=r.door;TRY.space=r.space;spaceUI();var drags0=tryStage.drags||0;
         refine(img,{door:r.door,sheet:null},function(q){if(!q||TRY.img!==img||(tryStage.drags||0)!==drags0)return;TRY.door=q.door;tryStage.schedule()})}tryStage.schedule();
       $('tryNote').textContent=r?'Дверь встала по найденным углам проёма. Если неточно — подвиньте синие точки.':'Не получилось найти углы автоматически. Поставьте синие точки на углы проёма.'})});
   $('tryHandles').addEventListener('click',function(){tryStage.handles=!tryStage.handles;this.textContent=tryStage.handles?'Скрыть точки':'Показать точки';tryStage.schedule()});
-  $('tryFlip').addEventListener('change',function(){S.flip=this.checked;tryStage.schedule()});
+  $('tryFlip').addEventListener('change',function(){S.flip=this.checked;S.slideAuto=true;syncSlide();spaceUI();tryStage.schedule()});
   function step(d){var a=list(),i=a.findIndex(function(x){return x.id===S.model.id});if(!a.length)return;S.model=a[(i+d+a.length)%a.length];S.color=0;render3()}
   $('tryPrev').addEventListener('click',function(){step(-1)});$('tryNext').addEventListener('click',function(){step(1)});
   function render3(){var m=S.model;$('tryName').textContent=m.n;$('tryMeta').textContent=m.b+' · '+m.cov+' · полотно '+S.leaf+' × 2000 · от '+fmt(m.p)+' ₽';$('tryColor').textContent=m.c[S.color].n;
@@ -1686,7 +1694,7 @@ body.pk-picking .pk{padding-bottom:120px}
     $(L.order?'needOrder':'needZamer').checked=true;S.leaf=st.leaf||800;$('leafSel').value=S.leaf;S.style=st.style||'';S.glass=st.glass||'';S.sort=st.sort||'pop';$('sortSel').value=S.sort;
     S.flip=!!st.flip;$('tryFlip').checked=S.flip;S.swing=st.swing||'out';$(S.swing==='in'?'swingIn':'swingOut').checked=true;$('tryMax').value=st.max||180;$('tryMaxV').textContent=$('tryMax').value+'°';
     S.sys=st.sys==='slide'?'slide':'swing';$(S.sys==='slide'?'sysSlide':'sysSwing').checked=true;S.kind=st.kind||(st.filter==='складные'?'fold':S.sys);S.slideDir=st.slideDir==='right'?'right':'left';$(S.slideDir==='right'?'slideR':'slideL').checked=true;
-    $('slideMax').value=st.slideMax||100;$('slideMaxV').textContent=$('slideMax').value+'%';TRY.space=st.space||null;A4.space=st.a4space||null;S.swingTouched=S.slideTouched=true;
+    $('slideMax').value=st.slideMax||100;$('slideMaxV').textContent=$('slideMax').value+'%';TRY.space=st.space||null;A4.space=st.a4space||null;S.swingTouched=S.slideTouched=S.slideAuto=true;
     S.model=st.model==null?null:CAT.filter(function(x){return x.id===st.model})[0]||null;S.color=S.model&&st.color<S.model.c.length?st.color:0;
     if(st.a4&&!st.a4.example){A4.example=false;A4.sheet=st.a4.sheet;A4.door=st.a4.door;A4.f35=st.a4.f35||null;A4.fix=!!st.a4.fix;$('mW').value=st.a4.mW||'';$('mH').value=st.a4.mH||''}
     if(st.tr&&!st.tr.example){TRY.example=false;TRY.door=st.tr.door}
