@@ -801,6 +801,7 @@ body.pk-picking .pk{padding-bottom:120px}
         <label><input type="radio" name="pkDoorA4" id="a4DoorNo" checked> Нет</label>
         <label><input type="radio" name="pkDoorA4" id="a4DoorYes"> Да — размер по коробке</label>
       </div>
+      <p class="pk-note" id="a4FrameAI" hidden></p>
       <div class="pk-in two" style="max-width:520px">
         <label for="a4Orient">Лист висит<select id="a4Orient"><option value="auto">определить сам</option><option value="port">вертикально</option><option value="land">горизонтально</option></select></label>
         <label for="a4T">Толщина стены, мм (рулеткой)<input type="text" id="a4T" inputmode="decimal" placeholder="120"></label>
@@ -1384,7 +1385,7 @@ body.pk-picking .pk{padding-bottom:120px}
   function autoDetect(img,stageEl,cb){if(!DETECT)return cb(null);var W=img.naturalWidth,H=img.naturalHeight,k=Math.min(1,1568/Math.max(W,H)),c=document.createElement('canvas');
     c.width=Math.round(W*k);c.height=Math.round(H*k);c.getContext('2d').drawImage(img,0,0,c.width,c.height);var busy=stageEl.querySelector('.pk-busy');busy.hidden=false;
     var ctl=window.AbortController?new AbortController():null,timer=setTimeout(function(){if(ctl)ctl.abort()},60000);
-    function done(r){clearTimeout(timer);busy.hidden=true;cb(r&&r.door?{door:r.door.map(function(p){return[p[0]*W,p[1]*H]}),sheet:r.sheet?r.sheet.map(function(p){return[p[0]*W,p[1]*H]}):null,space:r.space||null}:null)}
+    function done(r){clearTimeout(timer);busy.hidden=true;cb(r&&r.door?{door:r.door.map(function(p){return[p[0]*W,p[1]*H]}),sheet:r.sheet?r.sheet.map(function(p){return[p[0]*W,p[1]*H]}):null,space:r.space||null,frame:typeof r.frame==='boolean'?r.frame:null}:null)}
     fetch(DETECT,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({image:c.toDataURL('image/jpeg',.88)}),signal:ctl?ctl.signal:undefined})
       .then(function(r){return r.ok?r.json():null}).then(done,function(){done(null)})}
 
@@ -1420,12 +1421,15 @@ body.pk-picking .pk{padding-bottom:120px}
   function a4Show(){a4.setImage(A4.img,A4.img.width||A4.img.naturalWidth,A4.img.height||A4.img.naturalHeight);
     $('a4Note').textContent=A4.example?'Сейчас открыт пример: нарисованная стена, проём 880 × 2080 мм.':'Ваше фото. Поставьте точки на углы листа и проёма.'}
   function readF35(blob,cb){if(!blob||!blob.slice||!window.FileReader)return cb(null);var r=new FileReader();r.onload=function(){cb(exifF35(r.result))};r.onerror=function(){cb(null)};r.readAsArrayBuffer(blob.slice(0,262144))}
+  // стоит ли в проёме дверь — определяет ИИ по фото; человек может переключить
+  function setFrame(f){$('a4FrameAI').hidden=f==null;if(f==null)return;$(f?'a4DoorYes':'a4DoorNo').checked=true;$(f?'doorYes':'doorNo').checked=true;
+    $('a4FrameAI').textContent=f?'По фото в проёме стоит дверь — размер считаем по коробке.':'По фото коробки в проёме нет — размер от стены до стены.';upd1()}
   function fixOff(){A4.fix=false;$('mW').value='';$('mH').value=''}
-  loadFile($('a4Photo'),function(img,f){var drags0;A4.blob=f;idbPut('a4img',f);fixOff();A4.f35=null;readF35(f,function(v){A4.f35=v;upd1()});var d=defaultPts(img.naturalWidth,img.naturalHeight);A4.img=img;A4.sheet=d.sheet;A4.door=d.door;A4.example=false;a4Show();
+  loadFile($('a4Photo'),function(img,f){var drags0;A4.blob=f;idbPut('a4img',f);fixOff();$('a4FrameAI').hidden=true;A4.f35=null;readF35(f,function(v){A4.f35=v;upd1()});var d=defaultPts(img.naturalWidth,img.naturalHeight);A4.img=img;A4.sheet=d.sheet;A4.door=d.door;A4.example=false;a4Show();
     if(!DETECT)return;$('a4Note').textContent='Ищу углы листа и проёма на фото — это займёт до 30 секунд.';
     autoDetect(img,$('a4Stage'),function(r){if(A4.img!==img)return;
       if(!r){$('a4Note').textContent='Не получилось найти углы автоматически. Поставьте оранжевые точки на углы листа, синие — на углы проёма.';return}
-      A4.door=r.door;A4.space=r.space;if(r.sheet)A4.sheet=r.sheet;a4.schedule();drags0=a4.drags||0;
+      A4.door=r.door;A4.space=r.space;if(r.sheet)A4.sheet=r.sheet;setFrame(r.frame);a4.schedule();drags0=a4.drags||0;
       refine(img,r,function(q){if(!q||A4.img!==img||(a4.drags||0)!==drags0)return;A4.door=q.door;if(q.sheet)A4.sheet=q.sheet;a4.schedule();
         $('a4Note').textContent=(r.sheet?'Точки поставлены автоматически и уточнены.':'Проём найден и уточнён, а лист А4 — нет. Поставьте оранжевые точки на углы листа.')+' Проверьте углы и при необходимости подвиньте.'});
       $('a4Note').textContent=r.sheet?'Точки поставлены автоматически. Проверьте углы и при необходимости подвиньте.':'Проём найден, а лист А4 — нет. Поставьте оранжевые точки на углы листа.'})});
@@ -1454,14 +1458,14 @@ body.pk-picking .pk{padding-bottom:120px}
     if(W&&(W<400||W>2000))msgs.push('Ширина выглядит странно для межкомнатной двери — проверьте цифры.');
     if(H&&(H<1500||H>3000))msgs.push('Высота выглядит странно для межкомнатной двери — проверьте цифры.');
     $('dWarn').hidden=!msgs.length;$('dWarn').textContent=msgs.join(' ');
-    var sug=[];if(W){var lf=leafSwing(W);sug.push('Распашная — полотно '+lf.leaf+' мм.'+(lf.note?' '+lf.note:'')+' Купе — полотно '+leafSlide(W).leaf+' мм.')}if(H){var hn=frameNow()?(H>=1950&&H<=2030?'':'Высота по коробке нестандартная — уточнит замерщик.'):heightNote(H);sug.push(hn||'Высота полотна 2000 мм.')}
+    var sug=[];if(W){var lf=leafSwing(W);sug.push('Распашная — полотно '+lf.leaf+' мм.'+(lf.note?' '+lf.note:'')+' Купе — полотно '+leafSlide(W).leaf+' мм.')}if(H){var hn=frameNow()?(H>=1950&&H<=2070?'':'Высота по коробке нестандартная — уточнит замерщик.'):heightNote(H);sug.push(hn||'Высота полотна 2000 мм.')}
     if(T){var db=doborFor(T);sug.push(db?'Нужен добор около '+db+' мм.':'Доборы не нужны — стена до 75 мм.')}
     $('dSug').textContent=sug.join(' ');S.dims=W&&H?{W:W,H:H,T:T,door:door,method:S.method}:null;
     var key=S.dims?[Math.round(W),Math.round(H),Math.round(T||0),door].join():'';if(S.committed&&key!==S.committed&&S.maxStep>1){S.maxStep=1;navState()}}
   $('a4FixOn').addEventListener('click',function(){var r=A4.res;A4.fix=true;$('mW').value=r?Math.round(r.width):'';$('mH').value=r?Math.round(r.height):'';upd1();$('mW').focus()});
   $('a4FixOff').addEventListener('click',function(){fixOff();upd1()});
   // вопрос «стоит ли дверь» — один на оба способа замера
-  [['doorNo','a4DoorNo'],['doorYes','a4DoorYes']].forEach(function(pr){pr.forEach(function(id,i){$(id).addEventListener('change',function(){if(this.checked){$(pr[1-i]).checked=true;upd1()}})})});
+  [['doorNo','a4DoorNo'],['doorYes','a4DoorYes']].forEach(function(pr){pr.forEach(function(id,i){$(id).addEventListener('change',function(){if(this.checked){$(pr[1-i]).checked=true;$('a4FrameAI').hidden=true;upd1()}})})});
   tapeIds.concat(['a4T','mW','mH']).forEach(function(i){$(i).addEventListener('input',upd1)});['doorNo','doorYes'].forEach(function(i){$(i).addEventListener('change',upd1)});
   $('a4Orient').addEventListener('change',upd1);$('tapeForm').addEventListener('submit',function(e){e.preventDefault()});
   $('tapeExample').addEventListener('click',function(){var ex={w1:880,w2:885,w3:882,h1:2080,h2:2075,t1:120,t2:125};tapeIds.forEach(function(i){$(i).value=ex[i]});upd1()});
