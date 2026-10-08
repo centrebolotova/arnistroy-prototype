@@ -754,11 +754,11 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
       </div>
       <form class="pk-col" id="tapeForm" novalidate>
         <fieldset class="pk-fs"><legend>Ширина, мм — сверху, посередине, снизу</legend>
-          <div class="pk-in"><label for="w1">верх<input type="number" id="w1" inputmode="decimal" placeholder="880"></label><label for="w2">середина<input type="number" id="w2" inputmode="decimal" placeholder="885"></label><label for="w3">низ<input type="number" id="w3" inputmode="decimal" placeholder="882"></label></div></fieldset>
+          <div class="pk-in"><label for="w1">верх<input type="text" id="w1" inputmode="decimal" placeholder="880"></label><label for="w2">середина<input type="text" id="w2" inputmode="decimal" placeholder="885"></label><label for="w3">низ<input type="text" id="w3" inputmode="decimal" placeholder="882"></label></div></fieldset>
         <fieldset class="pk-fs"><legend>Высота, мм — от пола, слева и справа</legend>
-          <div class="pk-in two"><label for="h1">слева<input type="number" id="h1" inputmode="decimal" placeholder="2080"></label><label for="h2">справа<input type="number" id="h2" inputmode="decimal" placeholder="2075"></label></div></fieldset>
+          <div class="pk-in two"><label for="h1">слева<input type="text" id="h1" inputmode="decimal" placeholder="2080"></label><label for="h2">справа<input type="text" id="h2" inputmode="decimal" placeholder="2075"></label></div></fieldset>
         <fieldset class="pk-fs"><legend>Толщина стены, мм — с двух сторон</legend>
-          <div class="pk-in two"><label for="t1">слева<input type="number" id="t1" inputmode="decimal" placeholder="120"></label><label for="t2">справа<input type="number" id="t2" inputmode="decimal" placeholder="125"></label></div></fieldset>
+          <div class="pk-in two"><label for="t1">слева<input type="text" id="t1" inputmode="decimal" placeholder="120"></label><label for="t2">справа<input type="text" id="t2" inputmode="decimal" placeholder="125"></label></div></fieldset>
         <button type="button" class="pk-linkbtn" id="tapeExample">Заполнить примером</button>
       </form>
     </div>
@@ -775,7 +775,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
       <div class="pk-stage" id="a4Stage"><canvas class="view" aria-label="Фото проёма с отметками углов"></canvas><canvas class="loupe" hidden></canvas></div>
       <div class="pk-in two" style="max-width:520px">
         <label for="a4Orient">Лист висит<select id="a4Orient"><option value="auto">определить сам</option><option value="port">вертикально</option><option value="land">горизонтально</option></select></label>
-        <label for="a4T">Толщина стены, мм (рулеткой)<input type="number" id="a4T" inputmode="decimal" placeholder="120"></label>
+        <label for="a4T">Толщина стены, мм (рулеткой)<input type="text" id="a4T" inputmode="decimal" placeholder="120"></label>
       </div>
       <p class="pk-note" id="a4Ctrl"></p>
     </div>
@@ -1293,13 +1293,14 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
   function leafFor(W){var hit=LEAVES.filter(function(x){return W>=x+70&&W<=x+100})[0];if(hit)return{leaf:hit,note:''};
     if(W<670)return{leaf:600,note:'Проём уже стандарта: понадобится нестандартное полотно или подрезка — подскажет замерщик.'};
     if(W>1000)return{leaf:900,note:'Проём шире 1000 мм: подойдёт двустворчатая или раздвижная дверь.'};
-    var lo=LEAVES.filter(function(x){return x+100<W}).pop();return{leaf:lo,note:'Проём между стандартами: полотно '+lo+' с широкой коробкой или сужение проёма — решит замерщик.'}}
+    var best=LEAVES.map(function(x){return{x:x,d:W<x+70?x+70-W:W-(x+100)}}).sort(function(a,b){return a.d-b.d})[0];
+    return{leaf:best.x,note:W<best.x+70?'Проём на '+Math.round(best.d)+' мм уже стандарта под полотно '+best.x+': понадобится расширить проём — решит замерщик.':'Проём на '+Math.round(best.d)+' мм шире стандарта под полотно '+best.x+': широкая коробка или сужение проёма — решит замерщик.'}}
   function heightNote(H){return H<2070?'Проём ниже стандарта 2070 мм — нестандартная высота полотна.':H>2100?'Проём выше 2100 мм — понадобится добор сверху или высокое полотно.':''}
   function doborFor(T){if(!T)return null;var b=Math.round(T-75);return b>5?b:null}
 
   // ===== шаг 1: замер =====
   var tapeIds=['w1','w2','w3','h1','h2','t1','t2'];
-  function num(id,cmBelow){var v=parseFloat(($(id).value||'').replace(',','.'));if(!(v>0))return null;return v<cmBelow?{v:v*10,cm:true}:{v:v,cm:false}}
+  function num(id,cmBelow){var v=parseFloat(($(id).value||'').replace(/\s/g,'').replace(',','.'));if(!(v>0))return null;return v<cmBelow?{v:v*10,cm:true}:{v:v,cm:false}}
   var A4={sheet:EX.sheet.map(function(p){return p.slice()}),door:EX.door.map(function(p){return p.slice()}),example:true,img:EX.img,res:null};
   var a4=new Stage($('a4Stage'),{sets:function(){return[{pts:A4.sheet,color:'#e0841a'},{pts:A4.door,color:'#2f8fd8'}]},after:function(){if(S.method==='a4')upd1()}});
   function a4Show(){a4.setImage(A4.img,A4.img.width||A4.img.naturalWidth,A4.img.height||A4.img.naturalHeight);
@@ -1326,7 +1327,8 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
     $('dWarn').hidden=!msgs.length;$('dWarn').textContent=msgs.join(' ');
     var sug=[];if(W){var lf=leafFor(W);sug.push('Полотно '+lf.leaf+' мм.'+(lf.note?' '+lf.note:''))}if(H){var hn=heightNote(H);sug.push(hn||'Высота полотна 2000 мм.')}
     if(T){var db=doborFor(T);sug.push(db?'Нужен добор около '+db+' мм.':'Доборы не нужны — стена до 75 мм.')}
-    $('dSug').textContent=sug.join(' ');S.dims=W&&H?{W:W,H:H,T:T,door:door,method:S.method}:null}
+    $('dSug').textContent=sug.join(' ');S.dims=W&&H?{W:W,H:H,T:T,door:door,method:S.method}:null;
+    var key=S.dims?[Math.round(W),Math.round(H),Math.round(T||0),door].join():'';if(S.committed&&key!==S.committed&&S.maxStep>1){S.maxStep=1;navState()}}
   tapeIds.concat(['a4T']).forEach(function(i){$(i).addEventListener('input',upd1)});['doorNo','doorYes'].forEach(function(i){$(i).addEventListener('change',upd1)});
   $('a4Orient').addEventListener('change',upd1);$('tapeForm').addEventListener('submit',function(e){e.preventDefault()});
   $('tapeExample').addEventListener('click',function(){var ex={w1:880,w2:885,w3:882,h1:2080,h2:2075,t1:120,t2:125};tapeIds.forEach(function(i){$(i).value=ex[i]});upd1()});
@@ -1334,7 +1336,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
   function setMethod(m){S.method=m;$('tabTape').setAttribute('aria-selected',String(m==='tape'));$('tabA4').setAttribute('aria-selected',String(m==='a4'));$('paneTape').hidden=m!=='tape';$('paneA4').hidden=m!=='a4';if(m==='a4')a4Show();upd1()}
   $('tabTape').addEventListener('click',function(){setMethod('tape')});$('tabA4').addEventListener('click',function(){setMethod('a4')});
   $('next1').addEventListener('click',function(){upd1();if(!S.dims){$('err1').hidden=false;$('err1').textContent='Нужны хотя бы ширина и высота проёма.';return}$('err1').hidden=true;
-    S.leaf=leafFor(S.dims.W).leaf;$('leafSel').value=S.leaf;$('optDemont').checked=!!S.dims.door;
+    S.committed=[Math.round(S.dims.W),Math.round(S.dims.H),Math.round(S.dims.T||0),S.dims.door].join();S.leaf=leafFor(S.dims.W).leaf;$('leafSel').value=S.leaf;$('optDemont').checked=!!S.dims.door;
     if(S.dims.method==='a4'&&!A4.example){TRY.img=A4.img;TRY.door=A4.door.map(function(p){return p.slice()});TRY.example=false}go(2)});
 
   // ===== шаг 2: подбор =====
@@ -1363,7 +1365,11 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
   function sheet(n){if(!sheets[n]){var im=new Image();im.onload=function(){texCache={};tryStage.schedule()};im.src='img/sp'+n+'.jpg';sheets[n]=im}return sheets[n]}
   function texture(){var k=S.model.c[S.color].i,v=SPR[k];if(!v)return null;var key=k+(S.flip?'f':'');if(texCache[key])return texCache[key];var im=sheet(v[0]);if(!im.complete||!im.naturalWidth)return null;
     var c=document.createElement('canvas');c.width=200;c.height=450;var g=c.getContext('2d');if(S.flip){g.translate(200,0);g.scale(-1,1)}
-    var cw=im.naturalWidth/10,ch=im.naturalHeight/10;g.drawImage(im,v[1]*cw,v[2]*ch,cw,ch,0,0,200,450);texCache[key]=c;return c}
+    var cw=im.naturalWidth/10,ch=im.naturalHeight/10,sx=v[1]*cw,sy=v[2]*ch,b=[0,0,cw,ch];
+    try{var t=document.createElement('canvas');t.width=cw;t.height=ch;var tg=t.getContext('2d');tg.drawImage(im,sx,sy,cw,ch,0,0,cw,ch);var d=tg.getImageData(0,0,cw,ch).data;
+      var dark=function(i){return Math.min(d[i],d[i+1],d[i+2])<236},col=function(x){var n=0;for(var y=0;y<ch;y+=2)if(dark((y*cw+x)*4))n++;return n>ch*.03},row=function(y){var n=0;for(var x=0;x<cw;x+=2)if(dark((y*cw+x)*4))n++;return n>cw*.03};
+      var x0=0,x1=cw-1,y0=0,y1=ch-1;while(x0<x1&&!col(x0))x0++;while(x1>x0&&!col(x1))x1--;while(y0<y1&&!row(y0))y0++;while(y1>y0&&!row(y1))y1--;if(x1-x0>cw*.5&&y1-y0>ch*.5)b=[x0,y0,x1-x0+1,y1-y0+1]}catch(e){}
+    g.drawImage(im,sx+b[0],sy+b[1],b[2],b[3],0,0,200,450);texCache[key]=c;return c}
   // Фото двери (с коробкой и наличниками) ложится на стену по 4 углам проёма; сетка треугольников передаёт перспективу.
   function overlay(ctx,st){if(!S.model||!S.dims)return;var tex=texture();if(!tex)return;var OW=S.dims.W,OH=S.dims.H,lw=S.leaf,lx=(OW-lw)/2,ly=OH-10-2000,U=75;
     var x0=lx-U,x1=lx+lw+U,y0=ly-U,y1=OH,Hm=homography([[0,0],[OW,0],[OW,OH],[0,OH]],sortQuad(TRY.door));if(!Hm)return;
@@ -1413,9 +1419,9 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
   // ===== переходы =====
   function go(n){if(n>1&&!S.dims)return;if(n>2&&!S.model)return;S.step=n;S.maxStep=Math.max(S.maxStep,n);
     document.querySelectorAll('.pk-step').forEach(function(s){s.hidden=+s.dataset.step!==n});
-    document.querySelectorAll('#pkSteps button').forEach(function(b){var k=+b.dataset.go;if(k===n)b.setAttribute('aria-current','step');else b.removeAttribute('aria-current');b.disabled=k>S.maxStep});
-    if(n===1&&S.method==='a4')a4Show();if(n===2)render2();if(n===3)render3();if(n===4)render4();
+    navState();if(n===1&&S.method==='a4')a4Show();if(n===2)render2();if(n===3)render3();if(n===4)render4();if(n===5)$('leadOk').hidden=true;
     $('pkSteps').scrollIntoView({behavior:'smooth',block:'start'})}
+  function navState(){document.querySelectorAll('#pkSteps button').forEach(function(b){var k=+b.dataset.go;if(k===S.step)b.setAttribute('aria-current','step');else b.removeAttribute('aria-current');b.disabled=k>S.maxStep})}
   document.querySelectorAll('[data-go]').forEach(function(b){b.addEventListener('click',function(){go(+b.dataset.go)})});
 
   // ссылка из карточки модели: primerka.html#m57
