@@ -739,6 +739,7 @@ body.pk-picking .pk{padding-bottom:120px}
     <p class="lead">Измерьте проём, выберите дверь из каталога и посмотрите её на фото своей стены. На последнем шаге — расчёт комплекта и заявка в салон.</p>
   </div>
   <p class="pk-note" id="pkPicked" hidden></p>
+  <p class="pk-note" id="pkRestored" hidden>Продолжаем с того места, где вы остановились. <button type="button" class="pk-linkbtn" id="pkReset">Начать заново</button></p>
 
   <nav aria-label="Шаги"><ol class="pk-steps" id="pkSteps">
     <li><button type="button" data-go="1"><b>01</b><span>Замер</span></button></li>
@@ -1304,7 +1305,7 @@ body.pk-picking .pk{padding-bottom:120px}
       lc.setTransform(d,0,0,d,0,0);lc.strokeStyle='#fff';lc.lineWidth=1;lc.beginPath();var h=LOUPE/2;lc.moveTo(h,0);lc.lineTo(h,h-8);lc.moveTo(h,h+8);lc.lineTo(h,LOUPE);lc.moveTo(0,h);lc.lineTo(h-8,h);lc.moveTo(h+8,h);lc.lineTo(LOUPE,h);lc.stroke();
       var sw=this.el.clientWidth,off=(sw-parseFloat(this.view.style.width))/2,left=p[0]*this.S+off<sw/2;this.loupe.style.left=left?'':'10px';this.loupe.style.right=left?'10px':'';this.loupe.hidden=false}
     else this.loupe.hidden=true;
-    if(this.after)this.after(this)};
+    if(this.after)this.after(this);saveSoon()};
 
   // ===== пример: нарисованная стена с проёмом 880 × 2080 и листом А4 =====
   function makeExample(){var W=1200,H=1600,c=document.createElement('canvas');c.width=W;c.height=H;var g=c.getContext('2d');
@@ -1318,7 +1319,14 @@ body.pk-picking .pk{padding-bottom:120px}
     return{img:c,W:W,H:H,sheet:[[1080,1150],[1290,1150],[1290,1447],[1080,1447]].map(function(p){return apply(M,p)}),door:[[0,520],[880,520],[880,2600],[0,2600]].map(function(p){return apply(M,p)})}}
   function defaultPts(W,H){var cx=.74*W,cy=.48*H,sw=.07*Math.min(W,H),sh=sw*1.414;
     return{sheet:[[cx-sw,cy-sh],[cx+sw,cy-sh],[cx+sw,cy+sh],[cx-sw,cy+sh]],door:[[.2*W,.18*H],[.56*W,.18*H],[.56*W,.9*H],[.2*W,.9*H]]}}
-  function loadFile(input,cb){input.addEventListener('change',function(){var f=input.files&&input.files[0];if(!f)return;var img=new Image();img.onload=function(){cb(img)};img.src=URL.createObjectURL(f);input.value=''})}
+  function loadFile(input,cb){input.addEventListener('change',function(){var f=input.files&&input.files[0];if(!f)return;var img=new Image();img.onload=function(){cb(img,f)};img.src=URL.createObjectURL(f);input.value=''})}
+  // ===== память: всё, что человек сделал, сохраняется в телефоне и возвращается при следующем входе =====
+  var DB=null;
+  function idb(cb){if(DB)return cb(DB);try{var r=indexedDB.open('primerka',1);r.onupgradeneeded=function(){r.result.createObjectStore('kv')};r.onsuccess=function(){DB=r.result;cb(DB)};r.onerror=function(){cb(null)}}catch(e){cb(null)}}
+  function idbPut(k,v){idb(function(db){if(!db)return;try{var t=db.transaction('kv','readwrite').objectStore('kv');v==null?t.delete(k):t.put(v,k)}catch(e){}})}
+  function idbGet(k,cb){idb(function(db){if(!db)return cb(null);try{var q=db.transaction('kv').objectStore('kv').get(k);q.onsuccess=function(){cb(q.result||null)};q.onerror=function(){cb(null)}}catch(e){cb(null)}})}
+  function loadBlob(k,cb){idbGet(k,function(b){if(!b)return cb(null);var img=new Image();img.onload=function(){cb(img,b)};img.onerror=function(){cb(null)};img.src=URL.createObjectURL(b)})}
+  var saveT=null;function saveSoon(){clearTimeout(saveT);saveT=setTimeout(saveState,400)}
   var EX=makeExample();
   // Углы листа и проёма находит ИИ (функция Supabase); ответ — доли ширины и высоты фото
   function autoDetect(img,stageEl,cb){if(!DETECT)return cb(null);var W=img.naturalWidth,H=img.naturalHeight,k=Math.min(1,1568/Math.max(W,H)),c=document.createElement('canvas');
@@ -1351,7 +1359,7 @@ body.pk-picking .pk{padding-bottom:120px}
   $('a4Swap').addEventListener('click',a4Swap);
   function a4Show(){a4.setImage(A4.img,A4.img.width||A4.img.naturalWidth,A4.img.height||A4.img.naturalHeight);
     $('a4Note').textContent=A4.example?'Сейчас открыт пример: нарисованная стена, проём 880 × 2080 мм.':'Ваше фото. Поставьте точки на углы листа и проёма.'}
-  loadFile($('a4Photo'),function(img){var d=defaultPts(img.naturalWidth,img.naturalHeight);A4.img=img;A4.sheet=d.sheet;A4.door=d.door;A4.example=false;a4Show();
+  loadFile($('a4Photo'),function(img,f){A4.blob=f;idbPut('a4img',f);var d=defaultPts(img.naturalWidth,img.naturalHeight);A4.img=img;A4.sheet=d.sheet;A4.door=d.door;A4.example=false;a4Show();
     if(!DETECT)return;$('a4Note').textContent='Ищу углы листа и проёма на фото — это займёт до 30 секунд.';
     autoDetect(img,$('a4Stage'),function(r){if(A4.img!==img)return;
       if(!r){$('a4Note').textContent='Не получилось найти углы автоматически. Поставьте оранжевые точки на углы листа, синие — на углы проёма.';return}
@@ -1390,7 +1398,7 @@ body.pk-picking .pk{padding-bottom:120px}
   $('next1').addEventListener('click',function(){upd1();if(!S.dims){$('err1').hidden=false;$('err1').textContent='Нужны хотя бы ширина и высота проёма.';return}$('err1').hidden=true;
     S.committed=[Math.round(S.dims.W),Math.round(S.dims.H),Math.round(S.dims.T||0),S.dims.door].join();S.leaf=leafFor(S.dims.W).leaf;$('leafSel').value=S.leaf;$('optDemont').checked=!!S.dims.door;
     if(S.dims.method==='a4'&&a4Mixed())a4Swap();
-    if(S.dims.method==='a4'&&!A4.example){TRY.img=A4.img;TRY.door=A4.door.map(function(p){return p.slice()});TRY.example=false}go(2)});
+    if(S.dims.method==='a4'&&!A4.example){if(A4.blob)idbPut('tryimg',A4.blob);TRY.img=A4.img;TRY.door=A4.door.map(function(p){return p.slice()});TRY.example=false}go(2)});
 
   // ===== шаг 2: подбор =====
   function sprStyle(k){var v=SPR[k];return v?'background-image:url(img/sp'+v[0]+'.jpg);background-position:'+(v[1]/9*100)+'% '+(v[2]/9*100)+'%':''}
@@ -1466,7 +1474,7 @@ body.pk-picking .pk{padding-bottom:120px}
   $('tryOpen').addEventListener('click',toggleOpen);
   $('tryMax').addEventListener('input',function(){$('tryMaxV').textContent=this.value+'°';if(S.openTo>0){S.openTo=+this.value;S.ang=+this.value;tryStage.schedule()}});
   ['swingOut','swingIn'].forEach(function(i){$(i).addEventListener('change',function(){S.swing=$('swingIn').checked?'in':'out';tryStage.schedule()})});
-  loadFile($('tryPhoto'),function(img){TRY.img=img;TRY.door=defaultPts(img.naturalWidth,img.naturalHeight).door;TRY.example=false;S.ang=S.openTo=0;$('tryOpen').textContent='Открыть дверь';tryStage.handles=true;$('tryHandles').textContent='Скрыть точки';render3();
+  loadFile($('tryPhoto'),function(img,f){TRY.blob=f;idbPut('tryimg',f);TRY.img=img;TRY.door=defaultPts(img.naturalWidth,img.naturalHeight).door;TRY.example=false;S.ang=S.openTo=0;$('tryOpen').textContent='Открыть дверь';tryStage.handles=true;$('tryHandles').textContent='Скрыть точки';render3();
     if(!DETECT)return;$('tryNote').textContent='Ищу углы проёма на фото — это займёт до 30 секунд.';
     autoDetect(img,$('tryStage'),function(r){if(TRY.img!==img)return;if(r)TRY.door=r.door;tryStage.schedule();
       $('tryNote').textContent=r?'Дверь встала по найденным углам проёма. Если неточно — подвиньте синие точки.':'Не получилось найти углы автоматически. Поставьте синие точки на углы проёма.'})});
@@ -1517,17 +1525,39 @@ body.pk-picking .pk{padding-bottom:120px}
       function(){btn.disabled=false;btn.textContent='Отправить заявку';$('err5').hidden=false;$('err5').textContent='Не получилось отправить заявку. Попробуйте ещё раз или позвоните в салон: +7 (991) 595-81-86.'})})});
 
   // ===== переходы =====
-  function go(n){if(n>1&&!S.dims)return;if(n>2&&!S.model)return;S.step=n;S.maxStep=Math.max(S.maxStep,n);
+  function go(n,quiet){if(n>1&&!S.dims)return;if(n>2&&!S.model)return;S.step=n;S.maxStep=Math.max(S.maxStep,n);
     document.querySelectorAll('.pk-step').forEach(function(s){s.hidden=+s.dataset.step!==n});
     navState();pickBar();if(n===1&&S.method==='a4')a4Show();if(n===2)render2();if(n===3)render3();if(n===4)render4();if(n===5)$('leadOk').hidden=true;
-    $('pkSteps').scrollIntoView({behavior:'smooth',block:'start'})}
+    saveSoon();if(!quiet)$('pkSteps').scrollIntoView({behavior:'smooth',block:'start'})}
   function navState(){document.querySelectorAll('#pkSteps button').forEach(function(b){var k=+b.dataset.go;if(k===S.step)b.setAttribute('aria-current','step');else b.removeAttribute('aria-current');b.disabled=k>S.maxStep})}
   document.querySelectorAll('[data-go]').forEach(function(b){b.addEventListener('click',function(){go(+b.dataset.go)})});
 
   // ссылка из карточки модели: primerka.html#m57
   var mm=/^#m(\d+)$/.exec(location.hash);if(mm){S.want=CAT.filter(function(x){return x.id===+mm[1]})[0]||null;
-    if(S.want){S.model=S.want;$('pkPicked').hidden=false;$('pkPicked').textContent='Выбрана модель «'+S.want.n+'». Сначала измерьте проём — затем примерите её у себя.'}}
-  upd1();go(1);window.scrollTo(0,0);
+    if(S.want){$('pkPicked').hidden=false;$('pkPicked').textContent='Выбрана модель «'+S.want.n+'». Сначала измерьте проём — затем примерите её у себя.'}}
+  function saveState(){if(S.restoring)return;try{localStorage.setItem('pk-state',JSON.stringify({v:1,method:S.method,step:S.step,maxStep:S.maxStep,committed:S.committed||'',leaf:S.leaf,
+    model:S.model?S.model.id:null,color:S.color,flip:S.flip,swing:S.swing,max:$('tryMax').value,filter:S.filter,sort:S.sort,
+    a4:{sheet:A4.sheet,door:A4.door,example:A4.example,T:$('a4T').value,orient:$('a4Orient').value},tr:{door:TRY.door,example:TRY.example},
+    lead:{name:$('lName').value,phone:$('lPhone').value,addr:$('lAddr').value,note:$('lNote').value,order:$('needOrder').checked}}))}catch(e){}}
+  document.addEventListener('input',saveSoon);document.addEventListener('change',saveSoon);
+  function restore(){var st=null;try{st=JSON.parse(localStorage.getItem('pk-state')||'null')}catch(e){}if(!st||st.v!==1)return false;S.restoring=true;
+    $('a4T').value=st.a4.T||'';$('a4Orient').value=st.a4.orient||'auto';var L=st.lead||{};$('lName').value=L.name||'';$('lPhone').value=L.phone||'';$('lAddr').value=L.addr||'';$('lNote').value=L.note||'';
+    $(L.order?'needOrder':'needZamer').checked=true;S.leaf=st.leaf||800;$('leafSel').value=S.leaf;S.filter=st.filter||'';S.sort=st.sort||'pop';$('sortSel').value=S.sort;
+    S.flip=!!st.flip;$('tryFlip').checked=S.flip;S.swing=st.swing||'out';$(S.swing==='in'?'swingIn':'swingOut').checked=true;$('tryMax').value=st.max||180;$('tryMaxV').textContent=$('tryMax').value+'°';
+    S.model=st.model==null?null:CAT.filter(function(x){return x.id===st.model})[0]||null;S.color=S.model&&st.color<S.model.c.length?st.color:0;
+    if(st.a4&&!st.a4.example){A4.example=false;A4.sheet=st.a4.sheet;A4.door=st.a4.door}
+    if(st.tr&&!st.tr.example){TRY.example=false;TRY.door=st.tr.door}
+    setMethod(st.method||'tape');S.committed=st.committed||'';S.maxStep=st.maxStep||1;
+    var step=st.step||1;if(step>1&&!S.dims)step=1;if(step>2&&!S.model)step=2;S.maxStep=Math.max(S.maxStep,step);
+    // фото возвращаются из памяти телефона; если не нашлись — пример
+    if(!A4.example)loadBlob('a4img',function(img,b){if(img){A4.img=img;A4.blob=b}else{A4.example=true;A4.img=EX.img;A4.sheet=EX.sheet.map(function(p){return p.slice()});A4.door=EX.door.map(function(p){return p.slice()})}if(S.method==='a4'&&S.step===1)a4Show();upd1()});
+    if(!TRY.example)loadBlob('tryimg',function(img,b){if(img){TRY.img=img;TRY.blob=b}else{TRY.example=true;TRY.img=EX.img;TRY.door=EX.door.map(function(p){return p.slice()})}if(S.step===3)render3()});
+    S.restoring=false;go(step,true);$('pkRestored').hidden=false;return true}
+  $('pkReset').addEventListener('click',function(){S.restoring=true;try{localStorage.removeItem('pk-state');localStorage.removeItem('pk-tape')}catch(e){}idbPut('a4img',null);idbPut('tryimg',null);
+    setTimeout(function(){location.href=location.pathname},300)});
+  if(!restore()){upd1();go(1,true)}
+  if(S.want){S.model=S.want;S.color=0;if(S.step===2)render2();if(S.step===3)render3()}
+  window.scrollTo(0,0);
   })();
 
 })();
