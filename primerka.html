@@ -792,6 +792,7 @@ body.pk-picking .pk{padding-bottom:120px}
         <label for="a4Orient">Лист висит<select id="a4Orient"><option value="auto">определить сам</option><option value="port">вертикально</option><option value="land">горизонтально</option></select></label>
         <label for="a4T">Толщина стены, мм (рулеткой)<input type="text" id="a4T" inputmode="decimal" placeholder="120"></label>
       </div>
+      <p class="pk-warn" id="a4Mix" hidden>Похоже, рамки перепутаны: оранжевая — для листа А4, синяя — для проёма. Размеры уже посчитаны правильно. <button type="button" class="pk-linkbtn" id="a4Swap">Поменять рамки местами</button></p>
       <p class="pk-note" id="a4Ctrl"></p>
     </div>
 
@@ -1256,6 +1257,9 @@ body.pk-picking .pk{padding-bottom:120px}
 
   // ===== сцена с фото и перетаскиваемыми точками =====
   var LOUPE=140;
+  function quadLabel(ctx,pts,text,color,k){var q=sortQuad(pts),x=(q[0][0]+q[1][0])/2,y=Math.min(q[0][1],q[1][1])-8/k;ctx.save();ctx.font='600 '+(13/k)+'px Arial,sans-serif';
+    var w=ctx.measureText(text).width+12/k,h=20/k;if(y-h<0)y=Math.max(q[2][1],q[3][1])+h+8/k;ctx.fillStyle=color;ctx.fillRect(x-w/2,y-h,w,h);ctx.fillStyle='#fff';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(text,x,y-h/2);ctx.restore()}
+  function quadArea(pts){var q=sortQuad(pts),a=0;for(var i=0;i<4;i++){var p=q[i],n=q[(i+1)%4];a+=p[0]*n[1]-n[0]*p[1]}return Math.abs(a)/2}
   function drawQuad(ctx,pts,color,k,active){var q=sortQuad(pts);ctx.lineJoin='round';ctx.beginPath();q.forEach(function(p,i){i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1])});ctx.closePath();
     ctx.lineWidth=4/k;ctx.strokeStyle='rgba(0,0,0,.55)';ctx.stroke();ctx.lineWidth=2/k;ctx.strokeStyle=color;ctx.stroke();
     pts.forEach(function(p,i){var r=(active===i?13:10)/k;ctx.beginPath();ctx.arc(p[0],p[1],r,0,Math.PI*2);ctx.lineWidth=5/k;ctx.strokeStyle='rgba(0,0,0,.5)';ctx.stroke();ctx.lineWidth=3/k;ctx.strokeStyle=color;ctx.stroke();
@@ -1266,9 +1270,10 @@ body.pk-picking .pk{padding-bottom:120px}
     function tapEnd(x,y){var t=me.tap;me.tap=null;if(t&&me.onTap&&Math.hypot(x-t.x,y-t.y)<10&&Date.now()-t.t<600)me.onTap()}
     v.addEventListener('touchstart',function(e){if(e.touches.length!==1)return;var c=e.touches[0];if(me.start(c.clientX,c.clientY))e.preventDefault();else me.tap={x:c.clientX,y:c.clientY,t:Date.now()}},{passive:false});
     v.addEventListener('touchmove',function(e){if(me.drag){e.preventDefault();me.move(e.touches[0].clientX,e.touches[0].clientY)}},{passive:false});
-    v.addEventListener('touchend',function(e){me.end();var c=e.changedTouches[0];if(c)tapEnd(c.clientX,c.clientY)});v.addEventListener('touchcancel',function(){me.end();me.tap=null});
-    v.addEventListener('mousedown',function(e){if(me.start(e.clientX,e.clientY))e.preventDefault();else me.tap={x:e.clientX,y:e.clientY,t:Date.now()}});
-    v.addEventListener('mouseup',function(e){tapEnd(e.clientX,e.clientY)});
+    v.addEventListener('touchend',function(e){me.touchAt=Date.now();var was=me.tap;me.end();var c=e.changedTouches[0];if(c)tapEnd(c.clientX,c.clientY);if(was&&e.cancelable)e.preventDefault()},{passive:false});v.addEventListener('touchcancel',function(){me.end();me.tap=null});
+    var fromTouch=function(){return Date.now()-(me.touchAt||0)<900};
+    v.addEventListener('mousedown',function(e){if(fromTouch())return;if(me.start(e.clientX,e.clientY))e.preventDefault();else me.tap={x:e.clientX,y:e.clientY,t:Date.now()}});
+    v.addEventListener('mouseup',function(e){if(fromTouch())return;tapEnd(e.clientX,e.clientY)});
     window.addEventListener('mousemove',function(e){if(me.drag)me.move(e.clientX,e.clientY)});window.addEventListener('mouseup',function(){me.end()});
     v.addEventListener('mousemove',function(e){if(!me.drag){var l=me.local(e.clientX,e.clientY);v.style.cursor=me.pick(l[0],l[1])?'grab':(me.onTap?'pointer':'default')}});
     window.addEventListener('resize',function(){me.layout()})}
@@ -1287,7 +1292,7 @@ body.pk-picking .pk{padding-bottom:120px}
   Stage.prototype.end=function(){if(this.drag){this.drag=null;this.schedule()}};
   Stage.prototype.render=function(){this.queued=false;if(!this.img||!this.view.width)return;var ctx=this.vctx,k=this.S*this.dpr,sets=this.sets(),me=this;
     ctx.setTransform(k,0,0,k,0,0);ctx.clearRect(0,0,this.W,this.H);ctx.drawImage(this.img,0,0,this.W,this.H);if(this.overlay)this.overlay(ctx,this);
-    if(this.handles)sets.forEach(function(set,si){drawQuad(ctx,set.pts,set.color,me.S,me.drag&&me.drag.si===si?me.drag.i:-1)});
+    if(this.handles)sets.forEach(function(set,si){drawQuad(ctx,set.pts,set.color,me.S,me.drag&&me.drag.si===si?me.drag.i:-1);if(set.label)quadLabel(ctx,set.pts,set.label,set.color,me.S)});
     if(this.drag){var p=sets[this.drag.si].pts[this.drag.i],L=this.loupeK(),lk=L*this.dpr,lc=this.lctx,d=this.dpr;
       lc.setTransform(1,0,0,1,0,0);lc.fillStyle='#000';lc.fillRect(0,0,this.loupe.width,this.loupe.height);
       lc.setTransform(lk,0,0,lk,LOUPE/2*d-p[0]*lk,LOUPE/2*d-p[1]*lk);lc.drawImage(this.img,0,0,this.W,this.H);sets.forEach(function(set){drawQuad(lc,set.pts,set.color,L,-2)});
@@ -1327,7 +1332,11 @@ body.pk-picking .pk{padding-bottom:120px}
   var tapeIds=['w1','w2','w3','h1','h2','t1','t2'];
   function num(id,cmBelow){var v=parseFloat(($(id).value||'').replace(/\s/g,'').replace(',','.'));if(!(v>0))return null;return v<cmBelow?{v:v*10,cm:true}:{v:v,cm:false}}
   var A4={sheet:EX.sheet.map(function(p){return p.slice()}),door:EX.door.map(function(p){return p.slice()}),example:true,img:EX.img,res:null};
-  var a4=new Stage($('a4Stage'),{sets:function(){return[{pts:A4.sheet,color:'#e0841a'},{pts:A4.door,color:'#2f8fd8'}]},after:function(){if(S.method==='a4')upd1()}});
+  var a4=new Stage($('a4Stage'),{sets:function(){return[{pts:A4.sheet,color:'#e0841a',label:'Лист А4'},{pts:A4.door,color:'#2f8fd8',label:'Проём'}]},after:function(){if(S.method==='a4')upd1()}});
+  // проём всегда больше листа А4: если оранжевая рамка больше синей — их перепутали
+  function a4Mixed(){return quadArea(A4.sheet)>quadArea(A4.door)}
+  function a4Swap(){var t=A4.sheet;A4.sheet=A4.door;A4.door=t;a4.schedule()}
+  $('a4Swap').addEventListener('click',a4Swap);
   function a4Show(){a4.setImage(A4.img,A4.img.width||A4.img.naturalWidth,A4.img.height||A4.img.naturalHeight);
     $('a4Note').textContent=A4.example?'Сейчас открыт пример: нарисованная стена, проём 880 × 2080 мм.':'Ваше фото. Поставьте точки на углы листа и проёма.'}
   loadFile($('a4Photo'),function(img){var d=defaultPts(img.naturalWidth,img.naturalHeight);A4.img=img;A4.sheet=d.sheet;A4.door=d.door;A4.example=false;a4Show()});
@@ -1341,7 +1350,8 @@ body.pk-picking .pk{padding-bottom:120px}
       if(gap(ws)>15)msgs.push('Ширина в разных местах отличается на '+fmt(gap(ws))+' мм: проём неровный, считаем по узкому месту.');
       if(gap(hs)>15)msgs.push('Высота слева и справа отличается на '+fmt(gap(hs))+' мм: перекос пола или верха проёма.');
       try{localStorage.setItem('pk-tape',JSON.stringify(tapeIds.reduce(function(o,i){o[i]=$(i).value;return o},{door:door})))}catch(e){}}
-    else{var m=measure(A4.sheet,A4.door,$('a4Orient').value);A4.res=m.error?null:m;
+    else{var mixed=a4Mixed();$('a4Mix').hidden=!mixed;
+      var m=mixed?measure(A4.door,A4.sheet,$('a4Orient').value):measure(A4.sheet,A4.door,$('a4Orient').value);A4.res=m.error?null:m;
       if(m.error){msgs.push('Точки стоят крест-накрест или не сходятся — проверьте углы листа и проёма.');$('a4Ctrl').textContent=''}
       else{W=m.width;H=m.height;$('a4Ctrl').textContent='Контроль: лист по расчёту '+fmt(Math.min(m.sheetA,m.sheetB))+' × '+fmt(Math.max(m.sheetA,m.sheetB))+' мм, угол '+m.angle.toFixed(1).replace('.',',')+'°. Чем ближе к 210 × 297 и 90°, тем точнее.';
         if(Math.abs(m.angle-90)>3)msgs.push('Лист после пересчёта получился кривым — поправьте точки.')}
@@ -1362,6 +1372,7 @@ body.pk-picking .pk{padding-bottom:120px}
   $('tabTape').addEventListener('click',function(){setMethod('tape')});$('tabA4').addEventListener('click',function(){setMethod('a4')});
   $('next1').addEventListener('click',function(){upd1();if(!S.dims){$('err1').hidden=false;$('err1').textContent='Нужны хотя бы ширина и высота проёма.';return}$('err1').hidden=true;
     S.committed=[Math.round(S.dims.W),Math.round(S.dims.H),Math.round(S.dims.T||0),S.dims.door].join();S.leaf=leafFor(S.dims.W).leaf;$('leafSel').value=S.leaf;$('optDemont').checked=!!S.dims.door;
+    if(S.dims.method==='a4'&&a4Mixed())a4Swap();
     if(S.dims.method==='a4'&&!A4.example){TRY.img=A4.img;TRY.door=A4.door.map(function(p){return p.slice()});TRY.example=false}go(2)});
 
   // ===== шаг 2: подбор =====
@@ -1429,7 +1440,7 @@ body.pk-picking .pk{padding-bottom:120px}
     ctx.save();ctx.beginPath();ctx.rect(-1e5,-1e5,2e5,2e5);path(hole);ctx.clip('evenodd');mesh(unitMap,0,0,200,450,nx,ny);ctx.restore();
     ctx.beginPath();path(hole);ctx.fillStyle='rgba(0,0,0,.08)';ctx.fill();
     if(dir>0)drawLeaf();ctx.globalAlpha=1}
-  var tryStage=new Stage($('tryStage'),{sets:function(){return[{pts:TRY.door,color:'#2f8fd8'}]},overlay:overlay,onTap:function(){toggleOpen()}});
+  var tryStage=new Stage($('tryStage'),{sets:function(){return[{pts:TRY.door,color:'#2f8fd8',label:'Проём'}]},overlay:overlay,onTap:function(){toggleOpen()}});
   // плавное открывание до выбранного угла
   function animTo(t){var a0=S.ang,t0=performance.now(),dur=300+900*Math.abs(t-a0)/180;S.openTo=t;S.anim=true;
     (function stepA(now){var p=Math.min(1,(now-t0)/dur),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;S.ang=a0+(t-a0)*e;tryStage.schedule();if(p<1&&S.openTo===t)requestAnimationFrame(stepA);else if(p>=1){S.anim=false;tryStage.schedule()}})(t0);
