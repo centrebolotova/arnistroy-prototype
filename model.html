@@ -954,7 +954,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
   function mRender(){
     var m=location.hash.match(/^#m(\d+)$/), id=m?+m[1]:0;
     cur=ITEMS.find(function(x){return x.id===id})||ITEMS[0];
-    var tl=document.getElementById('tryLink');if(tl){tl.href='primerka.html#m'+cur.id;tl.hidden=!!cur.sk}
+    var tl=document.getElementById('tryLink');if(tl){tl.href='primerka.html#m'+cur.id}
     var it=cur, kn=it.sk==='kn', name=(kn?'Складная дверь-книжка ':it.sk?'Дверь-гармошка ':'Межкомнатная дверь ')+it.n;
     skMode(it);
     document.title=it.n+' АрниСтрой';
