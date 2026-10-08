@@ -1398,10 +1398,10 @@ body.pk-picking .pk{padding-bottom:120px}
     if(W>1000)return{leaf:900,note:'Проём шире 1000 мм: подойдёт двустворчатая или раздвижная дверь.'};
     var best=LEAVES.map(function(x){return{x:x,d:W<x+70?x+70-W:W-(x+100)}}).sort(function(a,b){return a.d-b.d})[0];
     return{leaf:best.x,note:W<best.x+70?'Проём на '+Math.round(best.d)+' мм уже стандарта под полотно '+best.x+': понадобится расширить проём — решит замерщик.':'Проём на '+Math.round(best.d)+' мм шире стандарта под полотно '+best.x+': широкая коробка или сужение проёма — решит замерщик.'}}
-  // купе висит на стене и перекрывает проём: полотно шире проёма минимум на 50 мм (ориентир, уточняет замерщик)
-  // дверь стоит, точки на коробке: меряем проход внутри коробки, он на 10–40 мм уже полотна (ориентир)
-  function leafFrame(W){var hit=LEAVES.filter(function(x){return W>=x-50&&W<=x+20})[0];if(hit)return{leaf:hit,note:'Размер по коробке старой двери — у неё полотно около '+hit+' мм.'};
-    var best=LEAVES.map(function(x){return{x:x,d:Math.min(Math.abs(W-x+50),Math.abs(W-x-20))}}).sort(function(a,b){return a.d-b.d})[0];return{leaf:best.x,note:'Размер по коробке нестандартный — ближайшее полотно '+best.x+' мм, точнее скажет замерщик.'}}
+  // купе висит на стене и перекрывает проём: полотно шире проёма минимум на 50 мм (подтвердил замерщик 09.10.2026)
+  // дверь стоит, точки на коробке (подтвердил замерщик 09.10.2026): проход не может быть уже полотна — берём самое широкое стандартное полотно, которое в него входит
+  function leafFrame(W){var fit=LEAVES.filter(function(x){return x<=W});if(!fit.length)return{leaf:600,note:'Проход по коробке уже 600 мм — нужно нестандартное полотно, подскажет замерщик.'};
+    var hit=fit[fit.length-1];return{leaf:hit,note:'Размер по коробке старой двери — проход не уже полотна, подходит '+hit+' мм.'}}
   function frameNow(){return S.method==='a4'&&$('a4DoorYes').checked}
   function leafSwing(W){return frameNow()?leafFrame(W):leafFor(W)}
   function leafSlide(W){var hit=LEAVES.filter(function(x){return x>=W+50})[0];return hit?{leaf:hit,note:'Купе перекрывает проём с запасом — полотно '+hit+' мм.'}:{leaf:900,note:'Проём шире 850 мм: для купе — два полотна или полотно под заказ.'}}
@@ -1458,7 +1458,7 @@ body.pk-picking .pk{padding-bottom:120px}
     if(W&&(W<400||W>2000))msgs.push('Ширина выглядит странно для межкомнатной двери — проверьте цифры.');
     if(H&&(H<1500||H>3000))msgs.push('Высота выглядит странно для межкомнатной двери — проверьте цифры.');
     $('dWarn').hidden=!msgs.length;$('dWarn').textContent=msgs.join(' ');
-    var sug=[];if(W){var lf=leafSwing(W);sug.push('Распашная — полотно '+lf.leaf+' мм.'+(lf.note?' '+lf.note:'')+' Купе — полотно '+leafSlide(W).leaf+' мм.')}if(H){var hn=frameNow()?(H>=1950&&H<=2070?'':'Высота по коробке нестандартная — уточнит замерщик.'):heightNote(H);sug.push(hn||'Высота полотна 2000 мм.')}
+    var sug=[];if(W){var lf=leafSwing(W);sug.push('Распашная — полотно '+lf.leaf+' мм.'+(lf.note?' '+lf.note:'')+' Купе — полотно '+leafSlide(W).leaf+' мм.')}if(H){var hn=frameNow()?(H<2000?'Проход по коробке ниже 2000 мм — нужно нестандартное полотно.':H>2100?'Проход выше 2100 мм — добор сверху или высокое полотно.':''):heightNote(H);sug.push(hn||'Высота полотна 2000 мм.')}
     if(T){var db=doborFor(T);sug.push(db?'Нужен добор около '+db+' мм.':'Доборы не нужны — стена до 75 мм.')}
     $('dSug').textContent=sug.join(' ');S.dims=W&&H?{W:W,H:H,T:T,door:door,method:S.method}:null;
     var key=S.dims?[Math.round(W),Math.round(H),Math.round(T||0),door].join():'';if(S.committed&&key!==S.committed&&S.maxStep>1){S.maxStep=1;navState()}}
