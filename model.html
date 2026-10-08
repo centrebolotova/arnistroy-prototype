@@ -529,6 +529,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
       <div><p class="lbl">Цвет: <b id="cName"></b></p><div class="csw" id="csw"></div></div>
       <div><p class="lbl" id="sizeLbl">Размер полотна, мм</p><div class="sizes" id="sizes"></div></div>
       <div class="acts2"><button class="btn" type="button" id="calcBtn">Рассчитать комплект</button><button class="btn ghost js-zamer" type="button">Вызвать замерщика</button></div>
+      <a class="arrow" id="tryLink" href="primerka.html">Примерить в своём проёме</a>
       <p class="wa">Есть вопрос по модели? <a href="https://wa.me/79851555223" target="_blank" rel="noopener">Напишите в WhatsApp</a> — пришлём фото в интерьере и подскажем по фурнитуре.</p>
       <ul class="perks">
         <li><b>Образцы в салонах</b><span>Московское ш., 49 и Ивановское</span></li>
@@ -616,7 +617,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
   <div class="wrap fnav">
     <div><b>Каталог</b><a href="mezhkomnatnye-dveri.html">Межкомнатные двери</a><a href="vhodnye-dveri.html">Входные двери</a><a href="vhodnye-dveri-v-kvartiru.html">Входные в квартиру</a><a href="vhodnye-dveri-v-dom.html">Входные в дом</a><a href="mezhkomnatnye-dveri-nedorogie.html">Недорогие двери</a><a href="mezhkomnatnye-dveri-skrytye.html">Скрытые двери</a><a href="mezhkomnatnye-dveri-razdvizhnye.html">Раздвижные двери</a><a href="mezhkomnatnye-dveri-skladnye.html">Складные двери</a><a href="furnitura.html">Фурнитура</a></div>
     <div><b>Услуги</b><a href="ustanovka.html">Установка дверей</a><a href="zamena-dverey.html">Замена дверей</a><a href="vrezka-zamkov.html">Врезка замков</a><a href="zamer.html">Вызов замерщика</a><a href="dostavka.html">Доставка</a><a href="kalkulyator.html">Калькулятор</a><a href="ceny.html">Цены</a></div>
-    <div><b>Покупателям</b><a href="magaziny.html">Магазины</a><a href="o-nas.html">О компании</a><a href="kontakty.html">Контакты</a><a href="obekty.html">Наши работы</a><a href="otzyvy.html">Отзывы</a><a href="garantiya.html">Гарантия и возврат</a><a href="kak-zamerit.html">Как замерить проём</a></div>
+    <div><b>Покупателям</b><a href="magaziny.html">Магазины</a><a href="o-nas.html">О компании</a><a href="kontakty.html">Контакты</a><a href="obekty.html">Наши работы</a><a href="otzyvy.html">Отзывы</a><a href="garantiya.html">Гарантия и возврат</a><a href="kak-zamerit.html">Как замерить проём</a><a href="primerka.html">Примерка двери онлайн</a></div>
     <div><b>Доставка и установка</b><a href="chehov.html">Чехов</a><a href="stupino.html">Ступино</a><a href="protvino.html">Протвино</a><a href="pushchino.html">Пущино</a><a href="zaokskiy.html">Заокский</a><a href="tarusa.html">Таруса</a><a href="kremenki.html">Кременки</a><a href="obolensk.html">Оболенск</a><a href="podolsk.html">Подольск</a><a href="tula.html">Тула</a><a href="zhukov.html">Жуков</a><a href="aleksin.html">Алексин</a></div>
   </div>
   <div class="wrap">
@@ -953,6 +954,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
   function mRender(){
     var m=location.hash.match(/^#m(\d+)$/), id=m?+m[1]:0;
     cur=ITEMS.find(function(x){return x.id===id})||ITEMS[0];
+    var tl=document.getElementById('tryLink');if(tl){tl.href='primerka.html#m'+cur.id;tl.hidden=!!cur.sk}
     var it=cur, kn=it.sk==='kn', name=(kn?'Складная дверь-книжка ':it.sk?'Дверь-гармошка ':'Межкомнатная дверь ')+it.n;
     skMode(it);
     document.title=it.n+' АрниСтрой';
