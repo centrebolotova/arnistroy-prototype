@@ -1512,7 +1512,7 @@ body.pk-picking .pk{padding-bottom:120px}
   var TRY={img:EX.img,door:EX.door.map(function(p){return p.slice()}),example:true};
   var sheets={},texCache={};
   function sheet(n){if(!sheets[n]){var im=new Image();im.onload=function(){texCache={};tryStage.schedule()};im.src='img/sp'+n+'.jpg';sheets[n]=im}return sheets[n]}
-  function texture(){var k=S.model.c[S.color].i,v=SPR[k];if(!v)return null;var key=k+(S.flip?'f':'');if(texCache[key])return texCache[key];var im=sheet(v[0]);if(!im.complete||!im.naturalWidth)return null;
+  function texture(){var k=S.model.c[S.color].i,v=SPR[k];if(!v)return null;var sl=!S.model.sk&&S.sys==='slide',key=k+(S.flip?'f':'')+(sl?'s':'');if(texCache[key])return texCache[key];var im=sheet(v[0]);if(!im.complete||!im.naturalWidth)return null;
     var c=document.createElement('canvas');c.width=200;c.height=450;var g=c.getContext('2d');if(S.flip){g.translate(200,0);g.scale(-1,1)}
     var cw=im.naturalWidth/10,ch=im.naturalHeight/10,sx=v[1]*cw,sy=v[2]*ch,b=[0,0,cw,ch];
     try{var t=document.createElement('canvas');t.width=cw;t.height=ch;var tg=t.getContext('2d');tg.drawImage(im,sx,sy,cw,ch,0,0,cw,ch);var d=tg.getImageData(0,0,cw,ch).data;
@@ -1521,6 +1521,9 @@ body.pk-picking .pk{padding-bottom:120px}
     g.drawImage(im,sx+b[0],sy+b[1],b[2],b[3],0,0,200,450);
     var lf=S.model.lf;if(lf){var u0=(lf[0]+1-b[0])/b[2]*200,u1=(lf[2]-1-b[0])/b[2]*200,v0=(lf[1]+3-b[1])/b[3]*450,v1=Math.min(450,(lf[3]-b[1])/b[3]*450);u0=Math.max(0,u0);u1=Math.min(200,u1);
       if(u1-u0>60&&v1-v0>200)c.leaf=S.flip?[200-u1,v0,200-u0,v1]:[u0,v0,u1,v1]}
+    // купе: ручку распашной двери с фото закрываем соседним участком полотна сверху — врезная ручка рисуется отдельно
+    var U0=75/(S.leaf+150)*200,V0=75/2085*450;if(sl){var Lf=c.leaf||[U0,V0,200-U0,2075/2085*450],lW=Lf[2]-Lf[0],ky=(Lf[3]-Lf[1])/2000,hw=lW*.28,hy=Lf[3]-1000*ky,hh=170*ky,hx=handleLeft()?Lf[0]+1:Lf[2]-1-hw;
+      g.setTransform(1,0,0,1,0,0);g.drawImage(c,hx,hy-hh-300*ky,hw,hh*2,hx,hy-hh,hw,hh*2)}
     // цвет торца — средний цвет полотна, чуть темнее; base — сам средний цвет (для карниза купе)
     c.edge='#7a5a3c';c.base='#a07a52';try{var ed=g.getImageData(60,120,80,200).data,er=0,eg=0,eb=0,en=0;for(var q=0;q<ed.length;q+=16){er+=ed[q];eg+=ed[q+1];eb+=ed[q+2];en++}
       var rgb=function(k){return 'rgb('+Math.round(er/en*k)+','+Math.round(eg/en*k)+','+Math.round(eb/en*k)+')'};c.edge=rgb(.72);c.base=rgb(.97)}catch(e){}
@@ -1559,7 +1562,7 @@ body.pk-picking .pk{padding-bottom:120px}
     var hole=[[lx,ly],[lx+lw,ly],[lx+lw,ly+lh],[lx,ly+lh]].map(function(p){return apply(Hm,p)});
     var hingeRight=(S.model.h!=='R')!==S.flip,hx=hingeRight?lx+lw:lx,sg=hingeRight?-1:1,dir=mode==='swing'&&S.swing==='in'?-1:1;
     var panels=[],V=[],i,N,a,w;
-    if(mode==='slide'){var d=S.p*(+$('slideMax').value/100)*lw*(S.slideDir==='right'?1:-1),zf=45;panels.push({L:[lx+d,zf],R:[lx+lw+d,zf],u0:tu0,u1:tu1})}
+    if(mode==='slide'){var d=S.p*(+$('slideMax').value/100)*lw*(S.slideDir==='right'?1:-1),zf=45;panels.push({L:[lx+d,zf],R:[lx+lw+d,zf],u0:tu0,u1:tu1,grip:handleLeft()?'L':'R'})}
     else{if(mode==='swing'){a=S.p*(+$('tryMax').value)*Math.PI/180;V=[[hx,0],[hx+sg*lw*Math.cos(a),dir*lw*Math.sin(a)]];N=1}
       else{N=S.model.sk==='gr'?6:2;a=S.p*82*Math.PI/180;w=lw/N;for(i=0;i<=N;i++)V.push([hx+sg*i*w*Math.cos(a),i%2?w*Math.sin(a):0])}
       var du=(tu1-tu0)/N;for(i=0;i<N;i++)panels.push(sg>0?{L:V[i],R:V[i+1],u0:tu0+i*du,u1:tu0+(i+1)*du}:{L:V[i+1],R:V[i],u0:tu1-(i+1)*du,u1:tu1-i*du})}
@@ -1569,13 +1572,16 @@ body.pk-picking .pk{padding-bottom:120px}
     function drawPanel(pn){var ex=pn.R[0]-pn.L[0],ez=pn.R[1]-pn.L[1],el=Math.hypot(ex,ez)||1,nx_=-ez/el,nz=ex/el,mx=(pn.L[0]+pn.R[0])/2,mz=(pn.L[1]+pn.R[1])/2;
       if(nx_*(camX-mx)+nz*(D-mz)<0){nx_=-nx_;nz=-nz}var o=[nx_*TH/2,nz*TH/2],Lf=[pn.L[0]+o[0],pn.L[1]+o[1]],Rf=[pn.R[0]+o[0],pn.R[1]+o[1]],Lb=[pn.L[0]-o[0],pn.L[1]-o[1]],Rb=[pn.R[0]-o[0],pn.R[1]-o[1]];
       ctx.save();ctx.fillStyle=tex.edge;ctx.strokeStyle='rgba(0,0,0,.35)';ctx.lineWidth=1/st.S;[[Lf,Lb],[Rf,Rb],[Lb,Rb]].forEach(function(e){ctx.beginPath();path(edgeQuad(e[0],e[1]));ctx.fill();ctx.stroke()});ctx.restore();
-      pn={L:Lf,R:Rf,u0:pn.u0,u1:pn.u1};
+      pn={L:Lf,R:Rf,u0:pn.u0,u1:pn.u1,grip:pn.grip};
       var q=[P3(pn.L[0],ly,pn.L[1]),P3(pn.R[0],ly,pn.R[1]),P3(pn.R[0],ly+lh,pn.R[1]),P3(pn.L[0],ly+lh,pn.L[1])],
         Hp=homography([[pn.u0,tv0],[pn.u1,tv0],[pn.u1,tv1],[pn.u0,tv1]],q);if(!Hp)return;
       mesh(function(u,v){return apply(Hp,[u,v])},pn.u0,tv0,pn.u1,tv1,Math.max(2,Math.round((fast?4:8)*(pn.u1-pn.u0)/(tu1-tu0))),fast?8:18);
       var dx=pn.R[0]-pn.L[0],dz=pn.R[1]-pn.L[1],sh=.3*Math.abs(dz)/(Math.hypot(dx,dz)||1);
       ctx.save();ctx.beginPath();path(q);ctx.fillStyle='rgba(0,0,0,'+sh.toFixed(3)+')';ctx.fill();ctx.lineWidth=1.5/st.S;ctx.strokeStyle='rgba(0,0,0,.3)';
-      ctx.beginPath();ctx.moveTo(q[0][0],q[0][1]);ctx.lineTo(q[3][0],q[3][1]);ctx.moveTo(q[1][0],q[1][1]);ctx.lineTo(q[2][0],q[2][1]);ctx.stroke();ctx.restore()}
+      ctx.beginPath();ctx.moveTo(q[0][0],q[0][1]);ctx.lineTo(q[3][0],q[3][1]);ctx.moveTo(q[1][0],q[1][1]);ctx.lineTo(q[2][0],q[2][1]);ctx.stroke();ctx.restore();
+      // врезная ручка-купе: тёмная планка у края со стороны ручки, на высоте 1 м от пола
+      if(pn.grip){var gl=pn.grip==='L',gx0=gl?pn.L[0]+45:pn.R[0]-75,gz=(pn.L[1]+pn.R[1])/2+1,gy=OH-10-1000,G=function(x0,y0,x1,y1){return[P3(x0,y0,gz),P3(x1,y0,gz),P3(x1,y1,gz),P3(x0,y1,gz)]};
+        ctx.save();ctx.beginPath();path(G(gx0,gy-95,gx0+30,gy+95));ctx.fillStyle='#2b2b2b';ctx.fill();ctx.beginPath();path(G(gx0+7,gy-80,gx0+23,gy+80));ctx.fillStyle='#4d4d4d';ctx.fill();ctx.restore()}}
     // за дверью — то, что на фото клиента; коробка и наличники рисуются вокруг проёма
     if(dir<0){ctx.save();ctx.beginPath();path(hole);ctx.clip();panels.forEach(drawPanel);ctx.restore()}
     // купе висит на стене поверх проёма: коробка и наличники из каталога не рисуются, остаются наличники с фото клиента
