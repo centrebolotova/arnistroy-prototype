@@ -1013,11 +1013,11 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
   function meta(it){return [it.ti==='панель'?'Панель МДФ внутри':'Металл внутри',LBL.lk[it.lk]||'',it.ct?it.ct+' '+plural(it.ct,'контур','контура','контуров'):''].filter(Boolean).join(' · ')}
   function tag(it){return it.th?'Терморазрыв':(it.use==='dom'?'Уличная':(it.mir?'С зеркалом':(it.kale?'Замки Kale':'')))}
   function card(it,k){
-    var d=document.createElement('article');d.className='pc opener rv';
+    var d=document.createElement('article');d.className='pc rv';  // дверь открывается только при наведении на саму дверь, не на цвета
     var c0=it.c[0], side=VIEW;
     var url='vhod-model.html#v'+it.id;
     var sws=it.c.slice(0,6).map(function(c,j){return '<button type="button" style="background:linear-gradient(90deg,'+c.ho+' 50%,'+c.hi+' 50%)" title="'+c.n+'" aria-label="Цвет '+c.n+'" aria-pressed="'+(j===0)+'" data-j="'+j+'"></button>'}).join('')+(it.c.length>6?'<span>+'+(it.c.length-6)+'</span>':'');
-    d.innerHTML='<a class="box" href="'+url+'" aria-label="'+it.n+'">'+(tag(it)?'<span class="tag">'+tag(it)+'</span>':'')+
+    d.innerHTML='<a class="box opener" href="'+url+'" aria-label="'+it.n+'">'+(tag(it)?'<span class="tag">'+tag(it)+'</span>':'')+
       '<span class="op"><img class="room" src="img/in-hall.jpg" alt="" loading="lazy"><span class="lf"><span class="spr" role="img"></span></span></span></a>'+
       '<div class="sws"><span class="dots">'+sws+'</span><span class="side" role="group" aria-label="Сторона"><button type="button" data-v="o">Снаружи</button><button type="button" data-v="i">Изнутри</button></span></div>'+
       '<div class="row"><a class="n" href="'+url+'">'+it.n+'</a><span class="pr">от '+fmtP(it.p)+' ₽</span></div>'+
