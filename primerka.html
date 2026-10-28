@@ -1559,7 +1559,7 @@ body.pk-picking .pk{padding-bottom:120px}
     if(W&&(W<400||W>2000))msgs.push('Ширина выглядит странно для '+tn+' двери — проверьте цифры.');
     if(H&&(H<1500||H>3000))msgs.push('Высота выглядит странно для '+tn+' двери — проверьте цифры.');
     $('dWarn').hidden=!msgs.length;$('dWarn').textContent=msgs.join(' ');
-    var sug=[];if(isV()){if(W){var vf=vFor(W);sug.push('Блок шириной '+vf.w*10+' мм — проём больше блока на 20–40 мм.'+(vf.note?' '+vf.note:''))}if(H){var vh=vHNote(H,205);sug.push(vh||'Высота блока 2050 мм.')}
+    var sug=[];if(isV()){if(W){var vf=vFor(W);sug.push(vf.note?'Ближайший блок — '+vf.w*10+' мм. '+vf.note:'Блок шириной '+vf.w*10+' мм — проём больше блока на 20–40 мм.')}if(H){var vh=vHNote(H,205);sug.push(vh||'Высота блока 2050 мм.')}
       if(door)sug.push('Сейчас стоит старая дверь: после демонтажа проём уточнит замерщик.')}
     else{if(W){var lf=leafSwing(W);sug.push('Распашная — полотно '+lf.leaf+' мм.'+(lf.note?' '+lf.note:'')+' Купе — полотно '+leafSlide(W).leaf+' мм.')}if(H){var hn=frameNow()?(H<2000?'Проход по коробке ниже 2000 мм — нужно нестандартное полотно.':H>2100?'Проход выше 2100 мм — добор сверху или высокое полотно.':''):heightNote(H);sug.push(hn||'Высота полотна 2000 мм.')}
     if(T){var db=doborFor(T);sug.push(db?'Нужен добор около '+db+' мм.':'Доборы не нужны — стена до 75 мм.')}}
