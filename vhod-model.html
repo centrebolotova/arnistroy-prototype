@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="ru"><head><meta name="robots" content="noindex, nofollow"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Входная дверь АрниСтрой</title>
+<html lang="ru"><head><meta name="robots" content="noindex, nofollow"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta charset="utf-8">
+<title>Входная дверь АрниСтрой</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600&display=swap">
@@ -80,12 +81,17 @@ body.clean .todo-note{display:none}
 .nav{display:flex;gap:26px;font-size:15px}
 .nav a{text-decoration:none;white-space:nowrap}
 .nav a:hover{color:var(--accent)}
+.dd{position:relative;padding:24px 0;margin:-24px 0}
+.dd-t::after{content:"";display:inline-block;width:6px;height:6px;border-right:1px solid;border-bottom:1px solid;transform:rotate(45deg);margin:0 0 3px 8px}
+.dd-m{position:absolute;top:100%;left:-20px;display:none;flex-direction:column;min-width:220px;padding:8px 0;background:var(--bg);border:1px solid var(--line);box-shadow:0 12px 30px rgba(0,0,0,.08);z-index:50}
+.dd-m a{padding:10px 20px}
+.dd:hover .dd-m,.dd:focus-within .dd-m{display:flex}
 .bar2 .acts{margin-left:auto;display:flex;gap:8px}
 .bar2 .btn{min-height:44px;padding:0 18px;font-size:12px}
 .burger{display:none;margin-left:auto;background:none;border:1px solid var(--line);width:46px;height:46px;cursor:pointer;color:var(--ink);font-size:20px;line-height:1}
 .mnav{display:none}
 @media (max-width:1240px){.nav{gap:18px;font-size:14px}}
-@media (max-width:1200px){.nav{display:none}.burger{display:block}.mnav.open{display:grid;gap:4px;padding:8px var(--gutter) 24px;border-top:1px solid var(--line);font-size:18px}.mnav a{text-decoration:none;padding:10px 0;border-bottom:1px solid var(--line)}.mnav .ph{display:grid;gap:6px;padding-top:14px;font-size:15px;color:var(--muted)}}
+@media (max-width:1100px){.nav{display:none}.burger{display:block}.mnav.open{display:grid;gap:4px;padding:8px var(--gutter) 24px;border-top:1px solid var(--line);font-size:18px}.mnav a{text-decoration:none;padding:10px 0;border-bottom:1px solid var(--line)}.mnav .ph{display:grid;gap:6px;padding-top:14px;font-size:15px;color:var(--muted)}}
 @media (max-width:900px){.bar1>.wrap>span{display:none}}
 @media (max-width:700px){.bar1{display:none}.bar2 .acts{display:none}.burger{display:block}
   .mnav.open{display:grid;gap:4px;padding:8px var(--gutter) 24px;border-top:1px solid var(--line);font-size:18px}
@@ -101,10 +107,13 @@ body[data-hero="corr"] .bg[data-v="corr"],body[data-hero="min"] .bg[data-v="min"
 .bg[data-v="corr"]{object-position:50% 50%}.bg[data-v="min"]{object-position:40% 50%}.bg[data-v="hall"]{object-position:60% 50%}
 /* светлые фото: тёмный текст на белой дымке слева */
 body:not([data-hero="night"]) .hero{color:#151515}
-body:not([data-hero="night"]) .hero::after{background:linear-gradient(90deg,rgba(255,255,255,.92) 0%,rgba(255,255,255,.72) 38%,rgba(255,255,255,0) 68%)}
+body:not([data-hero="night"]) .hero::after{background:linear-gradient(90deg,rgba(255,255,255,.95) 0%,rgba(255,255,255,.88) 42%,rgba(255,255,255,.55) 56%,rgba(255,255,255,0) 74%)}
 body:not([data-hero="night"]) .hero .lead{color:#4d4943}
-body:not([data-hero="night"]) .hero .facts li{border-top-color:rgba(0,0,0,.2)}
-body:not([data-hero="night"]) .hero .facts span{color:#6f6b65}
+body:not([data-hero="night"]) .hero .facts li{border-top-color:rgba(0,0,0,.35)}
+body:not([data-hero="night"]) .hero .facts span{color:#3f3b36}
+/* светлые фото: подложка под текстом плотнее, цифры и подписи темнее — чтобы читались на «Коридоре» (29.10.2026) */
+body:not([data-hero="night"]) .hero .facts b{color:#111}
+body:not([data-hero="night"]) .hero .lead{color:#2f2c28}
 body:not([data-hero="night"]) .hero .btn{background:#151515;color:#fff;border-color:#151515}
 body:not([data-hero="night"]) .hero .btn:hover{background:transparent;color:#151515}
 body:not([data-hero="night"]) .hero .btn.ghost{background:transparent;color:#151515;border-color:#151515}
@@ -526,13 +535,13 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
     <div class="wrap">
       <a class="logo" href="index.html">АрниСтрой</a>
       <nav class="nav" aria-label="Меню">
-        <a href="index.html#catalog">Каталог</a><a href="kuhni.html">Кухни</a><a href="#calc" class="js-calc">Калькулятор</a><a href="ustanovka.html">Установка</a><a href="otzyvy.html">Отзывы</a><a href="stati.html">Статьи</a><a href="o-nas.html">О нас</a><a href="kontakty.html">Контакты</a>
+        <a href="index.html#catalog">Каталог</a><a href="kuhni.html">Кухни</a><a href="primerka.html">Примерка онлайн</a><a href="#calc" class="js-calc">Калькулятор</a><a href="ustanovka.html">Установка</a><div class="dd"><a href="o-nas.html" class="dd-t" aria-haspopup="true">О нас</a><div class="dd-m"><a href="o-nas.html">О компании</a><a href="otzyvy.html">Отзывы</a><a href="stati.html">Статьи</a><a href="garantiya.html">Гарантия и возврат</a><a href="magaziny.html">Магазины</a></div></div><a href="kontakty.html">Контакты</a>
       </nav>
       <div class="acts"><button class="btn js-zamer" type="button">Вызвать замерщика</button></div>
       <button class="burger" type="button" aria-expanded="false" aria-controls="mnav" aria-label="Меню">☰</button>
     </div>
     <nav class="mnav" id="mnav" aria-label="Меню">
-      <a href="index.html#catalog">Каталог</a><a href="kuhni.html">Кухни</a><a href="#calc" class="js-calc">Калькулятор</a><a href="ustanovka.html">Установка</a><a href="otzyvy.html">Отзывы</a><a href="stati.html">Статьи</a><a href="o-nas.html">О нас</a><a href="kontakty.html">Контакты</a>
+      <a href="index.html#catalog">Каталог</a><a href="kuhni.html">Кухни</a><a href="primerka.html">Примерка онлайн</a><a href="#calc" class="js-calc">Калькулятор</a><a href="ustanovka.html">Установка</a><a href="otzyvy.html">Отзывы</a><a href="stati.html">Статьи</a><a href="o-nas.html">О нас</a><a href="kontakty.html">Контакты</a>
       <div class="ph num"><span>Московское ш. · +7 (991) 595-81-86</span><span>Ивановское · +7 (985) 155-52-23</span></div>
     </nav>
   </div>
