@@ -605,38 +605,29 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
 .kv dt{color:var(--muted)}.kv dd{margin:0}
 @media (max-width:820px){.kv{grid-template-columns:1fr}}
 
-.wchips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
-.wgal{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,1.6vw,22px)}
-.wcard{margin:0;display:grid;gap:10px;align-content:start}
-.wcard .ph{aspect-ratio:4/3;overflow:hidden;background:var(--soft)}
-.wcard .ph img{width:100%;height:100%;object-fit:cover;filter:saturate(.85);transition:transform 1.2s var(--ease)}
-.wcard:hover .ph img{transform:scale(1.04)}
-.wcard b{font-weight:500}
-.wcard span{font-size:14px;color:var(--muted)}
-.wcard[hidden]{display:none}
-@media (max-width:900px){.wgal{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:560px){.wgal{grid-template-columns:1fr}}
-.scores2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(16px,2.4vw,32px)}
-.scores2 .sc{border:1px solid var(--line);padding:clamp(22px,3vw,32px);display:grid;gap:12px;align-content:start;background:var(--bg)}
-.scores2 .sc b{font-size:clamp(44px,5vw,64px);font-weight:400;letter-spacing:-.04em;line-height:1}
-.scores2 .sc .acts3{display:flex;gap:10px;flex-wrap:wrap}
-@media (max-width:760px){.scores2{grid-template-columns:1fr}}
-.gt{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;min-width:520px}
-.gt th,.gt td{text-align:left;padding:12px 16px 12px 0;border-bottom:1px solid var(--line);font-weight:400;vertical-align:top}
-.gt th{font-weight:500;border-bottom-color:var(--ink)}
-.mcalc{display:grid;gap:18px;border:1px solid var(--line);padding:clamp(22px,3vw,32px);background:var(--bg)}
-.mcalc .in{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-.mcalc label{display:grid;gap:6px;font-size:13px;color:var(--muted)}
-.mcalc input{font:400 17px var(--font);color:var(--ink);background:transparent;border:0;border-bottom:1px solid var(--ink);padding:10px 0;width:100%;border-radius:0}
-.mcalc .out{display:grid;gap:8px;list-style:none;margin:0;padding:0;border-top:1px solid var(--ink)}
-.mcalc .out li{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid var(--line);font-size:15px}
-.mcalc .out li span:last-child{font-weight:500;text-align:right}
-@media (max-width:560px){.mcalc .in{grid-template-columns:1fr}}
-.steps2{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(20px,2.4vw,36px);list-style:none;margin:0;padding:0;counter-reset:s}
-.steps2 li{display:grid;gap:10px;align-content:start}
-.steps2 li::before{counter-increment:s;content:"0" counter(s);font-size:clamp(32px,3.2vw,46px);font-weight:300;line-height:1;color:var(--accent);padding-bottom:14px;border-bottom:1px solid var(--line)}
-.steps2 p{color:var(--muted);font-size:15px}
-@media (max-width:900px){.steps2{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.art{max-width:780px;padding-bottom:clamp(40px,5vw,72px)}
+.art .a-head{display:grid;gap:14px;padding-block:18px 26px;border-bottom:1px solid var(--line);margin-bottom:8px}
+.art .a-head h1{font-size:clamp(32px,4vw,54px);line-height:1.08}
+.art .a-meta{font-size:14px;color:var(--muted)}
+.art .toc{margin:22px 0 4px;padding:18px 0;border-bottom:1px solid var(--line)}
+.art .toc b{display:block;font-weight:500;margin-bottom:10px}
+.art .toc ol{margin:0;padding-left:20px;display:grid;gap:6px;font-size:15px}
+.art .toc a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line)}
+.art h2{font-size:clamp(24px,2.6vw,34px);line-height:1.18;margin:clamp(36px,4.4vw,56px) 0 14px;scroll-margin-top:90px}
+.art h3{font-size:clamp(19px,1.8vw,23px);font-weight:500;margin:28px 0 10px}
+.art p,.art li{font-size:17px;line-height:1.65}
+.art p{margin:0 0 14px}
+.art ul,.art ol.steps{margin:0 0 16px;padding-left:22px;display:grid;gap:8px}
+.art b{font-weight:500}
+.art p a,.art li a,.art td a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px}
+.art .tbl{margin:18px 0 22px;overflow-x:auto}
+.art table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:15px}
+.art th,.art td{text-align:left;vertical-align:top;padding:10px 12px 10px 0;border-bottom:1px solid var(--line);font-weight:400}
+.art thead th{font-weight:500;border-bottom-color:var(--ink)}
+.art tbody th{color:var(--muted)}
+.art tr:last-child td,.art tr:last-child th{border-bottom-color:var(--ink)}
+.art .see{display:grid;gap:12px;justify-items:start;margin-top:36px;padding-top:22px;border-top:1px solid var(--ink)}
+@media (max-width:560px){.art table{font-size:13px}.art th,.art td{padding-right:8px}}
 
 </style>
 
@@ -664,8 +655,8 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
 </header>
 
 <main>
-<div class="wrap"><nav class="crumbs" aria-label="Навигация"><a href="index.html">Главная</a><span>/</span><span>Статьи</span></nav><div class="c-head" style="padding-block:18px 28px;display:grid;gap:16px"><h1 style="font-size:clamp(32px,3.8vw,54px)">Статьи о дверях</h1><p class="lead">Как выбрать, замерить и установить дверь — простыми словами, с ценами для Серпухова. Первые статьи готовим к запуску сайта.</p><span class="todo-note" style="justify-self:start">Тексты статей отложены — пишем после основных страниц</span></div></div>
-<section style="padding-top:8px"><div class="wrap"><div class="svc3" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))"><article class="rv" style="border-top:1px solid var(--ink);padding-top:18px;display:grid;gap:8px;align-content:start"><span class="muted" style="font-size:13px">Скоро</span><h3>Сколько стоит установка двери в Серпухове в 2026 году</h3><p class="muted" style="font-size:15px">Цены на монтаж межкомнатных и входных дверей, доборы, демонтаж и доставку — по прайсу.</p><a class="arrow" href="ceny.html">Пока смотрите: цены</a></article><article class="rv" style="border-top:1px solid var(--ink);padding-top:18px;display:grid;gap:8px;align-content:start"><span class="muted" style="font-size:13px">Скоро</span><h3>Двери с терморазрывом: что это и нужна ли такая в частный дом</h3><p class="muted" style="font-size:15px">Как устроен терморазрыв, почему дверь не промерзает и когда переплачивать не стоит.</p><a class="arrow" href="vhodnye-dveri-s-termorazryvom.html">Пока смотрите: каталог</a></article><article class="rv" style="border-top:1px solid var(--ink);padding-top:18px;display:grid;gap:8px;align-content:start"><span class="muted" style="font-size:13px">Скоро</span><h3>Стандартные размеры межкомнатных и входных дверей</h3><p class="muted" style="font-size:15px">Таблица размеров полотна и проёма, высота, ширина, доборы.</p><a class="arrow" href="kak-zamerit.html">Пока смотрите: как замерить</a></article><article class="rv" style="border-top:1px solid var(--ink);padding-top:18px;display:grid;gap:8px;align-content:start"><span class="muted" style="font-size:13px">Скоро</span><h3>Какая входная дверь лучше: как выбрать в квартиру и в дом</h3><p class="muted" style="font-size:15px">Толщина металла, утепление, замки, отделка — на что смотреть.</p><a class="arrow" href="vhodnye-dveri.html">Пока смотрите: каталог</a></article><article class="rv" style="border-top:1px solid var(--ink);padding-top:18px;display:grid;gap:8px;align-content:start"><span class="muted" style="font-size:13px">Скоро</span><h3>Какие межкомнатные двери лучше: экошпон, эмаль, шпон, ПВХ</h3><p class="muted" style="font-size:15px">Сравниваем покрытия по виду, стойкости и цене.</p><a class="arrow" href="mezhkomnatnye-dveri.html">Пока смотрите: каталог</a></article></div></div></section>
+<div class="wrap"><nav class="crumbs" aria-label="Навигация"><a href="index.html">Главная</a><span>/</span><span>Статьи</span></nav><div class="c-head" style="padding-block:18px 28px;display:grid;gap:16px"><h1 style="font-size:clamp(32px,3.8vw,54px)">Статьи о дверях</h1><p class="lead">Как выбрать, замерить и установить дверь — простыми словами, с ценами для Серпухова.</p></div></div>
+<section style="padding-top:8px"><div class="wrap"><div class="svc3" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))"><article class="rv" style="border-top:1px solid var(--ink);padding-top:18px;display:grid;gap:8px;align-content:start"><span class="muted" style="font-size:13px">28 октября 2026</span><h3><a href="stati-razmery-dverey.html" style="color:inherit;text-decoration:none">Стандартные размеры межкомнатных и входных дверей</a></h3><p class="muted" style="font-size:15px">Таблица размеров полотна и проёма, коробки и доборы, дверь в ванную, входная дверь в квартиру и дом.</p><a class="arrow" href="stati-razmery-dverey.html">Читать</a></article><article class="rv" style="border-top:1px solid var(--ink);padding-top:18px;display:grid;gap:8px;align-content:start"><span class="muted" style="font-size:13px">28 октября 2026</span><h3><a href="stati-kak-vybrat-vhodnuyu-dver.html" style="color:inherit;text-decoration:none">Какая входная дверь лучше для квартиры</a></h3><p class="muted" style="font-size:15px">Толщина металла, замки, утеплитель и шумоизоляция, отделка, проверка в салоне и цена с установкой.</p><a class="arrow" href="stati-kak-vybrat-vhodnuyu-dver.html">Читать</a></article><article class="rv" style="border-top:1px solid var(--ink);padding-top:18px;display:grid;gap:8px;align-content:start"><span class="muted" style="font-size:13px">28 октября 2026</span><h3><a href="stati-kakie-mezhkomnatnye-dveri-luchshe.html" style="color:inherit;text-decoration:none">Какие межкомнатные двери лучше и как их выбрать</a></h3><p class="muted" style="font-size:15px">Чем отличаются экошпон, эмаль, шпон, ПВХ и CPL, что ставить в ванную и детскую и сколько стоит дверь под ключ.</p><a class="arrow" href="stati-kakie-mezhkomnatnye-dveri-luchshe.html">Читать</a></article><article class="rv" style="border-top:1px solid var(--ink);padding-top:18px;display:grid;gap:8px;align-content:start"><span class="muted" style="font-size:13px">28 октября 2026</span><h3><a href="stati-levaya-ili-pravaya-dver.html" style="color:inherit;text-decoration:none">Левая или правая дверь: как определить и в какую сторону открывать</a></h3><p class="muted" style="font-size:15px">Как определить сторону открывания и куда открывать двери в комнаты, ванную и входную дверь.</p><a class="arrow" href="stati-levaya-ili-pravaya-dver.html">Читать</a></article><article class="rv" style="border-top:1px solid var(--ink);padding-top:18px;display:grid;gap:8px;align-content:start"><span class="muted" style="font-size:13px">28 октября 2026</span><h3><a href="stati-kogda-stavit-dveri-pri-remonte.html" style="color:inherit;text-decoration:none">Когда ставить двери при ремонте</a></h3><p class="muted" style="font-size:15px">Когда менять входную дверь, когда делать замер и ставить межкомнатные двери и как защитить их от ремонта.</p><a class="arrow" href="stati-kogda-stavit-dveri-pri-remonte.html">Читать</a></article><article class="rv" style="border-top:1px solid var(--line);padding-top:18px;display:grid;gap:8px;align-content:start"><span class="muted" style="font-size:13px">Скоро</span><h3>Экошпон, эмаль, шпон или ПВХ: из чего выбрать дверь</h3><p class="muted" style="font-size:15px">Сравниваем покрытия по виду, стойкости к влаге и ударам и цене.</p><a class="arrow" href="mezhkomnatnye-dveri.html">Пока смотрите: каталог</a></article><article class="rv" style="border-top:1px solid var(--line);padding-top:18px;display:grid;gap:8px;align-content:start"><span class="muted" style="font-size:13px">Скоро</span><h3>Как выбрать цвет межкомнатных дверей</h3><p class="muted" style="font-size:15px">В цвет пола, светлые или тёмные — как дверь будет смотреться в интерьере.</p><a class="arrow" href="mezhkomnatnye-dveri-belye.html">Пока смотрите: белые двери</a></article><article class="rv" style="border-top:1px solid var(--line);padding-top:18px;display:grid;gap:8px;align-content:start"><span class="muted" style="font-size:13px">Скоро</span><h3>Какую входную дверь поставить в частный дом</h3><p class="muted" style="font-size:15px">Терморазрыв, утепление, размеры и защита от непогоды.</p><a class="arrow" href="vhodnye-dveri-v-dom.html">Пока смотрите: двери в дом</a></article></div></div></section>
 <section class="final" id="form" aria-labelledby="form-h">
   <div class="wrap">
     <div style="display:grid;gap:18px" class="rv">
@@ -733,8 +724,8 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
         <p class="hint">Цены за полотно — из нашего каталога.</p>
         <div class="opts">
           <label class="opt"><input type="radio" name="tier" value="eco"><b>Эконом</b><small>Флекс-покрытие, экошпон. Межкомнатные от 1 800 ₽</small></label>
-          <label class="opt"><input type="radio" name="tier" value="std" checked><b>Стандарт</b><small>Экошпон, винил, эмалит, шпон. От 4 200 ₽</small></label>
-          <label class="opt"><input type="radio" name="tier" value="prem"><b>Премиум</b><small>Эмаль, натуральный шпон, массив. От 8 000 ₽</small></label>
+          <label class="opt"><input type="radio" name="tier" value="std" checked><b>Стандарт</b><small>Экошпон, винил, эмалит, шпон. От 5 000 ₽</small></label>
+          <label class="opt"><input type="radio" name="tier" value="prem"><b>Премиум</b><small>Эмаль, натуральный шпон, массив. От 12 000 ₽</small></label>
           <label class="opt idk"><input type="radio" name="tier" value="idk"><b>Не знаю</b><small>Посчитаем по среднему, подберём в салоне</small></label>
         </div>
       </div>
@@ -855,7 +846,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
 
 
   // ===== калькулятор =====
-  // Цены полотна — из каталога (05.10.2026). Комплектующие, монтаж, доставка — от владельца 08.10.2026; монтаж скрытой, раздвижной, складной — примерно (уточняем).
+  // Цены полотна — вилки по каталогу 29.10.2026 (2 484 межкомнатных, 285 входных; эконом — Браво и плёнки, премиум — до 90% каталога). Комплектующие, монтаж, доставка — от владельца 08.10.2026; монтаж скрытой, раздвижной, складной — примерно (уточняем).
   var TYPES=[
     {id:'mezh',name:'Межкомнатные',img:'d-prima-white',note:'от 1 800 ₽ за полотно'},
     {id:'vhod',name:'Входные',img:'d-vhod',note:'от 7 625 ₽'},
@@ -864,8 +855,8 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
     {id:'skl',name:'Складные',img:'d-dsk',note:'от 1 900 ₽'}
   ];
   var P={ // [мин, макс] за 1 дверь
-    leaf:{mezh:{eco:[1800,3900],std:[4200,7900],prem:[8000,12600]},vhod:{eco:[7625,18100],std:[21900,34400],prem:[35100,49400]},
-          skr:{eco:[9000,14000],std:[14000,22000],prem:[22000,35000]},razd:{eco:[1800,3900],std:[4200,7900],prem:[8000,12600]},skl:{eco:[1900,3400],std:[3400,4500],prem:[4500,6900]}},
+    leaf:{mezh:{eco:[1800,5000],std:[5000,12000],prem:[12000,30000]},vhod:{eco:[7625,25000],std:[25000,42000],prem:[42000,65000]},
+          skr:{eco:[9000,14000],std:[14000,22000],prem:[22000,35000]},razd:{eco:[1800,5000],std:[5000,12000],prem:[12000,30000]},skl:{eco:[1900,3400],std:[3400,4500],prem:[4500,6900]}},
     kit:{mezh:{eco:[2750,2750],std:[4350,6000],prem:[6500,13750]},vhod:[0,0],skr:[14700,19200],razd:[3200,23250],skl:[0,0]},
     furn:{mezh:{eco:[1400,1400],std:[2300,2300],prem:[3600,3600]},vhod:[0,0],skr:[6400,8000],razd:[600,1400],skl:[0,0]},
     mount:{mezh:[4500,4500],vhod:[6000,7000],skr:[9000,12000],razd:[7000,9000],skl:[3000,4000]},
@@ -877,7 +868,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
   var VIL={"118 км ч Заокский":2800,"87 км":2200,"94 км":1500,"Авангард \"Воздвиженка\"":1600,"Авангард (дачи)":1200,"Авангард дом отдыха":1500,"Авдотьино":2800,"Автомобилист д/о":1500,"Автомосквич":1700,"Агаповка":1900,"Азаровка \"114 км\"":2400,"Акулово":1900,"Аладьино":2300,"Александровка":3000,"Арнеево":1600,"Байденки":2200,"Балково":2100,"Банино":1500,"Барыбино":2200,"Бегичево":1900,"Берег удачи":2100,"Березкино":1900,"Берендеево царство":3100,"Бобровый Остров":2400,"Болотово":2400,"Большая Городня":2100,"Большевик":900,"Большое Грызлово":2100,"Бор":2800,"Борисово":800,"Бутиково":2700,"Бутурлино":800,"Васильевское":1700,"Васькино":3500,"Велегож":2900,"Велегож парк":2600,"Велеми Нижнее Верхнее":1200,"Веранда":1400,"Верхнее Велеми":2400,"Верхнее Пикалово":2300,"Верхнее Романово":1800,"Веселово":3100,"Вестфалия":2100,"Вечери":1400,"Вишенки":2000,"Воздвиженка":1600,"Волковичи":2400,"Волково":1900,"Волковское":2100,"Волосово":2100,"Волохово":2500,"Волшебная страна":2100,"Воронино":2100,"Вороново (Тул. Обл)":3600,"Воскресенки":2100,"Всходы":1800,"Выдумки":2800,"Высокие дворики":1800,"Высокиничи":3200,"Вяземские сады":2400,"Вязищи":2900,"Гавшино":1900,"Глазово":1400,"Глазово 2":2100,"Глубоково":2100,"Гришенки":2600,"Гурьево":2000,"Дали КП":2700,"Данки":1300,"Дачи МВД Дубачиео":2600,"Дашковка":1300,"Дернополье":1900,"Дикси склады":1700,"ДНТ Любава (Заокский)":2400,"ДНТ Свой дом (Чех. Р-н)":2600,"Дракино":1700,"Дубки (Лужки)":1300,"Дубки на наре":1600,"Дулово":3000,"Дятлово":2400,"Енино":2400,"Еськино":2300,"Жерновка":3000,"Живыя картина":3000,"Журавлево":2400,"Зайцево":1800,"Заокская долина":1400,"Заокские просторы":2500,"Заокский":2300,"Заокское лесничество":1700,"Заречье (Калуж. обл)":3500,"Заречье 2":3500,"Заречье 3":3900,"Зиброво":2500,"Злобино (Мос. Обл)":1800,"Злобино (Тул. Обл)":3300,"Ивановское":700,"Ивантиново":2100,"Иваньково":1600,"Игнатьево":2200,"Игумново":2000,"Искань":2700,"Истомино (Калуж. Обл)":3000,"Калиново":1300,"Калиновские выселки":1300,"Калугино":2400,"Каменка":1500,"Каминищи (Ступ. Р-н)":3400,"Капитан":2800,"Капитанский мыс/Лэнд":2800,"Караулово":2400,"Каргашино":2600,"Карнищево":2100,"Карпищево (Заок. Р-н)":2100,"Карпова Поляна":1000,"Кирпичный завод":1700,"Клейменово":2900,"Конюшино":2900,"Коптево":2100,"Костино":1400,"Костино (Тул. Обл)":2600,"Кравцово":3100,"Кременки":2600,"Крюково (Тул. Обл)":2100,"Крюково (Чех. Р-н)":2800,"Кузьменки, ст Кузьменки":2100,"Кузьмищево":2700,"Кулаково":2000,"Курилово":3300,"Ладыжино":3300,"Ланьшино":3300,"Лаптево Заокский р--н":3400,"Левашово":1400,"Левашово озеро":1500,"Лесная долина":2000,"Лесная поляна (Чех. Р-н)":2200,"Лесная сказка":2100,"Лесное озеро":2100,"Лесные дали":2400,"Липицы":1500,"Лисинки":2400,"Лопатино Калужская обл.":3200,"Лужки":1300,"Лукино":1600,"Лукьяново дорожный":1600,"Лукьяново заокская долина":1500,"Луч (Чех. Р-н)":2600,"Люблинский садовод":1400,"Малахово":2100,"Малахово 2":2100,"Манишки":1500,"Манушкино (Чехов)":2200,"Мартьяново":1500,"Матрешкино":2000,"Матюшино":2800,"Маяк":1900,"Мещериново":1600,"Мирный":800,"Митино":2800,"Михайловка":1400,"Молоди":4000,"Московка":2100,"Мосолово":3100,"Мостовик":1700,"Мышинки":2700,"Небутово":2800,"Некрасово":3000,"Ненашево":3300,"Нефедово":1100,"Нижнее Романово":1800,"Нижняя Городня (Тул. Обл)":2800,"Никифорово":2300,"Никоновка":3400,"Новая деревня":2700,"Новиково (Капитан)":2800,"Новинки":1900,"Новоселки (Заокский р-н)":2100,"Новый быт":2400,"Оболенск":2200,"Окская слобода":1400,"Палихово (СНТ Палихово)":900,"Паниково":1100,"Панькино":1600,"Паршино":3000,"Пахомово":3400,"Петрищево (Тарусский р-н)":3400,"Петрухино":1900,"Пирогово":2700,"Плешкино":2200,"Погари":2000,"Подмоклово":2000,"Подольск":6000,"Покровское южное":3200,"Поленово":3100,"Похвиснево Калужская обл.":3100,"Приветливое":1400,"Прилуки":2400,"Приокская":2200,"Присады":1800,"Прокшино":2400,"Пролетарский":2100,"Прончищево":2600,"Протвино":2000,"Птицефабрика":1900,"Пущино":2000,"Пущино на Наре":1400,"Радионовка":1900,"Райсеменовское":2000,"Республика":1800,"Рогово":2100,"Родионовка":2100,"Родники":1600,"Родники (Калужская обл.)":2800,"Родники (Яковлево)":1700,"Рождествено (Туль. обл.)":2800,"Романовские дачи":2000,"Романовский парк":2300,"Рудаково":3100,"Русятино":2800,"Рыблово":1700,"Рыжиково":2100,"Савино":2800,"Салтыково":2300,"Сашкино":3400,"Светлая поляна":2600,"Свиненки":2100,"Свинская":2600,"Селино":1600,"Семеновское (Бол. Гор.)":2100,"Семеновское (Бол. Грызлово.)":2200,"Семеновское (Нов. Быт)":2800,"Сенино (Тул. Обл)":2800,"Сенино (Чех. Р-н)":2600,"Сенькино":2600,"Сераксеево":1700,"Сидоренки":2800,"Скинга (кирп. завод)":1600,"Скинга (Тул. Обл)":2400,"Скребухово":2700,"Скрипово":2500,"Скрылья":1100,"Скурыбино":3500,"Славное":3100,"СНТ Биоприборы Пущино":2100,"СНТ Лада":3200,"СНТ Надежда":2200,"СНТ Надежда (Лесная)":1000,"СНТ Нива":1500,"СНТ Ногина 3":1100,"СНТ Ногина 6":1600,"СНТ Ока":1600,"СНТ Приокский":2600,"СНТ Приокское":2600,"СНТ Речник":1700,"СНТ Родник":2600,"СНТ Северное":1500,"СНТ Сказка (Чех. Р-н)":2600,"СНТ Скнига":1700,"СНТ Славяне":1700,"СНТ Сосенки":1600,"СНТ Строитель Нива":1600,"СНТ Тарасовец":3100,"СНТ Твой дом":2400,"СНТ Трансгаз":1700,"СНТ Ясногорские дачи":3100,"Сосновка парк":1600,"Сосновый":1800,"Сосновый парк":2600,"Станки":2300,"Страхово":2800,"Студеное":3400,"Судимля":1400,"Сушки":1100,"Съяново":1600,"Съяново 2":2600,"Талеж":3000,"Таруса":2900,"Татарские хутора":2500,"Тверитино":1800,"Темьянь":2600,"Терхунь":3100,"Теряево (Заок. Р-н)":3300,"Тетерево":2600,"Трухачево":2400,"Тул. пост ГАИ":2800,"Тульчино":2600,"Турино 136 км":3500,"Турово":2200,"Турово поля аэродрома":2700,"Ушаковка":3500,"Фенино":2200,"Ферзиково (Калуж. обл)":4500,"Ферзиково (Мос. обл)":2500,"Царьград":1700,"Чепелево":3400,"Чехов":2800,"Чудо град":1900,"Шарапова охота":2200,"Шарапово (Чех. Р-н)":3400,"Шатово":2200,"Шахлово Верхнее ниж.":2200,"Шахтер":1900,"Шахтер д/о":1900,"Шепилово":1600,"Щеблово (Тульская обл.)":4000,"Щеболово":1700,"Южные дачи":2100,"Юрятино":2100,"Яковлево":1700,"Якшино":1800,"Ярославцево (Заок. Р-н)":2600,"Ясногорск":4100,"Ящерки":1500,"Ящерово":1500};
   function delivFor(c){c=(c||'').trim();if(VIL[c])return [VIL[c],VIL[c]];return c==='Серпухов'?P.deliv['Серпухов']:P.deliv.other}
   var st={cnt:{mezh:1,vhod:0,skr:0,razd:0,skl:0},step:1};
-  function r100(x){return Math.round(x/100)*100}
+  function r100(x){return Math.round(x/50)*50}  // шаг 50 ₽: коробка 2 750 ₽ не превращается в 2 800
   function fmt(x){return r100(x).toLocaleString('ru-RU').replace(/\s/g,'\u00a0')}
   function val(name){var e=document.querySelector('#calcDlg input[name="'+name+'"]:checked');return e?e.value:null}
   function on(name){var e=document.querySelector('#calcDlg input[name="'+name+'"]');return e&&e.checked}
