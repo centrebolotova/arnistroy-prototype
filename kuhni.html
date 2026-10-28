@@ -1148,7 +1148,9 @@ const K3=(()=>{
     const th=TOP[v.t]||'#D8D2C8';if(M.top.userData.t!==th+v.t){if(M.top.map)M.top.map.dispose();M.top.map=stoneTex(th,/мрамор|камень/i.test(v.t||''));M.top.userData.t=th+v.t;M.top.needsUpdate=true}
     const src=v.k||v.i;M.metal.color.copy(lin(/chernyj/.test(src)?'#1B1B1C':/zolot/.test(src)?'#C2A061':'#B9BCBF'));
     const body=/dub-votan/.test(src)?'#B39271':/graphite|grafit/.test(src)?'#4A4C50':'#F2F1ED';M.body.color.copy(lin(body));M.body.map=/dub-votan/.test(src)?woodTex:null;M.body.needsUpdate=true}
-  function openAll(on,stagger=130){const ms=[...modsList].sort((a,b)=>(a.userData.x||0)-(b.userData.x||0));allOn=false;ms.forEach((m,i)=>setTimeout(()=>{m.userData.all=on},reduce?0:i*stagger));if(!on)ms.forEach(m=>m.userData.pin=false)}
+  // каждый вызов отменяет ещё не сработавшие таймеры предыдущего: при подтормаживании браузера «открыть» не придёт после «закрыть»
+  let allGen=0;
+  function openAll(on,stagger=130){const g=++allGen;const ms=[...modsList].sort((a,b)=>(a.userData.x||0)-(b.userData.x||0));allOn=false;ms.forEach((m,i)=>setTimeout(()=>{if(g===allGen)m.userData.all=on},reduce?0:i*stagger));if(!on)ms.forEach(m=>m.userData.pin=false)}
   return{mount,build,paint,openAll,onSeen:f=>{onSeen=f},stopTour}})();
 
 /* ===== первый экран: большое фото, цвет меняется ===== */
@@ -1229,7 +1231,8 @@ $('#bModel').innerHTML=seriesNames.map(s=>`<optgroup label="${s}">${buildable.fi
 let bM,bV,bMods=[],bOpen=false;
 const k3ok=K3&&K3.mount($('#bKit'));
 // при первом показе кухня сама открывает шкафы и закрывает
-if(k3ok&&!reduce)K3.onSeen(()=>{setTimeout(()=>{if(!bOpen)K3.openAll(true)},700);setTimeout(()=>{if(!bOpen)K3.openAll(false,60)},4200);setTimeout(()=>{const tp=$('#bTip');if(tp)tp.style.opacity=0},9000)});
+let demo=true;$('#bKit').addEventListener('pointerdown',()=>{if(demo){demo=false;if(!bOpen)K3.openAll(false,0)}},true);
+if(k3ok&&!reduce)K3.onSeen(()=>{setTimeout(()=>{if(!bOpen&&demo)K3.openAll(true)},700);setTimeout(()=>{if(!bOpen&&demo){demo=false;K3.openAll(false,60)}},4200);setTimeout(()=>{const tp=$('#bTip');if(tp)tp.style.opacity=0},9000)});
 function bLoad(m,vi=0){bM=m;bV=m.v[vi].m.length?m.v[vi]:m.v.find(v=>v.m.length);bMods=bV.m.map(x=>[...x]);$('#bModel').value=m.n;
   const cols=[...new Set(m.v.filter(v=>v.m.length).map(v=>v.c))];
   $('#bColors').innerHTML=cols.map(c=>`<button type="button" data-c="${c}" aria-pressed="${c===bV.c}" title="${c}" aria-label="${c}" style="--c:${swBg(c)}"></button>`).join('');
