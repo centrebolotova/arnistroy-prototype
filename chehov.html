@@ -96,6 +96,7 @@ body.clean .todo-note{display:none}
   .mnav.open{display:grid;gap:4px;padding:8px var(--gutter) 24px;border-top:1px solid var(--line);font-size:18px}
   .mnav a{text-decoration:none;padding:10px 0;border-bottom:1px solid var(--line)}
   .mnav .ph{display:grid;gap:6px;padding-top:14px;font-size:15px;color:var(--muted)}}
+.mnav .ph a{border:0;padding:6px 0;color:var(--ink)}
 
 /* ===== первый экран: фото на всю ширину, текст слева ===== */
 .hero{position:relative;color:#fff;overflow:hidden;padding:0;min-height:clamp(560px,78vh,820px);display:grid;align-items:center}
@@ -417,8 +418,8 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
 @media (max-width:700px){
   .float{bottom:calc(80px + env(safe-area-inset-bottom,0px))}
   .chat span{display:none}
-  .mbar{display:grid;grid-template-columns:1fr 1fr;gap:8px;position:fixed;left:0;right:0;bottom:0;z-index:36;background:var(--bg);border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px))}
-  .mbar .btn{min-height:46px;padding:0 8px;font-size:11px}
+  .mbar{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;position:fixed;left:0;right:0;bottom:0;z-index:36;background:var(--bg);border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px))}
+  .mbar .btn{min-height:46px;padding:0 6px;font-size:11px;white-space:normal;text-align:center;line-height:1.25}
 }
 
 /* появление при прокрутке — только для блоков ниже первого экрана */
@@ -532,7 +533,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
 .facts2 li{display:grid;gap:2px;border-top:1px solid var(--line);padding-top:12px}
 .facts2 b{font-size:22px;font-weight:500;letter-spacing:-.02em}
 .facts2 span{font-size:13px;color:var(--muted);line-height:1.35}
-.u-cta{display:flex;gap:10px;flex-wrap:wrap}
+.u-cta{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 @media (max-width:900px){.u-head{grid-template-columns:1fr}.u-head .ph{order:-1;aspect-ratio:16/10}.facts2{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .prt{width:100%;border-collapse:collapse;min-width:620px}
 .prt th,.prt td{text-align:left;vertical-align:top;padding:16px 20px 16px 0;border-bottom:1px solid var(--line);font-weight:400}
@@ -626,7 +627,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
   <div class="bar1">
     <div class="wrap">
       <span>Серпухов, Московское ш., 49 · Ивановское, ул. Пролетарская, 51</span>
-      <div class="ph num"><span>Московское ш. · +7 (991) 595-81-86</span><span>Ивановское · +7 (985) 155-52-23</span></div>
+      <div class="ph num"><span>Московское ш. · <a href="tel:+79915958186">+7 (991) 595-81-86</a></span><span>Ивановское · <a href="tel:+79851555223">+7 (985) 155-52-23</a></span></div>
     </div>
   </div>
   <div class="bar2">
@@ -640,7 +641,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
     </div>
     <nav class="mnav" id="mnav" aria-label="Меню">
       <a href="index.html#catalog">Каталог</a><a href="kuhni.html">Кухни</a><a href="primerka.html">Примерка онлайн</a><a href="#calc" class="js-calc">Калькулятор</a><a href="ustanovka.html">Установка</a><a href="otzyvy.html">Отзывы</a><a href="stati.html">Статьи</a><a href="o-nas.html">О нас</a><a href="kontakty.html">Контакты</a>
-      <div class="ph num"><span>Московское ш. · +7 (991) 595-81-86</span><span>Ивановское · +7 (985) 155-52-23</span></div>
+      <div class="ph num"><span>Московское ш. · <a href="tel:+79915958186">+7 (991) 595-81-86</a></span><span>Ивановское · <a href="tel:+79851555223">+7 (985) 155-52-23</a></span></div>
     </nav>
   </div>
 </header>
@@ -677,7 +678,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
       <p>Металлические двери в Чехове ставим в квартиры и частные дома: в квартиру — модели с шумоизоляцией и двумя замками, в дом — утеплённые и с терморазрывом. Двери в квартиру в Чехове замерим и подберём под проём.</p>
       <p>Двери в Чеховском районе — с доставкой в посёлки и СНТ: цены по каждому пункту — на странице <a href="dostavka-chehovskiy.html">доставки в городском округе Чехов</a>.</p></div><aside class="rv" aria-label="Услуги">
       <b style="font-weight:500">Услуги</b>
-      <a href="ustanovka.html">Установка дверей</a><a href="ustanovka-mezhkomnatnyh.html">Установка межкомнатных дверей</a><a href="ustanovka-vhodnyh.html">Установка входных дверей</a><a href="zamena-dverey.html">Замена дверей</a><a href="vrezka-zamkov.html">Врезка и замена замков</a><a href="zamer.html">Вызов замерщика</a><a href="dostavka.html">Доставка по району</a><a href="kalkulyator.html">Калькулятор стоимости</a>
+      <a href="ustanovka.html">Установка дверей</a><a href="ustanovka-mezhkomnatnyh.html">Установка межкомнатных дверей</a><a href="ustanovka-vhodnyh.html">Установка входных дверей</a><a href="zamena-dverey.html">Замена дверей</a><a href="vrezka-zamkov.html">Врезка и замена замков</a><a href="zamer.html">Вызов замерщика</a><a href="primerka.html">Замер и примерка онлайн</a><a href="dostavka.html">Доставка по району</a><a href="kalkulyator.html">Калькулятор стоимости</a>
       <b style="font-weight:500;margin-top:14px">Каталог</b>
       <a href="mezhkomnatnye-dveri.html">Межкомнатные двери</a><a href="vhodnye-dveri.html">Входные двери</a>
     </aside></div></section>
@@ -709,8 +710,8 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
   </div>
   <div class="wrap">
     <span class="logo" style="color:var(--ink)">АрниСтрой</span>
-    <span>Московское шоссе, 49 · +7 (991) 595-81-86</span>
-    <span>Ивановское, Пролетарская, 51 · +7 (985) 155-52-23</span>
+    <span>Московское шоссе, 49 · <a href="tel:+79915958186">+7 (991) 595-81-86</a></span>
+    <span>Ивановское, Пролетарская, 51 · <a href="tel:+79851555223">+7 (985) 155-52-23</a></span>
     <span>ИП Малышев А. Н. · <a href="politika.html">Политика обработки персональных данных</a></span>
   </div>
 </footer>
@@ -831,6 +832,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
   <a class="chat" href="https://wa.me/79851555223" target="_blank" rel="noopener"><i></i><span>Написать в WhatsApp</span></a>
 </div>
 <div class="mbar">
+  <a class="btn ghost" href="tel:+79851555223">Позвонить</a>
   <button class="btn ghost js-calc" type="button">Рассчитать</button>
   <button class="btn js-zamer" type="button">Вызвать замерщика</button>
 </div>
@@ -918,6 +920,12 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
     return {L:L,lo:lo,hi:hi,n:n};
   }
   function add(acc,v,c){acc[0]+=v[0]*c;acc[1]+=v[1]*c}
+  // выбор в калькуляторе: [название, значение, шаг] — для боковой панели и для заявки
+  var TN={eco:'Эконом',std:'Стандарт',prem:'Премиум',idk:'Подберём'}, SN={std:'Стандартный',nonstd:'Нестандартный',idk:'Измерит замерщик'}, WN={thin:'До 7,5 см',mid:'7,5–15 см',thick:'Толще 15 см',idk:'Измерит замерщик'};
+  function picks(){
+    var inc=[];if(on('kit'))inc.push('коробка');if(on('furn'))inc.push('фурнитура');if(on('mount'))inc.push('монтаж');if(on('demont'))inc.push('демонтаж');if(on('deliv'))inc.push('доставка');
+    return [['Отделка',TN[val('tier')||'std'],2],['Проём',SN[val('size')||'std'],3],['Стена',WN[val('wall')||'thin'],3],['Включить',inc.join(', ')||'—',4]];
+  }
   var NAMES={leaf:'Полотна',kit:'Коробка и наличники',dobor:'Доборы',furn:'Фурнитура',mount:'Монтаж',demont:'Демонтаж',deliv:'Доставка'};
   function range(lo,hi){return lo===hi?fmt(lo)+' ₽':fmt(lo)+' – '+fmt(hi)+' ₽'}
   function render(){
@@ -933,10 +941,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
     }else{
       TYPES.forEach(function(t){if(st.cnt[t.id])line(t.name,st.cnt[t.id]+' шт.')});
       if(!r.n)line('Двери','не выбраны');
-      var TN={eco:'Эконом',std:'Стандарт',prem:'Премиум',idk:'Подберём'}, SN={std:'Стандартный',nonstd:'Нестандартный',idk:'Измерит замерщик'}, WN={thin:'До 7,5 см',mid:'7,5–15 см',thick:'Толще 15 см',idk:'Измерит замерщик'};
-      if(st.step>=2)line('Отделка',TN[val('tier')||'std']);
-      if(st.step>=3){line('Проём',SN[val('size')||'std']);line('Стена',WN[val('wall')||'thin'])}
-      if(st.step>=4){var inc=[];if(on('kit'))inc.push('коробка');if(on('furn'))inc.push('фурнитура');if(on('mount'))inc.push('монтаж');if(on('demont'))inc.push('демонтаж');if(on('deliv'))inc.push('доставка');line('Включить',inc.join(', ')||'—')}
+      picks().forEach(function(x){if(st.step>=x[2])line(x[0],x[1])});
     }
     document.querySelectorAll('.cnt output[data-id]').forEach(function(o){o.textContent=st.cnt[o.dataset.id]});
   }
@@ -1030,12 +1035,19 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
       f.querySelectorAll('input:not([type=radio]):not([type=checkbox]),textarea').forEach(function(i){var lb=f.querySelector('label[for="'+i.id+'"]');if(i.value.trim())L.push((lb?lb.textContent.trim():i.name||'Поле')+': '+i.value.trim())});
       var w=f.querySelector('input[name=way]:checked');if(w)L.push('Как связаться: '+w.parentNode.textContent.trim());
       if(f.closest('#calcDlg')){L.push('Расчёт: '+document.getElementById('cdBig').textContent);document.querySelectorAll('#cdLines li').forEach(function(li){L.push('· '+[].map.call(li.children,function(x){return x.textContent.trim()}).join(': '))});
-        var c=document.getElementById('cdCity');if(c&&c.value)L.push('Населённый пункт: '+c.value);TYPES.forEach(function(t){if(st.cnt[t.id])L.push('· '+t.name+': '+st.cnt[t.id]+' шт.')})}
+        var c=document.getElementById('cdCity');if(c&&c.value)L.push('Населённый пункт: '+c.value);var ad=document.getElementById('cdAddr');if(ad&&ad.value.trim()&&!document.getElementById('cdAddrWrap').hidden)L.push('Адрес: '+ad.value.trim());
+        L.push('Двери:');TYPES.forEach(function(t){if(st.cnt[t.id])L.push('· '+t.name+': '+st.cnt[t.id]+' шт.')});picks().forEach(function(x){L.push(x[0]+': '+x[1])})}
+      // карточка двери: модель, отделка, размер, открывание, цена
+      var mt=document.getElementById('title'),mp=document.getElementById('price');
+      if(mt&&mp&&mt.textContent.trim()){L.push('Модель: '+mt.textContent.trim());[['brand',''],['cName','Цвет / отделка: ']].forEach(function(x){var e=document.getElementById(x[0]);if(e&&e.textContent.trim())L.push(x[1]+e.textContent.trim())});
+        [['sizes','Размер: '],['sides','Открывание: ']].forEach(function(x){var b=document.querySelector('#'+x[0]+' button[aria-pressed="true"]');if(b)L.push(x[1]+b.firstChild.textContent.trim())});L.push('Цена: '+mp.textContent.trim())}
+      // страница может добавить своё (кухни: модель или проект из конструктора)
+      if(window.leadInfo){try{L=L.concat(window.leadInfo()||[])}catch(e){}}
       L.push('Страница: '+document.title+' — '+location.href);
       var btn=f.querySelector('[type=submit]'),ok=f.querySelector('.ok');btn.disabled=true;
       fetch(LEAD,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:L.join('\n')})})
         .then(function(r){if(!r.ok)throw 0;ok.textContent=ok.dataset.ok||ok.textContent;ok.hidden=false;f.reset()})
-        .catch(function(){ok.dataset.ok=ok.dataset.ok||ok.textContent;ok.textContent='Не удалось отправить заявку. Позвоните нам: +7 (985) 155-52-23.';ok.hidden=false})
+        .catch(function(){ok.dataset.ok=ok.dataset.ok||ok.textContent;ok.innerHTML='Не удалось отправить заявку. Позвоните нам: <a href="tel:+79851555223">+7 (985) 155-52-23</a>.';ok.hidden=false})
         .then(function(){btn.disabled=false})});
     ph.addEventListener('input',function(){ph.setCustomValidity('')});
   });
