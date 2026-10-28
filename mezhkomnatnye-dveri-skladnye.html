@@ -965,14 +965,15 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
   function spr(k){if(k&&k.indexOf('gx/')===0){var o=sprB('g/'+k.split('/')[1]+'_o.jpg');
       if(GXC[k])return '--gk:'+k+';background-image:url('+GXC[k]+');background-size:100% 100%;background-position:center';
       gxMake(k);return '--gk:'+k+';'+o}return sprB(k)}
-  var CHIPS=[["Со стеклом",{"t":["остекленные"]}],["Глухие",{"t":["глухие"]}],["Белые",{"fam":["white"]}],["Серые",{"fam":["grey"]}],["Тёмные",{"fam":["dark"]}],["Под дерево",{"fam":["wood"]}],["Экошпон",{"cov":["Экошпон"]}],["Эмаль",{"cov":["Эмаль","Эмалит"]}],["Шпон",{"cov":["Шпон"]}],["Массив",{"cov":["Массив"]}],["Классика",{"st":["классика","неоклассика"]}],["Современные",{"st":["модерн","минимализм"]}],["Недорогие",{"pmax":4000}]];
+  var CHIPS=[["Популярные",{"hit":[1]}],["Со стеклом",{"t":["остекленные"]}],["Глухие",{"t":["глухие"]}],["Белые",{"fam":["white"]}],["Серые",{"fam":["grey"]}],["Тёмные",{"fam":["dark"]}],["Под дерево",{"fam":["wood"]}],["Экошпон",{"cov":["Экошпон"]}],["Эмаль",{"cov":["Эмаль","Эмалит"]}],["Шпон",{"cov":["Шпон"]}],["Массив",{"cov":["Массив"]}],["Классика",{"st":["классика","неоклассика"]}],["Современные",{"st":["модерн","минимализм"]}],["Недорогие",{"pmax":4000}]];
   var ROOMS=['in-1','in-2','in-3','in-4','in-5','in-hall'];
   var FAMN={white:'Белые',cream:'Светлые',grey:'Серые',wood:'Под дерево',dark:'Тёмные',other:'Другие'};
   var FAMH={white:'#F4F3EF',cream:'#E9DFCC',grey:'#9C9D9B',wood:'#B88A5C',dark:'#3B302A',other:'#CFCAC2'};
-  var F={fam:[],cov:[],t:[],st:[],b:[],w:[],pmin:null,pmax:null}, PAGE=12, shown=PAGE;
+  var F={hit:[],fam:[],cov:[],t:[],st:[],b:[],w:[],pmin:null,pmax:null}, PAGE=12, shown=PAGE;
   function fmtP(x){return x.toLocaleString('ru-RU').replace(/\s/g,'\u00a0')}
   function prT(x){return x?'от '+fmtP(x)+' ₽':'цена по запросу'}
   function pass(it,skip){
+    if(F.hit.length&&!it.hit)return false;
     if(skip!=='fam'&&F.fam.length&&!F.fam.some(function(f){return it.fam.indexOf(f)>=0}))return false;
     if(skip!=='cov'&&F.cov.length&&F.cov.indexOf(it.cov)<0)return false;
     if(skip!=='t'&&F.t.length&&F.t.indexOf(it.t)<0)return false;
@@ -1025,7 +1026,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
     var c0=it.c.find(function(c){return c.i})||it.c[0];
     var room=ROOMS[k%ROOMS.length];
     var sws=it.c.slice(0,6).map(function(c,j){return '<button type="button" style="background:'+c.h+'" title="'+(c.n||'')+'" aria-label="Цвет '+(c.n||'')+'" aria-pressed="'+(c===c0)+'" data-i="'+(c.i||'')+'" data-n="'+(c.n||'')+'"></button>'}).join('')+(it.c.length>6?'<span>+'+(it.c.length-6)+'</span>':'');
-    d.innerHTML='<a class="box opener" href="model.html#m'+it.id+'" aria-label="'+it.n+'">'+(it.t==='остекленные'?'<span class="tag">Со стеклом</span>':'')+
+    d.innerHTML='<a class="box opener" href="model.html#m'+it.id+'" aria-label="'+it.n+'">'+(it.hit?'<span class="tag">Популярная</span>':it.t==='остекленные'?'<span class="tag">Со стеклом</span>':'')+
       '<span class="op'+(it.op?' '+it.op:it.sk?' fold'+(it.sk==='kn'?' fr':''):'')+'"><img class="room" src="img/'+room+'.jpg" alt="" loading="lazy"><span class="lf"><span class="spr" role="img" aria-label="'+(it.sk==='kn'?'Дверь-книжка ':it.sk?'Дверь-гармошка ':'Межкомнатная дверь ')+it.n+'" style="'+spr(c0.i)+'"></span></span></span></a>'+
       '<div class="sws">'+sws+'</div>'+
       '<div class="row"><a class="n" href="model.html#m'+it.id+'">'+it.n+'</a><span class="pr">'+prT(it.p)+'</span></div>'+
@@ -1056,7 +1057,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
     buildChecks('fSt','st',{'модерн':'Современный','классика':'Классика','неоклассика':'Неоклассика','минимализм':'Минимализм'});
     buildChecks('fB','b');buildChecks('fW','w',null,uniq('w').filter(function(w){return +w>=50}).sort(function(a,b){return a-b}));
   }
-  function resetF(){F={fam:[],cov:[],t:[],st:[],b:[],w:[],pmin:null,pmax:null};document.getElementById('pmin').value='';document.getElementById('pmax').value=''}
+  function resetF(){F={hit:[],fam:[],cov:[],t:[],st:[],b:[],w:[],pmin:null,pmax:null};document.getElementById('pmin').value='';document.getElementById('pmax').value=''}
   document.getElementById('more').addEventListener('click',function(){shown+=PAGE;draw()});
   document.getElementById('sort').addEventListener('change',function(){shown=PAGE;draw()});
   document.getElementById('reset').addEventListener('click',function(){resetF();shown=PAGE;draw()});
@@ -1064,6 +1065,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
   var flt=document.getElementById('flt');
   document.getElementById('fltOpen').addEventListener('click',function(){flt.classList.add('open')});
   document.getElementById('fltClose').addEventListener('click',function(){flt.classList.remove('open')});
+  if(location.hash==='#hit'&&ITEMS.some(function(it){return it.hit}))F.hit=[1];  // ссылка «Популярные модели» с главной
   draw();
 
 })();
