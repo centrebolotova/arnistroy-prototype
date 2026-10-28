@@ -703,7 +703,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
         <div class="res">
           <h3>Ваш ориентировочный расчёт</h3>
           <div class="big" id="cdBig">—</div>
-          <p class="muted" style="font-size:14px">Это вилка по нашему каталогу. Точную сумму менеджер назовёт после замера: она зависит от модели, проёма и фурнитуры. <span class="todo-note">Монтаж скрытых, раздвижных и складных дверей — примерно, уточняем</span></p>
+          <p class="muted" style="font-size:14px">Это вилка по нашему каталогу. Точную сумму менеджер назовёт после замера: она зависит от модели, проёма и фурнитуры. Монтаж скрытых, раздвижных и складных дверей — ориентировочно.</p>
           <form novalidate data-form="Калькулятор">
             <div class="f"><label for="c-name">Имя</label><input id="c-name" autocomplete="name"></div>
             <div class="f"><label for="c-phone">Телефон</label><input id="c-phone" type="tel" autocomplete="tel" placeholder="+7"></div>
@@ -1045,20 +1045,20 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
     var kn=it.sk==='kn';
     document.getElementById('op').className='op'+(it.sk?' fold'+(kn?' fr':''):'');
     document.getElementById('crSk').style.display=it.sk?'contents':'none';
-    document.getElementById('priceNote').innerHTML=it.sk?(kn?'за одну створку · механизм, коробка, наличники и монтаж — отдельно':'за одну створку · механизм и монтаж — отдельно'):'за полотно · коробка, наличники и монтаж — отдельно';
+    document.getElementById('priceNote').innerHTML=it.sk?(kn?'за одно полотно · механизм, коробка и монтаж — по согласованию':'за одно полотно · механизм и монтаж — по согласованию'):'за полотно · коробка, наличники и монтаж — отдельно';
     document.getElementById('sizeLbl').textContent=it.sk?'Размер двери, мм':'Размер полотна, мм';
     document.getElementById('szTh').textContent=it.sk?'Дверь, мм':'Полотно, мм';
     document.querySelector('.stage .hint').textContent=it.sk?'Наведите или нажмите — дверь сложится':'Наведите или нажмите — дверь откроется';
-    document.getElementById('perkM').innerHTML=it.sk?'<b>Монтаж — <mark class="todo">от 3 000 ₽</mark></b><span>'+(kn?'Коробка, створки, механизм':'Направляющая и полотно')+'</span>':PERK0;
+    document.getElementById('perkM').innerHTML=it.sk?'<b>Монтаж — по замеру</b><span>'+(kn?'Коробка, створки, механизм':'Направляющая и полотно')+'</span>':PERK0;
     document.getElementById('kitL').innerHTML=!it.sk?KIT0:kn?
       '<li><span>Две створки<small>Выбранный цвет, соединяются петлями</small></span><span class="v" id="kitLeaf"></span></li>'+
       '<li><span>Механизм складывания<small>Направляющая, ролик, петли между створками</small></span><span class="v">'+TD+'</span></li>'+
       '<li><span>Коробка<small>Рама под размер проёма</small></span><span class="v">'+TD+'</span></li>'+
       '<li><span>Наличники<small>С двух сторон проёма</small></span><span class="v">'+TD+'</span></li>'+
       '<li><span>Доборы<small>Если стена толще коробки</small></span><span class="v">от 1 000 ₽</span></li>'+
-      '<li><span>Монтаж<small>Коробка, створки, настройка механизма</small></span><span class="v"><mark class="todo">от 3 000 ₽</mark></span></li>':
+      '<li><span>Монтаж<small>Коробка, створки, настройка механизма</small></span><span class="v">по замеру</span></li>':
       '<li><span>Дверь-гармошка<small>Панели, направляющая и ручки — '+TD+'</small></span><span class="v" id="kitLeaf"></span></li>'+
-      '<li><span>Монтаж<small>Крепление направляющей и полотна в проёме</small></span><span class="v"><mark class="todo">от 3 000 ₽</mark></span></li>';
+      '<li><span>Монтаж<small>Крепление направляющей и полотна в проёме</small></span><span class="v">по замеру</span></li>';
     document.querySelectorAll('#mount .js-calc').forEach(function(b){b.dataset.type=it.sk?'skl':'mezh'});
   }
   // Якоря внутри карточки (#spec, #kit…) — плавная прокрутка без смены адреса: в hash хранится номер модели
