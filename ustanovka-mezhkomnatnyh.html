@@ -1,6 +1,5 @@
 <!doctype html>
-<html lang="ru"><head><meta name="robots" content="noindex, nofollow"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta charset="utf-8">
-<title>Установка межкомнатных дверей АрниСтрой</title>
+<html lang="ru"><head><meta name="robots" content="noindex, nofollow"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Установка межкомнатных дверей АрниСтрой</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600&display=swap">
@@ -834,7 +833,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
           <h3>Ваш ориентировочный расчёт</h3>
           <div class="big" id="cdBig">—</div>
           <p class="muted" style="font-size:14px">Это вилка по нашему каталогу. Точную сумму менеджер назовёт после замера: она зависит от модели, проёма и фурнитуры. <span class="todo-note">Монтаж скрытых, раздвижных и складных дверей — примерно, уточняем</span></p>
-          <form novalidate data-form>
+          <form novalidate data-form="Калькулятор">
             <div class="f"><label for="c-name">Имя</label><input id="c-name" autocomplete="name"></div>
             <div class="f"><label for="c-phone">Телефон</label><input id="c-phone" type="tel" autocomplete="tel" placeholder="+7"></div>
             <div class="ways" role="radiogroup" aria-label="Как связаться">
@@ -1070,7 +1069,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
       L.push('Заявка с сайта: '+(f.dataset.form||(h?h.textContent.trim():'форма')));
       f.querySelectorAll('input:not([type=radio]):not([type=checkbox]),textarea').forEach(function(i){var lb=f.querySelector('label[for="'+i.id+'"]');if(i.value.trim())L.push((lb?lb.textContent.trim():i.name||'Поле')+': '+i.value.trim())});
       var w=f.querySelector('input[name=way]:checked');if(w)L.push('Как связаться: '+w.parentNode.textContent.trim());
-      if(f.closest('#calcDlg')){L.push('Расчёт: '+document.getElementById('cdBig').textContent);document.querySelectorAll('#cdLines li').forEach(function(li){L.push('· '+li.textContent.replace(/\s+/g,' ').trim())});
+      if(f.closest('#calcDlg')){L.push('Расчёт: '+document.getElementById('cdBig').textContent);document.querySelectorAll('#cdLines li').forEach(function(li){L.push('· '+[].map.call(li.children,function(x){return x.textContent.trim()}).join(': '))});
         var c=document.getElementById('cdCity');if(c&&c.value)L.push('Населённый пункт: '+c.value);TYPES.forEach(function(t){if(st.cnt[t.id])L.push('· '+t.name+': '+st.cnt[t.id]+' шт.')})}
       L.push('Страница: '+document.title+' — '+location.href);
       var btn=f.querySelector('[type=submit]'),ok=f.querySelector('.ok');btn.disabled=true;
