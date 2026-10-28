@@ -111,6 +111,13 @@ body:not([data-hero="night"]) .hero .btn.ghost{background:transparent;color:#151
 body:not([data-hero="night"]) .hero .btn.ghost:hover{background:#151515;color:#fff}
 .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(12,10,8,.78) 0%,rgba(12,10,8,.55) 40%,rgba(12,10,8,.05) 75%)}
 @keyframes zoom{from{transform:scale(1.07)}to{transform:scale(1)}}
+/* первый экран (решение 29.10.2026): на компьютере фото медленно сменяются — Минимализм, Коридор, Прихожая; на телефоне — одно «Вечер» */
+body[data-hero="cycle"] .hero .bg[data-v="min"],body[data-hero="cycle"] .hero .bg[data-v="corr"],body[data-hero="cycle"] .hero .bg[data-v="hall"]{display:block;opacity:0;animation:heroCyc 24s linear infinite}
+body[data-hero="cycle"] .hero .bg[data-v="min"]{animation-delay:-1.5s}
+body[data-hero="cycle"] .hero .bg[data-v="corr"]{animation-delay:6.5s}
+body[data-hero="cycle"] .hero .bg[data-v="hall"]{animation-delay:14.5s}
+@keyframes heroCyc{0%{opacity:0;transform:scale(-1.06,1.06)}5%{opacity:1}33%{opacity:1}38%{opacity:0;transform:scale(-1,1)}100%{opacity:0;transform:scale(-1,1)}}
+@media (prefers-reduced-motion:reduce){body[data-hero="cycle"] .hero .bg{animation:none!important}body[data-hero="cycle"] .hero .bg[data-v="min"]{opacity:1}}
 .hero .wrap{position:relative;z-index:1;width:100%;padding-block:clamp(56px,7vw,96px)}
 .hero .txt{display:grid;gap:26px;max-width:640px}
 .hero .lead{font-size:clamp(17px,1.5vw,20px);color:rgba(255,255,255,.85)}
@@ -880,7 +887,9 @@ dialog.fd{max-width:min(860px,calc(100vw - 24px))}
   });
 
   // варианты для согласования: фото первого экрана, цвет блоков
-  body.setAttribute('data-hero','min');
+  var heroMq=matchMedia('(max-width:760px)');
+  function heroMode(){body.setAttribute('data-hero',heroMq.matches?'night':'cycle')}
+  heroMode();if(heroMq.addEventListener)heroMq.addEventListener('change',heroMode);
   function pick(attr){document.querySelectorAll('button[data-'+attr+']').forEach(function(b){b.addEventListener('click',function(){body.setAttribute('data-'+attr,b.dataset[attr]);document.querySelectorAll('button[data-'+attr+']').forEach(function(x){x.setAttribute('aria-pressed',x===b)})})})}
   pick('hero');
   var vt=document.querySelector('.variants .tgl');

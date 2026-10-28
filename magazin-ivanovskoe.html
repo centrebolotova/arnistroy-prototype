@@ -111,6 +111,13 @@ body:not([data-hero="night"]) .hero .btn.ghost{background:transparent;color:#151
 body:not([data-hero="night"]) .hero .btn.ghost:hover{background:#151515;color:#fff}
 .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(12,10,8,.78) 0%,rgba(12,10,8,.55) 40%,rgba(12,10,8,.05) 75%)}
 @keyframes zoom{from{transform:scale(1.07)}to{transform:scale(1)}}
+/* первый экран (решение 29.10.2026): на компьютере фото медленно сменяются — Минимализм, Коридор, Прихожая; на телефоне — одно «Вечер» */
+body[data-hero="cycle"] .hero .bg[data-v="min"],body[data-hero="cycle"] .hero .bg[data-v="corr"],body[data-hero="cycle"] .hero .bg[data-v="hall"]{display:block;opacity:0;animation:heroCyc 24s linear infinite}
+body[data-hero="cycle"] .hero .bg[data-v="min"]{animation-delay:-1.5s}
+body[data-hero="cycle"] .hero .bg[data-v="corr"]{animation-delay:6.5s}
+body[data-hero="cycle"] .hero .bg[data-v="hall"]{animation-delay:14.5s}
+@keyframes heroCyc{0%{opacity:0;transform:scale(-1.06,1.06)}5%{opacity:1}33%{opacity:1}38%{opacity:0;transform:scale(-1,1)}100%{opacity:0;transform:scale(-1,1)}}
+@media (prefers-reduced-motion:reduce){body[data-hero="cycle"] .hero .bg{animation:none!important}body[data-hero="cycle"] .hero .bg[data-v="min"]{opacity:1}}
 .hero .wrap{position:relative;z-index:1;width:100%;padding-block:clamp(56px,7vw,96px)}
 .hero .txt{display:grid;gap:26px;max-width:640px}
 .hero .lead{font-size:clamp(17px,1.5vw,20px);color:rgba(255,255,255,.85)}
@@ -650,6 +657,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
       <div class="rv"><h3>Образцы отделок</h3><p>Цвета и покрытия разных фабрик: сравните оттенок при обычном свете, а не на экране.</p></div>
       <div class="rv"><h3>Расчёт под ключ</h3><p>Менеджер подберёт комплектацию и посчитает стоимость с доставкой и установкой.</p></div>
     </div></div></section>
+<section><div class="wrap"><div class="head rv"><h2>Кухни и прихожие</h2></div><div class="types rv"><a href="kuhni.html"><b>Кухни Vivat</b><span>91 готовая модель от 19 290 ₽, модульная кухня под ваши размеры, 3D-конструктор</span></a><a href="prihozhie.html"><b>Прихожие Vivat «Стиль»</b><span>Шкаф, тумба, вешалка и зеркало от 8 295 ₽ — вместе с входной дверью</span></a></div><p class="note">Кухонь в салоне нет — есть собранные модули Vivat и образцы фасадов.</p></div></section>
 <section><div class="wrap"><div class="head rv"><h2>Отзывы об этом салоне</h2></div><div class="revs2"><figure class="rv"><q>Цвет точно такой, как на образце, никаких сюрпризов.</q><figcaption>Диана Р. · Яндекс Карты</figcaption></figure><figure class="rv"><q>Покупали двери 3 года назад и сейчас — всё отличного качества.</q><figcaption>Никита Н. · Яндекс Карты</figcaption></figure></div><p class="note"><a class="arrow" href="https://yandex.ru/maps/org/arnistroy/3342629458/reviews/" target="_blank" rel="noopener">Все отзывы на Яндекс Картах</a></p></div></section>
 <section class="grad" aria-labelledby="seo-h"><div class="wrap seo"><div class="txt rv"><h2 id="seo-h">Магазин дверей в Ивановском</h2>
       <p>В салоне на адресе Серпуховский район, д. Ивановское, ул. Пролетарская, 51 можно выбрать межкомнатные и входные двери, фурнитуру, заказать замер, доставку и установку. Ищете магазин дверей в Ивановском — приезжайте сравнить двери вживую.</p>
@@ -835,7 +843,9 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
   });
 
   // варианты для согласования: фото первого экрана, цвет блоков
-  body.setAttribute('data-hero','min');
+  var heroMq=matchMedia('(max-width:760px)');
+  function heroMode(){body.setAttribute('data-hero',heroMq.matches?'night':'cycle')}
+  heroMode();if(heroMq.addEventListener)heroMq.addEventListener('change',heroMode);
   function pick(attr){document.querySelectorAll('button[data-'+attr+']').forEach(function(b){b.addEventListener('click',function(){body.setAttribute('data-'+attr,b.dataset[attr]);document.querySelectorAll('button[data-'+attr+']').forEach(function(x){x.setAttribute('aria-pressed',x===b)})})})}
   pick('hero');
   var vt=document.querySelector('.variants .tgl');
