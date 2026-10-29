@@ -426,14 +426,16 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
 .js .rv.pre{opacity:0;transform:translateY(24px)}
 .js .rv{transition:opacity .9s var(--ease),transform .9s var(--ease)}
 @media (prefers-reduced-motion:reduce){.js .rv.pre{opacity:1;transform:none}}
-/* полоса акций под первым экраном */
-.promo-strip{border-bottom:1px solid var(--line)}
-.promo-strip a{display:flex;flex-wrap:wrap;align-items:center;gap:10px 30px;padding-block:18px;font-size:clamp(14px,1.2vw,15px);color:var(--ink);text-decoration:none}
-.promo-strip span{color:var(--muted);position:relative}
-.promo-strip span+span::before{content:"";position:absolute;left:-16px;top:50%;width:4px;height:4px;margin-top:-2px;border-radius:50%;background:var(--accent)}
-.promo-strip b{font-weight:500;margin-left:auto;white-space:nowrap;transition:color .3s}
+/* полоса акций под первым экраном: тёплый молочный фон, цифры — акцентом */
+.promo-strip{background:var(--tint);border-bottom:1px solid var(--line)}
+.promo-strip a{display:flex;flex-wrap:wrap;align-items:center;gap:10px 34px;padding-block:22px;font-size:clamp(15px,1.25vw,17px);color:var(--ink);text-decoration:none}
+.promo-strip i{font-style:normal;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.promo-strip span{position:relative}
+.promo-strip em{font-style:normal;font-weight:500;color:var(--accent)}
+.promo-strip span+span::before{content:"";position:absolute;left:-18px;top:50%;width:4px;height:4px;margin-top:-2px;border-radius:50%;background:var(--accent)}
+.promo-strip b{font-weight:500;margin-left:auto;white-space:nowrap;padding-bottom:2px;border-bottom:1px solid currentColor;transition:color .3s}
 .promo-strip a:hover b{color:var(--accent)}
-@media (max-width:760px){.promo-strip a{flex-direction:column;align-items:flex-start;gap:6px;padding-block:16px}.promo-strip span+span::before{display:none}.promo-strip b{margin-left:0;margin-top:6px}}
+@media (max-width:760px){.promo-strip a{flex-direction:column;align-items:flex-start;gap:8px;padding-block:20px}.promo-strip span+span::before{display:none}.promo-strip b{margin-left:0;margin-top:6px}}
 
 /* ===== страница каталога ===== */
 .crumbs{font-size:13px;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap;padding-top:28px}
