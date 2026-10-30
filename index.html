@@ -749,7 +749,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
         <div class="chk">
           <label><input type="checkbox" name="kit" checked><span><b style="font-weight:500">Коробка и наличники</b><small>Для межкомнатных; у входных коробка уже в комплекте</small></span><span class="pr"></span></label>
           <label><input type="checkbox" name="furn" checked><span><b style="font-weight:500">Фурнитура</b><small>Ручка, петли, защёлка или замок</small></span><span class="pr"></span></label>
-          <label><input type="checkbox" name="mount" checked><span><b style="font-weight:500">Монтаж</b><small>Установка коробки, полотна, наличников и доборов. Скрытые, раздвижные и нестандартные — дороже</small></span><span class="pr">межкомнатная — 4 500 ₽<br>входная — от 6 000 ₽</span></label>
+          <label><input type="checkbox" name="mount" checked><span><b style="font-weight:500">Монтаж</b><small>Установка коробки, полотна, наличников и доборов. Скрытые, раздвижные и нестандартные — дороже</small></span><span class="pr">межкомнатная — от 4 500 ₽<br>входная — от 6 000 ₽</span></label>
           <label><input type="checkbox" name="demont"><span><b style="font-weight:500">Демонтаж старой двери</b><small>Если меняете дверь</small></span><span class="pr"></span></label>
           <label><input type="checkbox" name="deliv" checked><span><b style="font-weight:500">Доставка</b><small>По Серпуховскому району и соседним городам</small></span><span class="pr"></span></label>
         </div>
@@ -910,7 +910,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
     var ul=document.getElementById('cdLines');ul.innerHTML='';
     function line(a,b){var li=document.createElement('li');li.innerHTML='<span>'+a+'</span><span>'+b+'</span>';ul.appendChild(li)}
     if(fin){
-      Object.keys(r.L).forEach(function(k){var v=r.L[k];if(v[1])line(NAMES[k],range(v[0],v[1]))});
+      Object.keys(r.L).forEach(function(k){var v=r.L[k];if(v[1])line(NAMES[k],k==='mount'?'от '+fmt(v[0])+' ₽':range(v[0],v[1]))});  // монтаж — «от»
     }else{
       TYPES.forEach(function(t){if(st.cnt[t.id])line(t.name,st.cnt[t.id]+' шт.')});
       if(!r.n)line('Двери','не выбраны');

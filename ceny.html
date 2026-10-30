@@ -511,7 +511,9 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
 }
 .op.fold.fr .lf{transform-origin:right center}
 .flt .close{display:none;justify-self:end;background:none;border:0;font-size:28px;cursor:pointer;color:var(--ink)}
-@media (max-width:520px){.grid{gap:10px}.pc .n{font-size:15px}.pc .m{display:none}}
+@media (max-width:520px){.grid{gap:10px}.pc{min-width:0}.pc .n{font-size:15px}.pc .m{display:none}
+  /* телефон: название и цена — в две строки, иначе длинная цена наезжает на название и распирает колонку */
+  .pc .row{flex-direction:column;align-items:flex-start;gap:2px}.pc .pr{font-size:14px;color:var(--muted)}.pc .sws{flex-wrap:wrap}}
 .svc{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,2.4vw,36px)}
 .svc div{display:grid;gap:8px;align-content:start;border-top:1px solid var(--ink);padding-top:18px}
 .svc p{color:var(--muted);font-size:15px}
@@ -712,7 +714,7 @@ dialog.fd{max-width:min(860px,calc(100vw - 24px))}
 <div class="wrap">
   <nav class="crumbs" aria-label="Навигация"><a href="index.html">Главная</a><span>/</span><span>Цены</span></nav>
   <div class="u-head">
-    <div class="txt"><h1>Сколько стоит дверь с установкой</h1><p class="lead">Цена двери под ключ складывается из полотна, коробки и наличников, доборов, фурнитуры, монтажа и доставки. Показываем, сколько стоит каждая часть и сколько получается в итоге — на четырёх примерах.</p><ul class="facts2"><li><b>от 1 800 ₽</b><span>межкомнатное полотно</span></li><li><b>4 500 ₽</b><span>монтаж межкомнатной</span></li><li><b>от 7 625 ₽</b><span>входная дверь</span></li><li><b>6 000 ₽</b><span>монтаж входной</span></li></ul><div class="u-cta"><button class="btn js-calc" type="button">Рассчитать свою дверь</button><button class="btn ghost js-zamer" type="button">Вызвать замерщика</button></div></div>
+    <div class="txt"><h1>Сколько стоит дверь с установкой</h1><p class="lead">Цена двери под ключ складывается из полотна, коробки и наличников, доборов, фурнитуры, монтажа и доставки. Показываем, сколько стоит каждая часть и сколько получается в итоге — на четырёх примерах.</p><ul class="facts2"><li><b>от 1 800 ₽</b><span>межкомнатное полотно</span></li><li><b>от 4 500 ₽</b><span>монтаж межкомнатной</span></li><li><b>от 7 625 ₽</b><span>входная дверь</span></li><li><b>от 6 000 ₽</b><span>монтаж входной</span></li></ul><div class="u-cta"><button class="btn js-calc" type="button">Рассчитать свою дверь</button><button class="btn ghost js-zamer" type="button">Вызвать замерщика</button></div></div>
     <div class="ph"><img src="img/hero-corr.jpg" alt="Коридор с дверями" class="flip"></div>
   </div>
 </div>
@@ -825,7 +827,7 @@ dialog.fd{max-width:min(860px,calc(100vw - 24px))}
         <div class="chk">
           <label><input type="checkbox" name="kit" checked><span><b style="font-weight:500">Коробка и наличники</b><small>Для межкомнатных; у входных коробка уже в комплекте</small></span><span class="pr"></span></label>
           <label><input type="checkbox" name="furn" checked><span><b style="font-weight:500">Фурнитура</b><small>Ручка, петли, защёлка или замок</small></span><span class="pr"></span></label>
-          <label><input type="checkbox" name="mount" checked><span><b style="font-weight:500">Монтаж</b><small>Установка коробки, полотна, наличников и доборов. Скрытые, раздвижные и нестандартные — дороже</small></span><span class="pr">межкомнатная — 4 500 ₽<br>входная — от 6 000 ₽</span></label>
+          <label><input type="checkbox" name="mount" checked><span><b style="font-weight:500">Монтаж</b><small>Установка коробки, полотна, наличников и доборов. Скрытые, раздвижные и нестандартные — дороже</small></span><span class="pr">межкомнатная — от 4 500 ₽<br>входная — от 6 000 ₽</span></label>
           <label><input type="checkbox" name="demont"><span><b style="font-weight:500">Демонтаж старой двери</b><small>Если меняете дверь</small></span><span class="pr"></span></label>
           <label><input type="checkbox" name="deliv" checked><span><b style="font-weight:500">Доставка</b><small>По Серпуховскому району и соседним городам</small></span><span class="pr"></span></label>
         </div>
@@ -985,7 +987,7 @@ dialog.fd{max-width:min(860px,calc(100vw - 24px))}
     var ul=document.getElementById('cdLines');ul.innerHTML='';
     function line(a,b){var li=document.createElement('li');li.innerHTML='<span>'+a+'</span><span>'+b+'</span>';ul.appendChild(li)}
     if(fin){
-      Object.keys(r.L).forEach(function(k){var v=r.L[k];if(v[1])line(NAMES[k],range(v[0],v[1]))});
+      Object.keys(r.L).forEach(function(k){var v=r.L[k];if(v[1])line(NAMES[k],k==='mount'?'от '+fmt(v[0])+' ₽':range(v[0],v[1]))});  // монтаж — «от»
     }else{
       TYPES.forEach(function(t){if(st.cnt[t.id])line(t.name,st.cnt[t.id]+' шт.')});
       if(!r.n)line('Двери','не выбраны');

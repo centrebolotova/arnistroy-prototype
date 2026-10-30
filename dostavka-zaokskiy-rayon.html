@@ -511,7 +511,9 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
 }
 .op.fold.fr .lf{transform-origin:right center}
 .flt .close{display:none;justify-self:end;background:none;border:0;font-size:28px;cursor:pointer;color:var(--ink)}
-@media (max-width:520px){.grid{gap:10px}.pc .n{font-size:15px}.pc .m{display:none}}
+@media (max-width:520px){.grid{gap:10px}.pc{min-width:0}.pc .n{font-size:15px}.pc .m{display:none}
+  /* телефон: название и цена — в две строки, иначе длинная цена наезжает на название и распирает колонку */
+  .pc .row{flex-direction:column;align-items:flex-start;gap:2px}.pc .pr{font-size:14px;color:var(--muted)}.pc .sws{flex-wrap:wrap}}
 .svc{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,2.4vw,36px)}
 .svc div{display:grid;gap:8px;align-content:start;border-top:1px solid var(--ink);padding-top:18px}
 .svc p{color:var(--muted);font-size:15px}
@@ -672,7 +674,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
 <main>
 <div class="wrap"><nav class="crumbs" aria-label="Навигация"><a href="index.html">Главная</a><span>/</span><a href="dostavka.html">Доставка</a><span>/</span><span>Заокский район</span></nav><div class="c-head" style="padding-block:18px 28px;display:grid;gap:16px"><h1 style="font-size:clamp(32px,3.8vw,54px)">Двери с доставкой и установкой в Заокском районе</h1>
   <p class="lead" style="max-width:68ch">Межкомнатные и входные двери из салонов «АрниСтрой» в Серпухове — с доставкой в 59 населённых пунктов: 118 км ч Заокский, 87 км, Азаровка "114 км", Березкино, Бобровый Остров, Болотово и другие. Цена доставки фиксированная и известна заранее.</p>
-  <ul class="facts2"><li><b>59</b><span>населённых пунктов</span></li><li><b>1 600 ₽–4 000 ₽</b><span>доставка</span></li><li><b>4 500 ₽</b><span>монтаж межкомнатной</span></li><li><b>6 000 ₽</b><span>монтаж входной</span></li></ul>
+  <ul class="facts2"><li><b>59</b><span>населённых пунктов</span></li><li><b>1 600 ₽–4 000 ₽</b><span>доставка</span></li><li><b>от 4 500 ₽</b><span>монтаж межкомнатной</span></li><li><b>от 6 000 ₽</b><span>монтаж входной</span></li></ul>
   <div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn ghost" href="zaokskiy.html">Двери в Заокском</a></div></div></div>
 <section class="grad" style="padding-top:clamp(40px,5vw,72px)"><div class="wrap">
   <div class="head rv"><h2>Цены доставки по посёлкам</h2></div>
@@ -684,7 +686,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
 <section><div class="wrap kv">
   <div class="rv" style="display:grid;gap:14px"><h2 style="font-size:clamp(26px,2.6vw,36px)">Что привезём</h2><p class="muted"><a href="mezhkomnatnye-dveri.html">Межкомнатные двери</a> от 1 800 ₽ за полотно, <a href="vhodnye-dveri.html">входные</a> от 7 625 ₽ — для квартир, частных домов и дач, в том числе <a href="vhodnye-dveri-s-termorazryvom.html">с терморазрывом</a>. <a href="furnitura.html">Фурнитура</a> — отдельно или в комплекте.</p></div>
   <div class="rv" style="display:grid;gap:14px"><h2 style="font-size:clamp(26px,2.6vw,36px)">Монтаж на месте</h2><div class="zone">
-      <div class="rv"><h3>Межкомнатная дверь</h3><p>Монтаж — 4 500 ₽: коробка, полотно, наличники. Добор — от 1 000 ₽, врезка замка — 1 000 ₽.</p></div>
+      <div class="rv"><h3>Межкомнатная дверь</h3><p>Монтаж — от 4 500 ₽: коробка, полотно, наличники. Добор — от 1 000 ₽, врезка замка — 1 000 ₽.</p></div>
       <div class="rv"><h3>Входная дверь</h3><p>Квартирная — 6 000 ₽, с терморазрывом — 7 000 ₽. Демонтаж старой металлической — 1 000 ₽.</p></div>
       <div class="rv"><h3>Замер</h3><p>Выезд замерщика за пределы Серпухова — 50% стоимости доставки, не меньше 500 ₽.</p></div>
     </div></div>
@@ -791,7 +793,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
         <div class="chk">
           <label><input type="checkbox" name="kit" checked><span><b style="font-weight:500">Коробка и наличники</b><small>Для межкомнатных; у входных коробка уже в комплекте</small></span><span class="pr"></span></label>
           <label><input type="checkbox" name="furn" checked><span><b style="font-weight:500">Фурнитура</b><small>Ручка, петли, защёлка или замок</small></span><span class="pr"></span></label>
-          <label><input type="checkbox" name="mount" checked><span><b style="font-weight:500">Монтаж</b><small>Установка коробки, полотна, наличников и доборов. Скрытые, раздвижные и нестандартные — дороже</small></span><span class="pr">межкомнатная — 4 500 ₽<br>входная — от 6 000 ₽</span></label>
+          <label><input type="checkbox" name="mount" checked><span><b style="font-weight:500">Монтаж</b><small>Установка коробки, полотна, наличников и доборов. Скрытые, раздвижные и нестандартные — дороже</small></span><span class="pr">межкомнатная — от 4 500 ₽<br>входная — от 6 000 ₽</span></label>
           <label><input type="checkbox" name="demont"><span><b style="font-weight:500">Демонтаж старой двери</b><small>Если меняете дверь</small></span><span class="pr"></span></label>
           <label><input type="checkbox" name="deliv" checked><span><b style="font-weight:500">Доставка</b><small>По Серпуховскому району и соседним городам</small></span><span class="pr"></span></label>
         </div>
@@ -951,7 +953,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
     var ul=document.getElementById('cdLines');ul.innerHTML='';
     function line(a,b){var li=document.createElement('li');li.innerHTML='<span>'+a+'</span><span>'+b+'</span>';ul.appendChild(li)}
     if(fin){
-      Object.keys(r.L).forEach(function(k){var v=r.L[k];if(v[1])line(NAMES[k],range(v[0],v[1]))});
+      Object.keys(r.L).forEach(function(k){var v=r.L[k];if(v[1])line(NAMES[k],k==='mount'?'от '+fmt(v[0])+' ₽':range(v[0],v[1]))});  // монтаж — «от»
     }else{
       TYPES.forEach(function(t){if(st.cnt[t.id])line(t.name,st.cnt[t.id]+' шт.')});
       if(!r.n)line('Двери','не выбраны');
