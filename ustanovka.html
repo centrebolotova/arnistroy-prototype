@@ -157,6 +157,14 @@ body[data-hero="cycle"] .hero .bg[data-v="hall"]{animation-delay:14.5s}
 .op.slide .lf{transform-origin:center;transition:transform 1.1s var(--ease)}
 .opener:hover .op.slide .lf,.opener:focus-visible .op.slide .lf,.op.slide.open .lf{transform:translateX(72%)}
 @media (prefers-reduced-motion:reduce){.op .lf{transition:none}}
+/* коробка стоит, открывается только полотно (02.11.2026): data-lb="x0,y0,x1" — где на фото полотно (leaf_all.py).
+   .jamb — то же фото, неподвижное, с «дырой» на месте полотна (за ней видна комната); .lf обрезано по полотну и поворачивается на петлях */
+.op[data-lb]{--lx:0%;--ty:0%;--rx:100%}
+.op .jamb{position:absolute;inset:0;z-index:1;pointer-events:none;clip-path:polygon(evenodd,0 0,100% 0,100% 100%,0 100%,0 0,var(--lx) var(--ty),var(--lx) 100%,var(--rx) 100%,var(--rx) var(--ty),var(--lx) var(--ty))}
+.op .jamb>*{display:block;width:100%;height:100%;object-fit:fill}
+.op[data-lb] .lf{z-index:2;clip-path:inset(var(--ty) calc(100% - var(--rx)) 0 var(--lx));transform-origin:var(--rx) 50%;box-shadow:none}
+.op.fold[data-lb] .lf,.op.inv[data-lb] .lf{transform-origin:var(--lx) 50%}
+.op.slide[data-lb] .lf{transform-origin:center}
 
 /* ===== боли ===== */
 .pains{border-top:1px solid var(--ink)}
@@ -1114,6 +1122,20 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
   (function(){var t='';if(!t)return;var rows=document.querySelectorAll('#miniCnt .r');var ids=['mezh','vhod','skr','razd','skl'];
     rows.forEach(function(r,i){var o=r.querySelector('output');var want=ids[i]===t?1:0;var cur=+o.textContent;while(cur>want){r.querySelector('[data-d="-1"]').click();cur--}while(cur<want){r.querySelector('[data-d="1"]').click();cur++}})})();
 
+})();
+</script>
+<script>
+// Неподвижная коробка вокруг открывающегося полотна: для каждой .op[data-lb] — копия фото в .jamb (её цвет повторяет полотно).
+(function(){
+  function vars(op){var b=(op.dataset.lb||'').split(',').map(Number);if(b.length<3||b.some(isNaN))b=[0,0,1];
+    op.style.setProperty('--lx',b[0]*100+'%');op.style.setProperty('--ty',b[1]*100+'%');op.style.setProperty('--rx',b[2]*100+'%')}
+  function setup(op){if(op._jamb)return;var lf=op.querySelector('.lf'),src=lf&&lf.firstElementChild;if(!src)return;
+    var j=document.createElement('span'),cl=src.cloneNode(true);j.className='jamb';j.setAttribute('aria-hidden','true');
+    ['id','role','aria-label','alt'].forEach(function(a){cl.removeAttribute(a)});j.appendChild(cl);op.appendChild(j);op._jamb=j;vars(op);
+    new MutationObserver(function(){cl.setAttribute('style',src.getAttribute('style')||'');if(src.tagName==='IMG')cl.src=src.src;cl.className=src.className}).observe(src,{attributes:true,attributeFilter:['style','src','class']});
+    new MutationObserver(function(){vars(op)}).observe(op,{attributes:true,attributeFilter:['data-lb']})}
+  function scan(){document.querySelectorAll('.op[data-lb]').forEach(setup)}
+  scan();new MutationObserver(scan).observe(document.body,{childList:true,subtree:true});
 })();
 </script>
 
