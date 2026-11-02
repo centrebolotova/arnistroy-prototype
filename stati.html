@@ -165,6 +165,10 @@ body[data-hero="cycle"] .hero .bg[data-v="hall"]{animation-delay:14.5s}
 .op[data-lb] .lf{z-index:2;clip-path:inset(var(--ty) calc(100% - var(--rx)) 0 var(--lx));transform-origin:var(--rx) 50%;box-shadow:none}
 .op.fold[data-lb] .lf,.op.inv[data-lb] .lf{transform-origin:var(--lx) 50%}
 .op.slide[data-lb] .lf{transform-origin:center}
+/* ручка на фото справа (.hr, hand_all.py) — петли слева: дверь открывается со стороны ручки */
+.op.hr .lf{transform-origin:left center}
+.op.hr[data-lb] .lf{transform-origin:var(--lx) 50%}
+.opener:hover .op.hr .lf,.opener:focus-visible .op.hr .lf,.op.hr.open .lf{transform:rotateY(-55deg)}
 
 /* ===== боли ===== */
 .pains{border-top:1px solid var(--ink)}

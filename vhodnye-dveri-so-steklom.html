@@ -165,6 +165,10 @@ body[data-hero="cycle"] .hero .bg[data-v="hall"]{animation-delay:14.5s}
 .op[data-lb] .lf{z-index:2;clip-path:inset(var(--ty) calc(100% - var(--rx)) 0 var(--lx));transform-origin:var(--rx) 50%;box-shadow:none}
 .op.fold[data-lb] .lf,.op.inv[data-lb] .lf{transform-origin:var(--lx) 50%}
 .op.slide[data-lb] .lf{transform-origin:center}
+/* ручка на фото справа (.hr, hand_all.py) — петли слева: дверь открывается со стороны ручки */
+.op.hr .lf{transform-origin:left center}
+.op.hr[data-lb] .lf{transform-origin:var(--lx) 50%}
+.opener:hover .op.hr .lf,.opener:focus-visible .op.hr .lf,.op.hr.open .lf{transform:rotateY(-55deg)}
 
 /* ===== боли ===== */
 .pains{border-top:1px solid var(--ink)}
@@ -1087,7 +1091,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
     var url='vhod-model.html#v'+it.id;
     var sws=it.c.slice(0,6).map(function(c,j){return '<button type="button" style="background:linear-gradient(90deg,'+c.ho+' 50%,'+c.hi+' 50%)" title="'+c.n+'" aria-label="Цвет '+c.n+'" aria-pressed="'+(j===0)+'" data-j="'+j+'"></button>'}).join('')+(it.c.length>6?'<span>+'+(it.c.length-6)+'</span>':'');
     d.innerHTML='<a class="box opener" href="'+url+'" aria-label="'+it.n+'">'+(tag(it)?'<span class="tag">'+tag(it)+'</span>':'')+
-      '<span class="op"'+(it.lb?' data-lb="'+it.lb+'"':'')+'><img class="room" src="img/in-hall.jpg" alt="" loading="lazy"><span class="lf"><span class="spr" role="img"></span></span></span></a>'+
+      '<span class="op'+(it.hs==='R'?' hr':'')+'"'+(it.lb?' data-lb="'+it.lb+'"':'')+'><img class="room" src="img/in-hall.jpg" alt="" loading="lazy"><span class="lf"><span class="spr" role="img"></span></span></span></a>'+
       '<div class="sws"><span class="dots">'+sws+'</span><span class="side" role="group" aria-label="Сторона"><button type="button" data-v="o">Снаружи</button><button type="button" data-v="i">Изнутри</button></span></div>'+
       '<div class="row"><a class="n" href="'+url+'">'+it.n+'</a><span class="pr">'+prT(it.p)+'</span></div>'+
       '<span class="m">'+meta(it)+'</span>'+
