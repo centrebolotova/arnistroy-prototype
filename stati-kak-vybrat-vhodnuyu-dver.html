@@ -652,6 +652,16 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
 .kv dt{color:var(--muted)}.kv dd{margin:0}
 @media (max-width:820px){.kv{grid-template-columns:1fr}}
 
+.wchips{display:flex;gap:8px;flex-wrap:wrap}
+.cs-spec{display:grid;grid-template-columns:auto 1fr;margin:0;border-top:1px solid var(--ink)}
+.cs-spec dt,.cs-spec dd{margin:0;padding:11px 0;border-bottom:1px solid var(--line);font-size:15px}
+.cs-spec dt{color:var(--muted);padding-right:20px}
+.steps2{display:grid;gap:clamp(20px,2.4vw,36px);list-style:none;margin:0;padding:0;counter-reset:s}
+.steps2 li{display:grid;gap:10px;align-content:start}
+.steps2 li::before{counter-increment:s;content:"0" counter(s);font-size:clamp(28px,2.8vw,40px);font-weight:300;line-height:1;color:var(--accent);padding-bottom:12px;border-bottom:1px solid var(--line)}
+.steps2 p{color:var(--muted);font-size:15px}
+@media (max-width:560px){.steps2{grid-template-columns:1fr!important}}
+
 .art{max-width:780px;padding-bottom:clamp(40px,5vw,72px)}
 .art .a-head{display:grid;gap:14px;padding-block:18px 26px;border-bottom:1px solid var(--line);margin-bottom:8px}
 .art .a-head h1{font-size:clamp(32px,4vw,54px);line-height:1.08}

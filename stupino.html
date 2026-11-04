@@ -652,6 +652,16 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
 .kv dt{color:var(--muted)}.kv dd{margin:0}
 @media (max-width:820px){.kv{grid-template-columns:1fr}}
 
+.wchips{display:flex;gap:8px;flex-wrap:wrap}
+.cs-spec{display:grid;grid-template-columns:auto 1fr;margin:0;border-top:1px solid var(--ink)}
+.cs-spec dt,.cs-spec dd{margin:0;padding:11px 0;border-bottom:1px solid var(--line);font-size:15px}
+.cs-spec dt{color:var(--muted);padding-right:20px}
+.steps2{display:grid;gap:clamp(20px,2.4vw,36px);list-style:none;margin:0;padding:0;counter-reset:s}
+.steps2 li{display:grid;gap:10px;align-content:start}
+.steps2 li::before{counter-increment:s;content:"0" counter(s);font-size:clamp(28px,2.8vw,40px);font-weight:300;line-height:1;color:var(--accent);padding-bottom:12px;border-bottom:1px solid var(--line)}
+.steps2 p{color:var(--muted);font-size:15px}
+@media (max-width:560px){.steps2{grid-template-columns:1fr!important}}
+
 </style>
 
 <header class="top">
@@ -686,6 +696,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
   </div>
 </div>
 <section class="grad" style="padding-top:clamp(40px,5vw,72px)"><div class="wrap">
+  <div class="rv" style="display:flex;gap:24px;flex-wrap:wrap;margin-bottom:28px"><a class="arrow" href="stupino-mezhkomnatnye-dveri.html">Межкомнатные двери в Ступино</a> · <a class="arrow" href="stupino-vhodnye-dveri.html">Входные двери в Ступино</a></div>
   <div class="head rv"><h2>Что возим в Ступино</h2></div>
   <div class="zone">
     <div class="rv"><h3><a href="mezhkomnatnye-dveri.html">Межкомнатные двери</a></h3><p>От 1 800 ₽ за полотно: экошпон, эмаль, шпон, ПВХ, массив. Глухие и со стеклом.</p></div>

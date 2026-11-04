@@ -652,6 +652,16 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
 .kv dt{color:var(--muted)}.kv dd{margin:0}
 @media (max-width:820px){.kv{grid-template-columns:1fr}}
 
+.wchips{display:flex;gap:8px;flex-wrap:wrap}
+.cs-spec{display:grid;grid-template-columns:auto 1fr;margin:0;border-top:1px solid var(--ink)}
+.cs-spec dt,.cs-spec dd{margin:0;padding:11px 0;border-bottom:1px solid var(--line);font-size:15px}
+.cs-spec dt{color:var(--muted);padding-right:20px}
+.steps2{display:grid;gap:clamp(20px,2.4vw,36px);list-style:none;margin:0;padding:0;counter-reset:s}
+.steps2 li{display:grid;gap:10px;align-content:start}
+.steps2 li::before{counter-increment:s;content:"0" counter(s);font-size:clamp(28px,2.8vw,40px);font-weight:300;line-height:1;color:var(--accent);padding-bottom:12px;border-bottom:1px solid var(--line)}
+.steps2 p{color:var(--muted);font-size:15px}
+@media (max-width:560px){.steps2{grid-template-columns:1fr!important}}
+
 </style>
 
 <header class="top">
@@ -681,11 +691,12 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
 <div class="wrap">
   <nav class="crumbs" aria-label="Навигация"><a href="index.html">Главная</a><span>/</span><a href="dostavka.html">Доставка</a><span>/</span><span>Тула</span></nav>
   <div class="u-head">
-    <div class="txt"><h1>Двери в Туле с доставкой и установкой</h1><p class="lead">Двери в Туле с доставкой: входные и межкомнатные двери из салонов «АрниСтрой» в Серпухове. Доставка — от 4 000 ₽; в Туле только доставка, без монтажа.</p><ul class="facts2"><li><b><b>от 4 000 ₽</b></b><span>доставка в Туле</span></li><li><b>только</b><span>доставка, без монтажа</span></li><li><b>от 1 800 ₽</b><span>межкомнатные двери</span></li></ul><div class="u-cta"><button class="btn js-zamer" type="button">Вызвать замерщика</button><a class="btn ghost" href="kalkulyator.html">Рассчитать с доставкой</a></div></div>
+    <div class="txt"><h1>Двери в Туле с доставкой и установкой</h1><p class="lead">Двери в Туле с доставкой и установкой: входные и межкомнатные двери из салонов «АрниСтрой» в Серпухове. Замер, доставка от 4 000 ₽ и монтаж.</p><ul class="facts2"><li><b><b>от 4 000 ₽</b></b><span>доставка в Туле</span></li><li><b>от 4 500 ₽</b><span>монтаж межкомнатной</span></li><li><b>от 6 000 ₽</b><span>монтаж входной</span></li><li><b>от 1 800 ₽</b><span>межкомнатные двери</span></li></ul><div class="u-cta"><button class="btn js-zamer" type="button">Вызвать замерщика</button><a class="btn ghost" href="kalkulyator.html">Рассчитать с доставкой</a></div></div>
     <div class="ph"><img src="img/hero-corr.jpg" alt="Коридор с дверями" class="flip"></div>
   </div>
 </div>
 <section class="grad" style="padding-top:clamp(40px,5vw,72px)"><div class="wrap">
+  <div class="rv" style="display:flex;gap:24px;flex-wrap:wrap;margin-bottom:28px"><a class="arrow" href="tula-mezhkomnatnye-dveri.html">Межкомнатные двери в Туле</a> · <a class="arrow" href="tula-vhodnye-dveri.html">Входные двери в Туле</a></div>
   <div class="head rv"><h2>Что возим в Туле</h2></div>
   <div class="zone">
     <div class="rv"><h3><a href="mezhkomnatnye-dveri.html">Межкомнатные двери</a></h3><p>От 1 800 ₽ за полотно: экошпон, эмаль, шпон, ПВХ, массив. Глухие и со стеклом.</p></div>
@@ -712,7 +723,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
       <b style="font-weight:500;margin-top:14px">Каталог</b>
       <a href="mezhkomnatnye-dveri.html">Межкомнатные двери</a><a href="vhodnye-dveri.html">Входные двери</a>
     </aside></div></section>
-<section aria-labelledby="faq-h"><div class="wrap"><div class="head rv"><h2 id="faq-h">Вопросы о дверях в Туле</h2></div><div class="faq rv"><details><summary>Сколько стоит доставка дверей в Туле?</summary><p>Доставка в Туле — <b>от 4 000 ₽</b>. Её можно включить в расчёт в калькуляторе.</p></details><details><summary>Приедет ли замерщик в Туле?</summary><p>Нет: сюда только доставка, без замера и монтажа.</p></details><details><summary>Где посмотреть двери вживую?</summary><p>В салонах «АрниСтрой» на Московском шоссе, 49 в Серпухове и в Ивановском.</p></details></div></div></section>
+<section aria-labelledby="faq-h"><div class="wrap"><div class="head rv"><h2 id="faq-h">Вопросы о дверях в Туле</h2></div><div class="faq rv"><details><summary>Сколько стоит доставка дверей в Туле?</summary><p>Доставка в Туле — <b>от 4 000 ₽</b>. Её можно включить в расчёт в калькуляторе.</p></details><details><summary>Приедет ли замерщик в Туле?</summary><p>Да. Выезд — 50% стоимости доставки, не меньше 500 ₽.</p></details><details><summary>Где посмотреть двери вживую?</summary><p>В салонах «АрниСтрой» на Московском шоссе, 49 в Серпухове и в Ивановском.</p></details></div></div></section>
 <section class="final" id="form" aria-labelledby="form-h">
   <div class="wrap">
     <div style="display:grid;gap:18px" class="rv">
