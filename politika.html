@@ -695,7 +695,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
 .steps2 p{color:var(--muted);font-size:15px}
 @media (max-width:900px){.steps2{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
-.cs-nav{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:clamp(12px,1.6vw,22px)}
+.cs-nav{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:clamp(12px,1.6vw,22px)}
 .cs-nav a{display:grid;gap:10px;text-decoration:none;color:inherit}
 .cs-nav .ph{aspect-ratio:3/4;overflow:hidden;background:var(--soft)}
 .cs-nav img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease)}
@@ -721,7 +721,10 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
 .cs-ph.more{display:none}
 .cs-ph.w2{grid-column:span 2;aspect-ratio:3/2}
 .cs-ph.w3{grid-column:span 3;aspect-ratio:9/4}
-.cs-vid{cursor:default}
+.cs-vid{cursor:pointer}
+.cs-vid i{position:absolute;left:50%;top:50%;width:64px;height:64px;margin:-32px 0 0 -32px;border-radius:50%;background:rgba(0,0,0,.45);transition:transform .4s var(--ease),background .4s}
+.cs-vid i::after{content:"";position:absolute;left:26px;top:20px;border-style:solid;border-width:12px 0 12px 19px;border-color:transparent transparent transparent #fff}
+.cs-vid:hover i{transform:scale(1.1);background:rgba(0,0,0,.65)}
 .cs-vid span{position:absolute;left:10px;bottom:10px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:rgba(0,0,0,.45);padding:4px 8px}
 .cs-txt{display:grid;gap:16px;position:sticky;top:120px}
 .cs-txt h3{font-size:15px;font-weight:500;margin-top:6px}
@@ -738,6 +741,8 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
 .lb.on{opacity:1;pointer-events:auto}
 .lb img{max-width:min(92vw,1100px);max-height:86vh;object-fit:contain;transform:scale(.97);transition:transform .45s var(--ease)}
 .lb.on img{transform:none}
+.lb video{max-width:min(92vw,1100px);max-height:86vh;background:#000}
+.lb [hidden]{display:none}
 .lb button{position:absolute;background:none;border:0;color:#fff;font:300 34px/1 var(--font);cursor:pointer;padding:16px}
 .lb .x{top:10px;right:14px}.lb .p{left:6px;top:50%;transform:translateY(-50%)}.lb .nx{right:6px;top:50%;transform:translateY(-50%)}
 .lb .c{position:absolute;bottom:18px;left:0;right:0;text-align:center;color:rgba(255,255,255,.75);font-size:14px}
