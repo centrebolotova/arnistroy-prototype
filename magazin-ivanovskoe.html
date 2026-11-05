@@ -1,5 +1,7 @@
 <!doctype html>
 <html lang="ru"><head><meta name="robots" content="noindex, nofollow"><style>.variants{display:none!important}mark.todo{background:none!important;color:inherit!important;padding:0!important}.todo-note{display:none!important}</style><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Магазин дверей в Ивановском АрниСтрой</title>
+<link rel="icon" type="image/png" href="img/favicon.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600&display=swap">
@@ -77,6 +79,7 @@ body.clean .todo-note{display:none}
 .bar1 .ph{margin-left:auto;display:flex;gap:22px;color:var(--ink)}
 .bar2 .wrap{display:flex;align-items:center;gap:32px;min-height:72px}
 .logo{font-size:17px;letter-spacing:.24em;text-transform:uppercase;font-weight:600;text-decoration:none;white-space:nowrap}
+.logo img{display:block;height:48px;width:auto}
 .nav{display:flex;gap:26px;font-size:15px}
 .nav a{text-decoration:none;white-space:nowrap}
 .nav a:hover{color:var(--accent)}
@@ -439,22 +442,29 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
 .js .rv.pre{opacity:0;transform:translateY(24px)}
 .js .rv{transition:opacity .9s var(--ease),transform .9s var(--ease)}
 @media (prefers-reduced-motion:reduce){.js .rv.pre{opacity:1;transform:none}}
-/* полоса акций под первым экраном: светлая, бронзовый ярлык, акции сменяют друг друга, тонкая линия-таймер */
-.promo-strip{position:relative;background:var(--bg);border-bottom:1px solid var(--line)}
-.promo-strip::after{content:"";position:absolute;left:0;bottom:-1px;height:2px;width:0;background:var(--accent)}
-.promo-strip.run::after{animation:psbar 3.2s linear forwards}
-@keyframes psbar{from{width:0}to{width:100%}}
-.promo-strip a{display:flex;align-items:center;gap:12px 28px;padding-block:20px;font-size:clamp(16px,1.4vw,19px);color:var(--ink);text-decoration:none}
-.promo-strip i{font-style:normal;font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:#fff;background:var(--accent);padding:6px 10px 5px;white-space:nowrap}
-.promo-strip em{font-style:normal;font-weight:500;color:var(--accent)}
-.ps-rot{position:relative;flex:1;min-width:0;height:1.45em;overflow:hidden}
-.ps-rot span{position:absolute;inset:0 auto auto 0;white-space:nowrap;opacity:0;transform:translateY(110%);transition:transform .8s var(--ease),opacity .8s}
-.ps-rot span.on{opacity:1;transform:none}
-.ps-rot span.out{opacity:0;transform:translateY(-110%)}
-.promo-strip b{font-weight:400;font-size:15px;white-space:nowrap;padding-bottom:2px;border-bottom:1px solid currentColor;transition:color .3s}
-.promo-strip a:hover b{color:var(--accent)}
-@media (max-width:760px){.promo-strip a{flex-wrap:wrap;gap:12px 20px;padding-block:18px}.ps-rot{order:3;flex-basis:100%;height:2.9em}.ps-rot span{white-space:normal}.promo-strip b{margin-left:auto}}
-@media (prefers-reduced-motion:reduce){.ps-rot span{transition:none}.promo-strip.run::after{animation:none}}
+.cd-x{margin-top:14px;border:1px solid var(--line);padding:12px 14px}
+.cd-x summary{cursor:pointer;font-weight:500}
+.cd-x .chk{margin-top:10px}
+/* ===== поиск по сайту ===== */
+.sbtn{display:inline-flex;align-items:center;gap:8px;margin-left:auto;background:none;border:1px solid var(--line);height:44px;padding:0 14px;cursor:pointer;color:var(--ink);font:400 14px var(--font)}
+.sbtn:hover{border-color:var(--ink)}
+.sbtn+.acts{margin-left:0}
+.sbtn~.burger{margin-left:0}
+@media (max-width:700px){.sbtn span{display:none}.sbtn{width:46px;height:46px;justify-content:center;padding:0}}
+.srch{position:fixed;inset:0;z-index:150;background:rgba(21,21,21,.35);display:none;align-items:flex-start;justify-content:center;padding:6vh 0 0}
+.srch.on{display:flex}
+.srch .box{background:var(--bg);width:min(760px,100%);max-height:min(80vh,760px);display:grid;grid-template-rows:auto minmax(0,1fr);box-shadow:0 30px 80px -30px rgba(0,0,0,.4)}
+@media (max-width:700px){.srch{padding:0}.srch .box{max-height:100vh;height:100%}}
+.srch .in{display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--line);padding:0 18px}
+.srch input{flex:1;border:0;outline:0;font:400 20px var(--font);padding:20px 0;background:none;color:var(--ink);min-width:0}
+.srch .x{background:none;border:0;font-size:30px;cursor:pointer;color:var(--ink);line-height:1}
+.srch .res{overflow:auto;padding:6px 0 14px}
+.srch .grp{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:14px 18px 6px}
+.srch a{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 16px;padding:10px 18px;text-decoration:none}
+.srch a:hover,.srch a.cur{background:#f3f1ed}
+.srch a small{grid-column:1;color:var(--muted);font-size:13px}
+.srch a .pr{grid-row:1/3;grid-column:2;align-self:center;white-space:nowrap;font-variant-numeric:tabular-nums;font-size:14px}
+.srch .none{padding:18px;color:var(--muted)}
 
 /* ===== страница каталога ===== */
 .crumbs{font-size:13px;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap;padding-top:28px}
@@ -482,6 +492,9 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
 .flt label{display:flex;gap:10px;align-items:center;font-size:15px;cursor:pointer}
 .flt label small{color:var(--muted);margin-left:auto;font-variant-numeric:tabular-nums}
 .flt input[type=checkbox]{width:17px;height:17px;accent-color:#151515}
+.flt .ser{display:grid;gap:7px;padding:2px 0 6px 27px}
+.flt .ser label{font-size:14px;color:var(--muted)}
+.flt .ser label:has(input:checked){color:var(--ink)}
 .price-in{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding-top:12px}
 .price-in input{font:400 15px var(--font);border:1px solid var(--line);padding:9px 10px;width:100%;background:var(--bg);color:var(--ink)}
 .sw-row{display:flex;flex-wrap:wrap;gap:8px;padding-top:12px}
@@ -504,7 +517,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
 .pc .sws button{width:20px;height:20px;border-radius:50%;border:1px solid rgba(0,0,0,.15);padding:0;cursor:pointer;box-shadow:0 0 0 2px var(--bg),0 0 0 3px transparent}
 .pc .sws button[aria-pressed="true"]{box-shadow:0 0 0 2px var(--bg),0 0 0 3px var(--ink)}
 .pc .sws span{font-size:12px;color:var(--muted)}
-.pc .row{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.pc .row{display:flex;justify-content:space-between;gap:2px 10px;align-items:baseline;flex-wrap:wrap}
 .pc .n{font-weight:500;font-size:17px;text-decoration:none}
 .pc .pr{white-space:nowrap;font-variant-numeric:tabular-nums}
 .pc .m{font-size:13px;color:var(--muted);margin-top:-6px}
@@ -638,6 +651,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
 @media (max-width:820px){.shops2{grid-template-columns:1fr}}
 .mapph{display:grid;place-items:center;gap:12px;text-align:center;aspect-ratio:16/7;background:repeating-linear-gradient(45deg,#f2f0ec 0 14px,#ebe8e3 14px 28px);border:1px solid var(--line);padding:24px}
 .mapph p{color:var(--muted);max-width:44ch}
+.ymap{display:block;width:100%;height:clamp(260px,28vw,360px);border:1px solid var(--line);background:#f2f0ec}
 .pop{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(12px,1.6vw,22px)}
 .pop .pc{text-decoration:none}
 .pop .box{display:flex}
@@ -673,10 +687,11 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
   </div>
   <div class="bar2">
     <div class="wrap">
-      <a class="logo" href="index.html">АрниСтрой</a>
+      <a class="logo" href="index.html" aria-label="АрниСтрой — на главную"><img src="img/logo.svg" alt="АрниСтрой" width="77" height="48"></a>
       <nav class="nav" aria-label="Меню">
         <a href="index.html#catalog">Каталог</a><a href="primerka.html">Примерить дверь</a><a href="#calc" class="js-calc">Калькулятор</a><a href="ustanovka.html">Установка</a><div class="dd"><a href="o-nas.html" class="dd-t" aria-haspopup="true">О нас</a><div class="dd-m"><a href="o-nas.html">О компании</a><a href="obekty.html">Наши работы</a><a href="otzyvy.html">Отзывы</a><a href="stati.html">Статьи</a><a href="garantiya.html">Гарантия и возврат</a><a href="akcii.html">Акции</a><a href="magaziny.html">Магазины</a></div></div><a href="kuhni.html">Кухни</a><a href="kontakty.html">Контакты</a>
       </nav>
+      <button class="sbtn" type="button" id="sOpen" aria-label="Поиск по сайту"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="1.6"/></svg><span>Поиск</span></button>
       <div class="acts"><button class="btn js-zamer" type="button">Вызвать замерщика</button></div>
       <button class="burger" type="button" aria-expanded="false" aria-controls="mnav" aria-label="Меню">☰</button>
     </div>
@@ -686,12 +701,52 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
     </nav>
   </div>
 </header>
+<div class="srch" id="srch" role="dialog" aria-modal="true" aria-label="Поиск по сайту"><div class="box"><div class="in"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="1.6"/></svg><input id="sQ" type="search" placeholder="Модель, фабрика или коллекция" autocomplete="off" aria-label="Что ищем"><button class="x" type="button" id="sX" aria-label="Закрыть">×</button></div><div class="res" id="sRes"></div></div></div>
+<script>
+// Поиск по сайту: модели (название, фабрика, коллекция) и страницы. Индекс search.js — каталог/make_search.py.
+(function(){
+  var W=document.getElementById('srch'),Q=document.getElementById('sQ'),R=document.getElementById('sRes'),IX=null,cur=-1;
+  var LAT={a:'а',b:'б',c:'к',d:'д',e:'е',f:'ф',g:'г',h:'х',i:'и',j:'й',k:'к',l:'л',m:'м',n:'н',o:'о',p:'п',q:'к',r:'р',s:'с',t:'т',u:'у',v:'в',w:'в',x:'кс',y:'й',z:'з'};
+  function nz(s){return (s||'').toLowerCase().replace(/ё/g,'е').replace(/[.\-_/·,()«»"]/g,' ').replace(/\s+/g,' ').trim()}
+  function tr(s){return s.replace(/[a-z]/g,function(c){return LAT[c]})}
+  function load(cb){if(IX)return cb();if(window.SEARCH){prep();return cb()}var sc=document.createElement('script');sc.src='search.js';sc.onload=function(){prep();cb()};document.head.appendChild(sc)}
+  function prep(){var S=window.SEARCH;IX={m:S.m.map(function(r){var h=nz(r[0]+' '+r[1]+' '+(S.a[r[1]]||'')+' '+r[2]+' '+r[3]);return {r:r,h:h+' '+tr(h)}}),p:S.p.map(function(r){var h=nz(r[0]);return {r:r,h:h+' '+tr(h)}})}}
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  function fp(x){return x?'от '+x.toLocaleString('ru-RU').replace(/\s/g,'\u00a0')+' ₽':''}
+  function run(){
+    var q=nz(Q.value);cur=-1;if(q.length<2){R.innerHTML='<p class="none">Например: «Браво-22», «Гармония», «Geona Light», «терморазрыв».</p>';return}
+    var ws=q.split(' ').map(function(w){return [w,tr(w)]});
+    function ok(h){return ws.every(function(w){return h.indexOf(w[0])>=0||h.indexOf(w[1])>=0})}
+    var pg=IX.p.filter(function(x){return ok(x.h)}).slice(0,6), ms=IX.m.filter(function(x){return ok(x.h)});
+    ms.sort(function(a,b){var an=nz(a.r[0]).indexOf(ws[0][0])===0,bn=nz(b.r[0]).indexOf(ws[0][0])===0;return (bn-an)||((a.r[5]||1e9)-(b.r[5]||1e9))});
+    var n=ms.length;ms=ms.slice(0,40);
+    var h='';
+    if(pg.length)h+='<div class="grp">Разделы</div>'+pg.map(function(x){return '<a href="'+x.r[1]+'"><span>'+esc(x.r[0])+'</span></a>'}).join('');
+    if(ms.length)h+='<div class="grp">Модели · '+n+'</div>'+ms.map(function(x){var r=x.r;return '<a href="'+r[4]+'"><span>'+esc(r[0])+'</span><small>'+esc(r[3]+' · '+r[1]+(r[2]?' · '+r[2]:''))+'</small><span class="pr">'+fp(r[5])+'</span></a>'}).join('');
+    R.innerHTML=h||'<p class="none">Ничего не нашли. Напишите нам — привезём дверь под заказ.</p>';
+  }
+  function open(){W.classList.add('on');document.body.style.overflow='hidden';Q.focus();load(run)}
+  function close(){W.classList.remove('on');document.body.style.overflow=''}
+  document.getElementById('sOpen').addEventListener('click',open);
+  document.getElementById('sX').addEventListener('click',close);
+  W.addEventListener('click',function(e){if(e.target===W)close()});
+  R.addEventListener('click',function(e){var a=e.target.closest('a');if(a&&a.getAttribute('href').split('#')[0]===location.pathname.split('/').pop())close()});
+  Q.addEventListener('input',function(){if(IX)run()});
+  document.addEventListener('keydown',function(e){
+    if(!W.classList.contains('on'))return;
+    var as=R.querySelectorAll('a');
+    if(e.key==='Escape')close();
+    else if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();cur=Math.max(0,Math.min(as.length-1,cur+(e.key==='ArrowDown'?1:-1)));as.forEach(function(a,i){a.classList.toggle('cur',i===cur)});if(as[cur])as[cur].scrollIntoView({block:'nearest'})}
+    else if(e.key==='Enter'&&as.length){(as[cur>=0?cur:0]).click()}
+  });
+}());  // не «})();» — генераторы страниц вставляют свой код перед первым таким концом
+</script>
 
 <main>
 <div class="wrap">
   <nav class="crumbs" aria-label="Навигация"><a href="index.html">Главная</a><span>/</span><a href="magaziny.html">Магазины</a><span>/</span><span>Ивановское, ул. Пролетарская, 51</span></nav>
   <div class="u-head">
-    <div class="txt"><h1>Магазин дверей в Ивановском</h1><p class="lead">Салон «АрниСтрой»: Серпуховский район, д. Ивановское, ул. Пролетарская, 51. Межкомнатные и входные двери, образцы отделок, расчёт стоимости с установкой. Работаем вт–вс, 9:00–18:00; пн — выходной.</p><ul class="facts2"><li><b>4,6</b><span>рейтинг · 138 оценок</span></li><li><b>вт–вс</b><span>9:00–18:00; пн — выходной</span></li><li><b>по фото</b><span>замер онлайн</span></li><li><b>1 заказ</b><span>дверь, доставка, монтаж</span></li></ul><div class="u-cta"><a class="btn" href="https://yandex.ru/maps/org/arnistroy/3342629458/" target="_blank" rel="noopener">Как доехать</a><button class="btn ghost js-zamer" type="button">Вызвать замерщика</button></div></div>
+    <div class="txt"><h1>Магазин дверей в Ивановском</h1><p class="lead">Салон «АрниСтрой»: Серпуховский район, д. Ивановское, ул. Пролетарская, 51. Межкомнатные и входные двери, образцы отделок, расчёт стоимости с установкой. Работаем вт–вс, 9:00–18:00; пн — выходной.</p><ul class="facts2"><li><b>4,6</b><span>рейтинг · 138 оценок</span></li><li><b>вт–вс</b><span>9:00–18:00; пн — выходной</span></li><li><b>по фото</b><span>замер онлайн</span></li><li><b>1 заказ</b><span>дверь, доставка, монтаж</span></li></ul><div class="u-cta"><a class="btn" href="https://yandex.ru/maps/?rtext=~54.941682,37.439232&rtt=auto" target="_blank" rel="noopener">Построить маршрут</a><button class="btn ghost js-zamer" type="button">Вызвать замерщика</button></div></div>
     <div class="ph"><img src="img/hero-min.jpg" alt="Интерьер с дверями" class="flip"></div>
   </div>
 </div>
@@ -699,15 +754,16 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
         <p class="addr">Серпуховский район, д. Ивановское, ул. Пролетарская, 51</p>
         <div class="rate"><b>4,6</b><span>на Яндекс Картах · 138 оценок</span></div>
         <dl><dt>Часы</dt><dd>вт–вс, 9:00–18:00; пн — выходной</dd><dt>Телефон</dt><dd><a href="tel:+79851555223">+7 (985) 155-52-23</a></dd><dt>WhatsApp</dt><dd><a href="https://wa.me/79851555223" target="_blank" rel="noopener">+7 (985) 155-52-23</a></dd></dl>
-        <div class="acts3"><a class="btn" href="tel:+79851555223">Позвонить</a><a class="btn ghost" href="https://yandex.ru/maps/org/arnistroy/3342629458/" target="_blank" rel="noopener">Как доехать</a></div>
-      </article><div class="mapph rv" style="aspect-ratio:auto"><b style="font-weight:500">Как доехать</b><p>Парковка у салона есть.</p><a class="arrow" href="https://yandex.ru/maps/org/arnistroy/3342629458/" target="_blank" rel="noopener">Открыть в Яндекс Картах</a></div></div>
+        <div class="acts3"><a class="btn" href="tel:+79851555223">Позвонить</a><a class="btn ghost" href="https://yandex.ru/maps/?rtext=~54.941682,37.439232&rtt=auto" target="_blank" rel="noopener">Построить маршрут</a></div>
+        
+      </article><iframe class="ymap" src="https://yandex.ru/map-widget/v1/?ll=37.439232,54.941682&amp;z=16&amp;oid=3342629458&amp;ol=biz" title="Карта: Серпуховский район, д. Ивановское, ул. Пролетарская, 51" allowfullscreen></iframe></div>
 <p class="note rv"><span class="todo-note">Нужны фото салона и экспозиции</span></p></div></section>
 <section><div class="wrap"><div class="head rv"><h2>Что есть в салоне</h2></div><div class="zone">
       <div class="rv"><h3>Экспозиция дверей</h3><p>Межкомнатные и входные двери в проёмах — можно открыть, закрыть, оценить вес и ход.</p></div>
       <div class="rv"><h3>Образцы отделок</h3><p>Цвета и покрытия разных фабрик: сравните оттенок при обычном свете, а не на экране.</p></div>
       <div class="rv"><h3>Расчёт под ключ</h3><p>Менеджер подберёт комплектацию и посчитает стоимость с доставкой и установкой.</p></div>
     </div></div></section>
-<section><div class="wrap"><div class="head rv"><h2>Кухни и прихожие</h2></div><div class="types rv"><a href="kuhni.html"><b>Кухни Vivat</b><span>91 готовая модель от 19 290 ₽, модульная кухня под ваши размеры, 3D-конструктор</span></a><a href="prihozhie.html"><b>Прихожие Vivat «Стиль»</b><span>Шкаф, тумба, вешалка и зеркало от 8 295 ₽ — вместе с входной дверью</span></a></div><p class="note">Кухонь в салоне нет — есть собранные модули Vivat и образцы фасадов.</p></div></section>
+<section><div class="wrap"><div class="head rv"><h2>Кухни и прихожие</h2></div><div class="types rv"><a href="kuhni.html"><b>Кухни Vivat</b><span>91 готовая модель от 19 300 ₽, модульная кухня под ваши размеры, 3D-конструктор</span></a><a href="prihozhie.html"><b>Прихожие Vivat «Стиль»</b><span>Шкаф, тумба, вешалка и зеркало от 8 300 ₽ — вместе с входной дверью</span></a></div><p class="note">Кухонь в салоне нет — есть собранные модули Vivat и образцы фасадов.</p></div></section>
 <section><div class="wrap"><div class="head rv"><h2>Отзывы об этом салоне</h2></div><div class="revs2"><figure class="rv"><q>Цвет точно такой, как на образце, никаких сюрпризов.</q><figcaption>Диана Р. · Яндекс Карты</figcaption></figure><figure class="rv"><q>Покупали двери 3 года назад и сейчас — всё отличного качества.</q><figcaption>Никита Н. · Яндекс Карты</figcaption></figure></div><p class="note"><a class="arrow" href="https://yandex.ru/maps/org/arnistroy/3342629458/reviews/" target="_blank" rel="noopener">Все отзывы на Яндекс Картах</a></p></div></section>
 <section class="grad" aria-labelledby="seo-h"><div class="wrap seo"><div class="txt rv"><h2 id="seo-h">Магазин дверей в Ивановском</h2>
       <p>В салоне на адресе Серпуховский район, д. Ивановское, ул. Пролетарская, 51 можно выбрать межкомнатные и входные двери, фурнитуру, заказать замер, доставку и установку. Ищете магазин дверей в Ивановском — приезжайте сравнить двери вживую.</p>
@@ -726,6 +782,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
     <form class="lf-form rv" novalidate data-form>
       <div class="f"><label for="f-name">Имя</label><input id="f-name" autocomplete="name"></div>
       <div class="f"><label for="f-phone">Телефон</label><input id="f-phone" type="tel" autocomplete="tel" placeholder="+7"></div>
+      <div class="f"><label for="f-promo">Промокод</label><input id="f-promo" autocomplete="off" placeholder="Если есть"></div>
       <div class="f full"><label for="f-town">Город или посёлок</label><input id="f-town"></div>
       <div class="f full"><button class="btn" type="submit">Отправить заявку</button></div>
       <p class="legal">Нажимая кнопку, вы соглашаетесь с <a href="politika.html">политикой обработки персональных данных</a>.</p>
@@ -737,13 +794,13 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
 
 <footer>
   <div class="wrap fnav">
-    <div><b>Каталог</b><a href="mezhkomnatnye-dveri.html">Межкомнатные двери</a><a href="vhodnye-dveri.html">Входные двери</a><a href="vhodnye-dveri-v-kvartiru.html">Входные в квартиру</a><a href="vhodnye-dveri-v-dom.html">Входные в дом</a><a href="brendy.html">Фабрики</a><a href="mezhkomnatnye-dveri-nedorogie.html">Недорогие двери</a><a href="mezhkomnatnye-dveri-skrytye.html">Скрытые двери</a><a href="mezhkomnatnye-dveri-razdvizhnye.html">Раздвижные двери</a><a href="mezhkomnatnye-dveri-skladnye.html">Складные двери</a><a href="furnitura.html">Фурнитура</a><a href="kuhni.html">Кухни</a><a href="prihozhie.html">Прихожие</a></div>
+    <div><b>Каталог</b><a href="mezhkomnatnye-dveri.html">Межкомнатные двери</a><a href="vhodnye-dveri.html">Входные двери</a><a href="vhodnye-dveri-v-kvartiru.html">Входные в квартиру</a><a href="vhodnye-dveri-v-dom.html">Входные в дом</a><a href="brendy.html">Фабрики</a><a href="mezhkomnatnye-dveri-nedorogie.html">Недорогие двери</a><a href="mezhkomnatnye-dveri-skrytye.html">Скрытые двери</a><a href="mezhkomnatnye-dveri-nestandartnye.html">Нестандартные двери</a><a href="mezhkomnatnye-dveri-razdvizhnye.html">Раздвижные двери</a><a href="mezhkomnatnye-dveri-skladnye.html">Складные двери</a><a href="furnitura.html">Фурнитура</a><a href="kuhni.html">Кухни</a><a href="prihozhie.html">Прихожие</a></div>
     <div><b>Услуги</b><a href="ustanovka.html">Установка дверей</a><a href="zamena-dverey.html">Замена дверей</a><a href="vrezka-zamkov.html">Врезка замков</a><a href="zamer.html">Вызов замерщика</a><a href="dostavka.html">Доставка</a><a href="kalkulyator.html">Калькулятор</a><a href="ceny.html">Цены</a></div>
     <div><b>Покупателям</b><a href="magaziny.html">Магазины</a><a href="o-nas.html">О компании</a><a href="kontakty.html">Контакты</a><a href="obekty.html">Наши работы</a><a href="otzyvy.html">Отзывы</a><a href="garantiya.html">Гарантия и возврат</a><a href="akcii.html">Акции</a><a href="kak-zamerit.html">Как замерить проём</a><a href="primerka.html">Примерка двери онлайн</a></div>
     <div><b>Доставка и установка</b><a href="chehov.html">Чехов</a><a href="stupino.html">Ступино</a><a href="protvino.html">Протвино</a><a href="pushchino.html">Пущино</a><a href="zaokskiy.html">Заокский</a><a href="tarusa.html">Таруса</a><a href="kremenki.html">Кременки</a><a href="obolensk.html">Оболенск</a><a href="podolsk.html">Подольск</a><a href="tula.html">Тула</a><a href="zhukov.html">Жуков</a><a href="aleksin.html">Алексин</a></div>
   </div>
   <div class="wrap">
-    <span class="logo" style="color:var(--ink)">АрниСтрой</span>
+    <span class="logo"><img src="img/logo.svg" alt="АрниСтрой" width="64" height="40"></span>
     <span>Московское шоссе, 49 · <a href="tel:+79915958186">+7 (991) 595-81-86</a></span>
     <span>Ивановское, Пролетарская, 51 · <a href="tel:+79851555223">+7 (985) 155-52-23</a></span>
     <span>ИП Малышев А. Н. · <a href="politika.html">Политика обработки персональных данных</a></span>
@@ -759,6 +816,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
       <div class="f"><label for="d-name">Имя</label><input id="d-name" autocomplete="name"></div>
       <div class="f"><label for="d-phone">Телефон</label><input id="d-phone" type="tel" autocomplete="tel" placeholder="+7"></div>
       <div class="f full"><label for="d-town">Город или посёлок</label><input id="d-town"></div>
+      <div class="f full"><label for="d-promo">Промокод</label><input id="d-promo" autocomplete="off" placeholder="Если есть"></div>
       <div class="f full"><button class="btn" type="submit">Отправить заявку</button></div>
       <p class="legal">Нажимая кнопку, вы соглашаетесь с <a href="politika.html">политикой обработки персональных данных</a>.</p>
       <p class="ok" hidden>Спасибо. Менеджер свяжется с вами в рабочее время салона.</p>
@@ -815,6 +873,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
           <label><input type="checkbox" name="demont"><span><b style="font-weight:500">Демонтаж старой двери</b><small>Если меняете дверь</small></span><span class="pr"></span></label>
           <label><input type="checkbox" name="deliv" checked><span><b style="font-weight:500">Доставка</b><small>По Серпуховскому району и соседним городам</small></span><span class="pr"></span></label>
         </div>
+        <details class="cd-x"><summary>Дополнительные работы</summary><div class="chk" id="cdExtra"></div><p class="muted" style="font-size:13px;margin-top:8px">Плинтусы, фрамуги и нестандартные работы посчитаем после замера.</p></details>
         <div class="city"><label for="cdCity">Населённый пункт:</label>
           <span class="ac"><input id="cdCity" value="Серпухов" autocomplete="off" placeholder="Начните вводить название" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="cdVilL" enterkeyhint="done"><ul class="acl" id="cdVilL" role="listbox" hidden></ul></span><datalist id="cdVil"><option value="Серпухов"><option value="118 км ч Заокский"><option value="87 км"><option value="94 км"><option value="Авангард &quot;Воздвиженка&quot;"><option value="Авангард (дачи)"><option value="Авангард дом отдыха"><option value="Авдотьино"><option value="Автомобилист д/о"><option value="Автомосквич"><option value="Агаповка"><option value="Азаровка &quot;114 км&quot;"><option value="Акулово"><option value="Аладьино"><option value="Александровка"><option value="Арнеево"><option value="Байденки"><option value="Балково"><option value="Банино"><option value="Барыбино"><option value="Бегичево"><option value="Берег удачи"><option value="Березкино"><option value="Берендеево царство"><option value="Бобровый Остров"><option value="Болотово"><option value="Большая Городня"><option value="Большевик"><option value="Большое Грызлово"><option value="Бор"><option value="Борисово"><option value="Бутиково"><option value="Бутурлино"><option value="Васильевское"><option value="Васькино"><option value="Велегож"><option value="Велегож парк"><option value="Велеми Нижнее Верхнее"><option value="Веранда"><option value="Верхнее Велеми"><option value="Верхнее Пикалово"><option value="Верхнее Романово"><option value="Веселово"><option value="Вестфалия"><option value="Вечери"><option value="Вишенки"><option value="Воздвиженка"><option value="Волковичи"><option value="Волково"><option value="Волковское"><option value="Волосово"><option value="Волохово"><option value="Волшебная страна"><option value="Воронино"><option value="Вороново (Тул. Обл)"><option value="Воскресенки"><option value="Всходы"><option value="Выдумки"><option value="Высокие дворики"><option value="Высокиничи"><option value="Вяземские сады"><option value="Вязищи"><option value="Гавшино"><option value="Глазово"><option value="Глазово 2"><option value="Глубоково"><option value="Гришенки"><option value="Гурьево"><option value="Дали КП"><option value="Данки"><option value="Дачи МВД Дубачиео"><option value="Дашковка"><option value="Дернополье"><option value="Дикси склады"><option value="ДНТ Любава (Заокский)"><option value="ДНТ Свой дом (Чех. Р-н)"><option value="Дракино"><option value="Дубки (Лужки)"><option value="Дубки на наре"><option value="Дулово"><option value="Дятлово"><option value="Енино"><option value="Еськино"><option value="Жерновка"><option value="Живыя картина"><option value="Журавлево"><option value="Зайцево"><option value="Заокская долина"><option value="Заокские просторы"><option value="Заокский"><option value="Заокское лесничество"><option value="Заречье (Калуж. обл)"><option value="Заречье 2"><option value="Заречье 3"><option value="Зиброво"><option value="Злобино (Мос. Обл)"><option value="Злобино (Тул. Обл)"><option value="Ивановское"><option value="Ивантиново"><option value="Иваньково"><option value="Игнатьево"><option value="Игумново"><option value="Искань"><option value="Истомино (Калуж. Обл)"><option value="Калиново"><option value="Калиновские выселки"><option value="Калугино"><option value="Каменка"><option value="Каминищи (Ступ. Р-н)"><option value="Капитан"><option value="Капитанский мыс/Лэнд"><option value="Караулово"><option value="Каргашино"><option value="Карнищево"><option value="Карпищево (Заок. Р-н)"><option value="Карпова Поляна"><option value="Кирпичный завод"><option value="Клейменово"><option value="Конюшино"><option value="Коптево"><option value="Костино"><option value="Костино (Тул. Обл)"><option value="Кравцово"><option value="Кременки"><option value="Крюково (Тул. Обл)"><option value="Крюково (Чех. Р-н)"><option value="Кузьменки, ст Кузьменки"><option value="Кузьмищево"><option value="Кулаково"><option value="Курилово"><option value="Ладыжино"><option value="Ланьшино"><option value="Лаптево Заокский р--н"><option value="Левашово"><option value="Левашово озеро"><option value="Лесная долина"><option value="Лесная поляна (Чех. Р-н)"><option value="Лесная сказка"><option value="Лесное озеро"><option value="Лесные дали"><option value="Липицы"><option value="Лисинки"><option value="Лопатино Калужская обл."><option value="Лужки"><option value="Лукино"><option value="Лукьяново дорожный"><option value="Лукьяново заокская долина"><option value="Луч (Чех. Р-н)"><option value="Люблинский садовод"><option value="Малахово"><option value="Малахово 2"><option value="Манишки"><option value="Манушкино (Чехов)"><option value="Мартьяново"><option value="Матрешкино"><option value="Матюшино"><option value="Маяк"><option value="Мещериново"><option value="Мирный"><option value="Митино"><option value="Михайловка"><option value="Молоди"><option value="Московка"><option value="Мосолово"><option value="Мостовик"><option value="Мышинки"><option value="Небутово"><option value="Некрасово"><option value="Ненашево"><option value="Нефедово"><option value="Нижнее Романово"><option value="Нижняя Городня (Тул. Обл)"><option value="Никифорово"><option value="Никоновка"><option value="Новая деревня"><option value="Новиково (Капитан)"><option value="Новинки"><option value="Новоселки (Заокский р-н)"><option value="Новый быт"><option value="Оболенск"><option value="Окская слобода"><option value="Палихово (СНТ Палихово)"><option value="Паниково"><option value="Панькино"><option value="Паршино"><option value="Пахомово"><option value="Петрищево (Тарусский р-н)"><option value="Петрухино"><option value="Пирогово"><option value="Плешкино"><option value="Погари"><option value="Подмоклово"><option value="Подольск"><option value="Покровское южное"><option value="Поленово"><option value="Похвиснево Калужская обл."><option value="Приветливое"><option value="Прилуки"><option value="Приокская"><option value="Присады"><option value="Прокшино"><option value="Пролетарский"><option value="Прончищево"><option value="Протвино"><option value="Птицефабрика"><option value="Пущино"><option value="Пущино на Наре"><option value="Радионовка"><option value="Райсеменовское"><option value="Республика"><option value="Рогово"><option value="Родионовка"><option value="Родники"><option value="Родники (Калужская обл.)"><option value="Родники (Яковлево)"><option value="Рождествено (Туль. обл.)"><option value="Романовские дачи"><option value="Романовский парк"><option value="Рудаково"><option value="Русятино"><option value="Рыблово"><option value="Рыжиково"><option value="Савино"><option value="Салтыково"><option value="Сашкино"><option value="Светлая поляна"><option value="Свиненки"><option value="Свинская"><option value="Селино"><option value="Семеновское (Бол. Гор.)"><option value="Семеновское (Бол. Грызлово.)"><option value="Семеновское (Нов. Быт)"><option value="Сенино (Тул. Обл)"><option value="Сенино (Чех. Р-н)"><option value="Сенькино"><option value="Сераксеево"><option value="Сидоренки"><option value="Скинга (кирп. завод)"><option value="Скинга (Тул. Обл)"><option value="Скребухово"><option value="Скрипово"><option value="Скрылья"><option value="Скурыбино"><option value="Славное"><option value="СНТ Биоприборы Пущино"><option value="СНТ Лада"><option value="СНТ Надежда"><option value="СНТ Надежда (Лесная)"><option value="СНТ Нива"><option value="СНТ Ногина 3"><option value="СНТ Ногина 6"><option value="СНТ Ока"><option value="СНТ Приокский"><option value="СНТ Приокское"><option value="СНТ Речник"><option value="СНТ Родник"><option value="СНТ Северное"><option value="СНТ Сказка (Чех. Р-н)"><option value="СНТ Скнига"><option value="СНТ Славяне"><option value="СНТ Сосенки"><option value="СНТ Строитель Нива"><option value="СНТ Тарасовец"><option value="СНТ Твой дом"><option value="СНТ Трансгаз"><option value="СНТ Ясногорские дачи"><option value="Сосновка парк"><option value="Сосновый"><option value="Сосновый парк"><option value="Станки"><option value="Страхово"><option value="Студеное"><option value="Судимля"><option value="Сушки"><option value="Съяново"><option value="Съяново 2"><option value="Талеж"><option value="Таруса"><option value="Татарские хутора"><option value="Тверитино"><option value="Темьянь"><option value="Терхунь"><option value="Теряево (Заок. Р-н)"><option value="Тетерево"><option value="Трухачево"><option value="Тул. пост ГАИ"><option value="Тульчино"><option value="Турино 136 км"><option value="Турово"><option value="Турово поля аэродрома"><option value="Ушаковка"><option value="Фенино"><option value="Ферзиково (Калуж. обл)"><option value="Ферзиково (Мос. обл)"><option value="Царьград"><option value="Чепелево"><option value="Чехов"><option value="Чудо град"><option value="Шарапова охота"><option value="Шарапово (Чех. Р-н)"><option value="Шатово"><option value="Шахлово Верхнее ниж."><option value="Шахтер"><option value="Шахтер д/о"><option value="Шепилово"><option value="Щеблово (Тульская обл.)"><option value="Щеболово"><option value="Южные дачи"><option value="Юрятино"><option value="Яковлево"><option value="Якшино"><option value="Ярославцево (Заок. Р-н)"><option value="Ясногорск"><option value="Ящерки"><option value="Ящерово"></datalist><span class="vp" id="cdVp"></span>
         </div>
@@ -829,6 +888,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
           <form novalidate data-form="Калькулятор">
             <div class="f"><label for="c-name">Имя</label><input id="c-name" autocomplete="name"></div>
             <div class="f"><label for="c-phone">Телефон</label><input id="c-phone" type="tel" autocomplete="tel" placeholder="+7"></div>
+            <div class="f"><label for="c-promo">Промокод</label><input id="c-promo" autocomplete="off" placeholder="Если есть"></div>
             <div class="ways" role="radiogroup" aria-label="Как связаться">
               <label class="opt"><input type="radio" name="way" value="call" checked><b>Позвонить</b></label>
               <label class="opt"><input type="radio" name="way" value="wa"><b>WhatsApp</b></label>
@@ -912,7 +972,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
   // Цены полотна — вилки по каталогу 29.10.2026 (2 484 межкомнатных, 285 входных; эконом — Браво и плёнки, премиум — до 90% каталога). Комплектующие, монтаж, доставка — от владельца 08.10.2026; монтаж скрытой, раздвижной, складной — примерно (уточняем).
   var TYPES=[
     {id:'mezh',name:'Межкомнатные',img:'d-prima-white',note:'от 1 800 ₽ за полотно'},
-    {id:'vhod',name:'Входные',img:'d-vhod',note:'от 7 625 ₽'},
+    {id:'vhod',name:'Входные',img:'d-vhod',note:'от 7 700 ₽'},
     {id:'skr',name:'Скрытые',img:'d-hidden',note:'под покраску'},
     {id:'razd',name:'Раздвижные',img:'d-bravo27',note:'купе и пеналы'},
     {id:'skl',name:'Складные',img:'d-dsk',note:'от 1 900 ₽'}
@@ -924,14 +984,19 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
     furn:{mezh:{eco:[1400,1400],std:[2300,2300],prem:[3600,3600]},vhod:[0,0],skr:[6400,8000],razd:[600,1400],skl:[0,0]},
     mount:{mezh:[4500,4500],vhod:[6000,7000],skr:[9000,12000],razd:[7000,9000],skl:[3000,4000]},
     demont:{mezh:[1000,1000],vhod:[1000,1000],skr:[1000,1000],razd:[1000,1000],skl:[1000,1000]},
-    dobor:{thin:[0,0],mid:[1000,1000],thick:[1500,1500],idk:[0,1500]},
+    dobor:{thin:[0,0],mid:[1100,1100],thick:[1500,1500],idk:[0,1500]},
+    // доп. работы, прайс Александра (Саши) от 04.11.2026: [код, название, цена за единицу, единиц на дверь, подпись]
+    extra:[['lock','Врезка замка',900,1,'900 ₽ с установкой, за дверь'],['hinge','Скрытые петли',800,2,'от 800 ₽ за петлю, две на дверь'],
+      ['joint','Стыковка доборов',1100,1,'1 100 ₽, каждый следующий стык +700 ₽'],['stop','Магнитный ограничитель',500,1,'от 500 ₽ за дверь'],
+      ['trim','Подрез наличника',350,1,'от 350 ₽ за дверь'],['fnal','Фигурный наличник',500,2,'500 ₽ за сторону'],
+      ['cap','Капители',1500,1,'от 1 500 ₽ за дверь'],['ros','Розетки и подпятники',700,2,'от 700 ₽ за сторону']],
     deliv:{'Серпухов':[1000,1000],'other':[1000,2500]}
   };
   // доставка по населённым пунктам — таблица с arnistroy.ru/delivery (06.10.2026)
   var VIL={"118 км ч Заокский":2800,"87 км":2200,"94 км":1500,"Авангард \"Воздвиженка\"":1600,"Авангард (дачи)":1200,"Авангард дом отдыха":1500,"Авдотьино":2800,"Автомобилист д/о":1500,"Автомосквич":1700,"Агаповка":1900,"Азаровка \"114 км\"":2400,"Акулово":1900,"Аладьино":2300,"Александровка":3000,"Арнеево":1600,"Байденки":2200,"Балково":2100,"Банино":1500,"Барыбино":2200,"Бегичево":1900,"Берег удачи":2100,"Березкино":1900,"Берендеево царство":3100,"Бобровый Остров":2400,"Болотово":2400,"Большая Городня":2100,"Большевик":900,"Большое Грызлово":2100,"Бор":2800,"Борисово":800,"Бутиково":2700,"Бутурлино":800,"Васильевское":1700,"Васькино":3500,"Велегож":2900,"Велегож парк":2600,"Велеми Нижнее Верхнее":1200,"Веранда":1400,"Верхнее Велеми":2400,"Верхнее Пикалово":2300,"Верхнее Романово":1800,"Веселово":3100,"Вестфалия":2100,"Вечери":1400,"Вишенки":2000,"Воздвиженка":1600,"Волковичи":2400,"Волково":1900,"Волковское":2100,"Волосово":2100,"Волохово":2500,"Волшебная страна":2100,"Воронино":2100,"Вороново (Тул. Обл)":3600,"Воскресенки":2100,"Всходы":1800,"Выдумки":2800,"Высокие дворики":1800,"Высокиничи":3200,"Вяземские сады":2400,"Вязищи":2900,"Гавшино":1900,"Глазово":1400,"Глазово 2":2100,"Глубоково":2100,"Гришенки":2600,"Гурьево":2000,"Дали КП":2700,"Данки":1300,"Дачи МВД Дубачиео":2600,"Дашковка":1300,"Дернополье":1900,"Дикси склады":1700,"ДНТ Любава (Заокский)":2400,"ДНТ Свой дом (Чех. Р-н)":2600,"Дракино":1700,"Дубки (Лужки)":1300,"Дубки на наре":1600,"Дулово":3000,"Дятлово":2400,"Енино":2400,"Еськино":2300,"Жерновка":3000,"Живыя картина":3000,"Журавлево":2400,"Зайцево":1800,"Заокская долина":1400,"Заокские просторы":2500,"Заокский":2300,"Заокское лесничество":1700,"Заречье (Калуж. обл)":3500,"Заречье 2":3500,"Заречье 3":3900,"Зиброво":2500,"Злобино (Мос. Обл)":1800,"Злобино (Тул. Обл)":3300,"Ивановское":700,"Ивантиново":2100,"Иваньково":1600,"Игнатьево":2200,"Игумново":2000,"Искань":2700,"Истомино (Калуж. Обл)":3000,"Калиново":1300,"Калиновские выселки":1300,"Калугино":2400,"Каменка":1500,"Каминищи (Ступ. Р-н)":3400,"Капитан":2800,"Капитанский мыс/Лэнд":2800,"Караулово":2400,"Каргашино":2600,"Карнищево":2100,"Карпищево (Заок. Р-н)":2100,"Карпова Поляна":1000,"Кирпичный завод":1700,"Клейменово":2900,"Конюшино":2900,"Коптево":2100,"Костино":1400,"Костино (Тул. Обл)":2600,"Кравцово":3100,"Кременки":2600,"Крюково (Тул. Обл)":2100,"Крюково (Чех. Р-н)":2800,"Кузьменки, ст Кузьменки":2100,"Кузьмищево":2700,"Кулаково":2000,"Курилово":3300,"Ладыжино":3300,"Ланьшино":3300,"Лаптево Заокский р--н":3400,"Левашово":1400,"Левашово озеро":1500,"Лесная долина":2000,"Лесная поляна (Чех. Р-н)":2200,"Лесная сказка":2100,"Лесное озеро":2100,"Лесные дали":2400,"Липицы":1500,"Лисинки":2400,"Лопатино Калужская обл.":3200,"Лужки":1300,"Лукино":1600,"Лукьяново дорожный":1600,"Лукьяново заокская долина":1500,"Луч (Чех. Р-н)":2600,"Люблинский садовод":1400,"Малахово":2100,"Малахово 2":2100,"Манишки":1500,"Манушкино (Чехов)":2200,"Мартьяново":1500,"Матрешкино":2000,"Матюшино":2800,"Маяк":1900,"Мещериново":1600,"Мирный":800,"Митино":2800,"Михайловка":1400,"Молоди":4000,"Московка":2100,"Мосолово":3100,"Мостовик":1700,"Мышинки":2700,"Небутово":2800,"Некрасово":3000,"Ненашево":3300,"Нефедово":1100,"Нижнее Романово":1800,"Нижняя Городня (Тул. Обл)":2800,"Никифорово":2300,"Никоновка":3400,"Новая деревня":2700,"Новиково (Капитан)":2800,"Новинки":1900,"Новоселки (Заокский р-н)":2100,"Новый быт":2400,"Оболенск":2200,"Окская слобода":1400,"Палихово (СНТ Палихово)":900,"Паниково":1100,"Панькино":1600,"Паршино":3000,"Пахомово":3400,"Петрищево (Тарусский р-н)":3400,"Петрухино":1900,"Пирогово":2700,"Плешкино":2200,"Погари":2000,"Подмоклово":2000,"Подольск":6000,"Покровское южное":3200,"Поленово":3100,"Похвиснево Калужская обл.":3100,"Приветливое":1400,"Прилуки":2400,"Приокская":2200,"Присады":1800,"Прокшино":2400,"Пролетарский":2100,"Прончищево":2600,"Протвино":2000,"Птицефабрика":1900,"Пущино":2000,"Пущино на Наре":1400,"Радионовка":1900,"Райсеменовское":2000,"Республика":1800,"Рогово":2100,"Родионовка":2100,"Родники":1600,"Родники (Калужская обл.)":2800,"Родники (Яковлево)":1700,"Рождествено (Туль. обл.)":2800,"Романовские дачи":2000,"Романовский парк":2300,"Рудаково":3100,"Русятино":2800,"Рыблово":1700,"Рыжиково":2100,"Савино":2800,"Салтыково":2300,"Сашкино":3400,"Светлая поляна":2600,"Свиненки":2100,"Свинская":2600,"Селино":1600,"Семеновское (Бол. Гор.)":2100,"Семеновское (Бол. Грызлово.)":2200,"Семеновское (Нов. Быт)":2800,"Сенино (Тул. Обл)":2800,"Сенино (Чех. Р-н)":2600,"Сенькино":2600,"Сераксеево":1700,"Сидоренки":2800,"Скинга (кирп. завод)":1600,"Скинга (Тул. Обл)":2400,"Скребухово":2700,"Скрипово":2500,"Скрылья":1100,"Скурыбино":3500,"Славное":3100,"СНТ Биоприборы Пущино":2100,"СНТ Лада":3200,"СНТ Надежда":2200,"СНТ Надежда (Лесная)":1000,"СНТ Нива":1500,"СНТ Ногина 3":1100,"СНТ Ногина 6":1600,"СНТ Ока":1600,"СНТ Приокский":2600,"СНТ Приокское":2600,"СНТ Речник":1700,"СНТ Родник":2600,"СНТ Северное":1500,"СНТ Сказка (Чех. Р-н)":2600,"СНТ Скнига":1700,"СНТ Славяне":1700,"СНТ Сосенки":1600,"СНТ Строитель Нива":1600,"СНТ Тарасовец":3100,"СНТ Твой дом":2400,"СНТ Трансгаз":1700,"СНТ Ясногорские дачи":3100,"Сосновка парк":1600,"Сосновый":1800,"Сосновый парк":2600,"Станки":2300,"Страхово":2800,"Студеное":3400,"Судимля":1400,"Сушки":1100,"Съяново":1600,"Съяново 2":2600,"Талеж":3000,"Таруса":2900,"Татарские хутора":2500,"Тверитино":1800,"Темьянь":2600,"Терхунь":3100,"Теряево (Заок. Р-н)":3300,"Тетерево":2600,"Трухачево":2400,"Тул. пост ГАИ":2800,"Тульчино":2600,"Турино 136 км":3500,"Турово":2200,"Турово поля аэродрома":2700,"Ушаковка":3500,"Фенино":2200,"Ферзиково (Калуж. обл)":4500,"Ферзиково (Мос. обл)":2500,"Царьград":1700,"Чепелево":3400,"Чехов":2800,"Чудо град":1900,"Шарапова охота":2200,"Шарапово (Чех. Р-н)":3400,"Шатово":2200,"Шахлово Верхнее ниж.":2200,"Шахтер":1900,"Шахтер д/о":1900,"Шепилово":1600,"Щеблово (Тульская обл.)":4000,"Щеболово":1700,"Южные дачи":2100,"Юрятино":2100,"Яковлево":1700,"Якшино":1800,"Ярославцево (Заок. Р-н)":2600,"Ясногорск":4100,"Ящерки":1500,"Ящерово":1500};
   function delivFor(c){c=(c||'').trim();if(VIL[c])return [VIL[c],VIL[c]];return c==='Серпухов'?P.deliv['Серпухов']:P.deliv.other}
   var st={cnt:{mezh:1,vhod:0,skr:0,razd:0,skl:0},step:1};
-  function r100(x){return Math.round(x/50)*50}  // шаг 50 ₽: коробка 2 750 ₽ не превращается в 2 800
+  function r100(x){return Math.ceil(x/100)*100}  // все цены сайта — вверх до 100 ₽
   function fmt(x){return r100(x).toLocaleString('ru-RU').replace(/\s/g,'\u00a0')}
   function val(name){var e=document.querySelector('#calcDlg input[name="'+name+'"]:checked');return e?e.value:null}
   function on(name){var e=document.querySelector('#calcDlg input[name="'+name+'"]');return e&&e.checked}
@@ -939,7 +1004,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
   function calc(){
     var tier=val('tier')||'std'; if(tier==='idk')tier='std';
     var size=val('size')||'std', wall=val('wall')||'thin';
-    var L={leaf:[0,0],kit:[0,0],dobor:[0,0],furn:[0,0],mount:[0,0],demont:[0,0],deliv:[0,0]}, n=0;
+    var L={leaf:[0,0],kit:[0,0],dobor:[0,0],furn:[0,0],mount:[0,0],demont:[0,0],extra:[0,0],deliv:[0,0]}, n=0;
     TYPES.forEach(function(t){var c=st.cnt[t.id];if(!c)return;n+=c;
       var lf=pick2(P.leaf[t.id],tier).slice(); if(size==='nonstd'){lf=[lf[0]*1.15,lf[1]*1.3]} if(size==='idk'){lf=[lf[0],lf[1]*1.15]}
       add(L.leaf,lf,c);
@@ -949,6 +1014,8 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
       if(on('mount')){var mt=P.mount[t.id].slice();if(size==='nonstd'){mt=[mt[0]*1.2,mt[1]*1.4]}if(size==='idk'){mt=[mt[0],mt[1]*1.2]}add(L.mount,mt,c)}
       if(on('demont'))add(L.demont,P.demont[t.id],c);
     });
+    if(n)P.extra.forEach(function(x){if(on('x_'+x[0]))add(L.extra,[x[2]*x[3],x[2]*x[3]],n)});
+    if(n&&on('x_portal')){var q=Math.max(1,+document.getElementById('cdPortal').value||1);add(L.extra,[3500,3500],q)}
     if(n&&on('deliv')){L.deliv=delivFor(document.getElementById('cdCity').value).slice()}
     var lo=0,hi=0;Object.keys(L).forEach(function(k){lo+=L[k][0];hi+=L[k][1]});
     return {L:L,lo:lo,hi:hi,n:n};
@@ -957,11 +1024,15 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
   // выбор в калькуляторе: [название, значение, шаг] — для боковой панели и для заявки
   var TN={eco:'Эконом',std:'Стандарт',prem:'Премиум',idk:'Подберём'}, SN={std:'Стандартный',nonstd:'Нестандартный',idk:'Измерит замерщик'}, WN={thin:'До 7,5 см',mid:'7,5–15 см',thick:'Толще 15 см',idk:'Измерит замерщик'};
   function picks(){
-    var inc=[];if(on('kit'))inc.push('коробка');if(on('furn'))inc.push('фурнитура');if(on('mount'))inc.push('монтаж');if(on('demont'))inc.push('демонтаж');if(on('deliv'))inc.push('доставка');
+    var inc=[];if(on('kit'))inc.push('коробка');if(on('furn'))inc.push('фурнитура');if(on('mount'))inc.push('монтаж');if(on('demont'))inc.push('демонтаж');P.extra.forEach(function(x){if(on('x_'+x[0]))inc.push(x[1].toLowerCase())});if(on('x_portal'))inc.push('портал');if(on('deliv'))inc.push('доставка');
     return [['Отделка',TN[val('tier')||'std'],2],['Проём',SN[val('size')||'std'],3],['Стена',WN[val('wall')||'thin'],3],['Включить',inc.join(', ')||'—',4]];
   }
-  var NAMES={leaf:'Полотна',kit:'Коробка и наличники',dobor:'Доборы',furn:'Фурнитура',mount:'Монтаж',demont:'Демонтаж',deliv:'Доставка'};
+  var NAMES={leaf:'Полотна',kit:'Коробка и наличники',dobor:'Доборы',furn:'Фурнитура',mount:'Монтаж',demont:'Демонтаж',extra:'Дополнительные работы',deliv:'Доставка'};
   function range(lo,hi){return lo===hi?fmt(lo)+' ₽':fmt(lo)+' – '+fmt(hi)+' ₽'}
+  // чекбоксы доп. работ собираются из P.extra
+  (function(){var b=document.getElementById('cdExtra');if(!b)return;
+    b.innerHTML=P.extra.map(function(x){return '<label><input type="checkbox" name="x_'+x[0]+'"><span><b style="font-weight:500">'+x[1]+'</b><small>'+x[4]+'</small></span></label>'}).join('')+
+      '<label><input type="checkbox" name="x_portal"><span><b style="font-weight:500">Портал</b><small>от 3 500 ₽ за проём без двери · проёмов: <input id="cdPortal" type="number" min="1" value="1" inputmode="numeric" style="width:56px;font:inherit;padding:2px 4px;border:1px solid var(--line)"></small></span></label>'})();
   function render(){
     var r=calc(), fin=st.step===5;
     var sum=document.getElementById('cdSum');sum.hidden=!fin;sum.textContent=r.n?range(r.lo,r.hi):'—';
