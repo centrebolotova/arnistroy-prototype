@@ -718,7 +718,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
   </div>
   <div class="bar2">
     <div class="wrap">
-      <a class="logo" href="index.html" aria-label="АрниСтрой — на главную"><img src="img/logo.svg" alt="АрниСтрой" width="77" height="48"></a>
+      <a class="logo" href="index.html" aria-label="АрниСтрой — на главную"><picture><source media="(prefers-color-scheme:dark)" srcset="img/logo-dark.svg"><img src="img/logo.svg" alt="АрниСтрой" width="77" height="48"></picture></a>
       <nav class="nav" aria-label="Меню">
         <a href="index.html#catalog">Каталог</a><a href="primerka.html">Примерить дверь</a><a href="#calc" class="js-calc">Калькулятор</a><a href="ustanovka.html">Установка</a><div class="dd"><a href="o-nas.html" class="dd-t" aria-haspopup="true">О нас</a><div class="dd-m"><a href="o-nas.html">О компании</a><a href="obekty.html">Наши работы</a><a href="otzyvy.html">Отзывы</a><a href="stati.html">Статьи</a><a href="garantiya.html">Гарантия и возврат</a><a href="akcii.html">Акции</a><a href="magaziny.html">Магазины</a></div></div><a href="kuhni.html">Кухни</a><a href="kontakty.html">Контакты</a>
       </nav>
@@ -871,7 +871,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
     <div><b>Доставка и установка</b><a href="chehov.html">Чехов</a><a href="stupino.html">Ступино</a><a href="protvino.html">Протвино</a><a href="pushchino.html">Пущино</a><a href="zaokskiy.html">Заокский</a><a href="tarusa.html">Таруса</a><a href="kremenki.html">Кременки</a><a href="obolensk.html">Оболенск</a><a href="podolsk.html">Подольск</a><a href="tula.html">Тула</a><a href="zhukov.html">Жуков</a><a href="aleksin.html">Алексин</a></div>
   </div>
   <div class="wrap">
-    <span class="logo"><img src="img/logo.svg" alt="АрниСтрой" width="64" height="40"></span>
+    <span class="logo"><picture><source media="(prefers-color-scheme:dark)" srcset="img/logo-dark.svg"><img src="img/logo.svg" alt="АрниСтрой" width="64" height="40"></picture></span>
     <span>Московское шоссе, 49 · <a href="tel:+79915958186">+7 (991) 595-81-86</a></span>
     <span>Ивановское, Пролетарская, 51 · <a href="tel:+79851555223">+7 (985) 155-52-23</a></span>
     <span>ИП Малышев А. Н. · <a href="politika.html">Политика обработки персональных данных</a></span>
@@ -1026,7 +1026,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
 
   // варианты для согласования: фото первого экрана, цвет блоков
   var heroMq=matchMedia('(max-width:760px)');
-  function heroMode(){body.setAttribute('data-hero',heroMq.matches?'night':'corr')}  // компьютер — «Коридор», телефон — «Вечер» (решение 29.10.2026); варианты — оформление/README.md
+  function heroMode(){var h=heroMq.matches?'night':'corr';body.setAttribute('data-hero',h);var im=document.querySelector('.hero .bg[data-v="'+h+'"]');if(im)im.loading='eager'}  // компьютер — «Коридор», телефон — «Вечер» (решение 29.10.2026); варианты — оформление/README.md
   heroMode();if(heroMq.addEventListener)heroMq.addEventListener('change',heroMode);
   function pick(attr){document.querySelectorAll('button[data-'+attr+']').forEach(function(b){b.addEventListener('click',function(){body.setAttribute('data-'+attr,b.dataset[attr]);document.querySelectorAll('button[data-'+attr+']').forEach(function(x){x.setAttribute('aria-pressed',x===b)})})})}
   pick('hero');
