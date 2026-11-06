@@ -725,6 +725,23 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
     </nav>
   </div>
 </header>
+<script>
+// Маска телефона на всех формах: +7 уже стоит, человек вводит 10 цифр; 8 или +7 в начале при вставке убираются.
+(function(){
+  function digits(v){var d=v.replace(/\D/g,'');if(/^\s*\+?7/.test(v))return d.slice(1,11);if(d.length>10&&(d[0]==='7'||d[0]==='8'))d=d.slice(1);return d.slice(0,10)}
+  function fmt(a){var s='+7 ';if(!a)return s;s+='('+a.slice(0,3);if(a.length>3)s+=') '+a.slice(3,6);if(a.length>6)s+='-'+a.slice(6,8);if(a.length>8)s+='-'+a.slice(8,10);return s}
+  function tel(e){return e&&e.tagName==='INPUT'&&e.type==='tel'}
+  function pos(s,n){if(!n)return 3;for(var i=3,c=0;i<s.length;i++){if(/\d/.test(s[i])&&++c===n)return i+1}return s.length}
+  function init(i){if(!i.value)i.value='+7 ';if(i.defaultValue!=='+7 ')i.defaultValue='+7 '}
+  document.addEventListener('input',function(e){var i=e.target;if(!tel(i))return;
+    var end=i.selectionStart>=i.value.length,n=digits(i.value.slice(0,i.selectionStart)).length,a=digits(i.value),v=fmt(a);i.value=v;i.setCustomValidity('');
+    var p=end?v.length:pos(v,n);try{i.setSelectionRange(p,p)}catch(x){}});
+  document.addEventListener('focusin',function(e){var i=e.target;if(!tel(i))return;init(i);setTimeout(function(){if(i.selectionStart<3)try{i.setSelectionRange(i.value.length,i.value.length)}catch(x){}},0)});
+  document.addEventListener('keydown',function(e){var i=e.target;if(tel(i)&&(e.key==='Backspace'||e.key==='Delete')&&i.selectionStart<=3&&i.selectionEnd<=3)e.preventDefault()});
+  function all(){document.querySelectorAll('input[type=tel]').forEach(init)}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',all);else all();
+}());
+</script>
 <div class="srch" id="srch" role="dialog" aria-modal="true" aria-label="Поиск по сайту"><div class="box"><div class="in"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="1.6"/></svg><input id="sQ" type="search" placeholder="Модель, фабрика или коллекция" autocomplete="off" aria-label="Что ищем"><button class="x" type="button" id="sX" aria-label="Закрыть">×</button></div><div class="res" id="sRes"></div></div></div>
 <script>
 // Поиск по сайту: модели (название, фабрика, коллекция) и страницы. Индекс search.js — каталог/make_search.py.
@@ -786,7 +803,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
 <p><b>Сувальдный замок</b> открывается плоским длинным ключом с бородками. Его сложнее вскрыть отмычкой, но если потеряли ключ — меняют весь замок, а не одну деталь.</p>
 <p><b>Цилиндровый замок</b> открывается ключом с выемками, а секрет спрятан в личинке — сменной вставке. Потеряли ключ — меняют только личинку, это быстро. Слабое место — саму личинку можно выбить или высверлить, поэтому снаружи её закрывают броненакладкой — стальной пластиной. <b>Какая личинка лучше</b>: с защитой от высверливания и с картой владельца — дубликат ключа сделают только по ней.</p>
 <p>Замки делят на классы по ГОСТ 5089-2011 — от 1-го до 4-го. Чем выше класс, тем надёжнее замок. Класс пишут в паспорте замка — спросите его в салоне.</p>
-<p>Отдельная линейка в каталоге — <a href="vhodnye-dveri-s-zamkami-kale.html">двери с турецкими замками Kale</a>: 14 моделей, от 27 200 до 36 900 ₽. Если хочется открывать дверь картой, кодом или со смартфона, можно поставить смарт-замок: монтаж двери с ним стоит 8 000 ₽.</p>
+<p>Отдельная линейка в каталоге — : 14 моделей, от 27 200 до 36 900 ₽. Если хочется открывать дверь картой, кодом или со смартфона, можно поставить смарт-замок: монтаж двери с ним стоит 8 000 ₽.</p>
 <h2 id="uteplitel-i-shumoizolyatsiya-chto-vnutri">Утеплитель и шумоизоляция: что внутри входной двери</h2>
 <p>Полотно входной двери — это стальной короб, а внутри него — наполнитель. От него и от уплотнителя зависит, будет ли в прихожей слышно лифт и соседей.</p>
 <p><b>Пенополистирол</b> — лёгкие жёсткие плиты, хорошо держат тепло и не боятся влаги. Это самый частый вариант: так утеплены 27 моделей из 47.</p>
@@ -817,7 +834,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
 <h2 id="itog">Итог</h2>
 <p>Квартире не нужна самая толстая дверь из каталога. Ей нужна сбалансированная: сталь 1–1,2 мм, два замка разных типов, три контура уплотнения и нормальный наполнитель вместо картона. Всё, что сверх этого, — либо для частного дома, либо за внешний вид.</p>
 <p>Сложнее всего сравнить двери по фото: на экране не видно, как дверь закрывается, сколько она весит и как ходит ключ. В салонах «АрниСтрой» на Московском шоссе, 49 в Серпухове и в Ивановском входные двери стоят в экспозиции — их можно открыть, закрыть и послушать. Экспозиции салонов различаются, поэтому если ищете конкретную модель, уточните по телефону, где она стоит. Чтобы дверь встала в проём без сюрпризов, вызовите замерщика: выезд по Серпухову — 500 ₽, он измерит проём, проверит стену и подскажет сторону открывания.</p>
-  <div class="see"><b>Смотрите также</b><a class="arrow" href="vhodnye-dveri-v-kvartiru.html">Входные двери в квартиру</a><a class="arrow" href="vhodnye-dveri-s-zamkami-kale.html">Двери с замками Kale</a><a class="arrow" href="ustanovka-vhodnyh.html">Установка входных дверей</a><a class="arrow" href="zamer.html">Вызвать замерщика</a></div>
+  <div class="see"><b>Смотрите также</b><a class="arrow" href="vhodnye-dveri-v-kvartiru.html">Входные двери в квартиру</a><a class="arrow" href="ustanovka-vhodnyh.html">Установка входных дверей</a><a class="arrow" href="zamer.html">Вызвать замерщика</a></div>
 </article>
 <script type="application/ld+json">[{"@context": "https://schema.org", "@type": "Article", "headline": "Какая входная дверь лучше для квартиры", "description": "Толщина металла, замки, утеплитель и шумоизоляция, отделка, проверка в салоне и цена с установкой.", "datePublished": "2026-10-28", "dateModified": "2026-10-28", "inLanguage": "ru", "mainEntityOfPage": "https://arnistroy.ru/stati-kak-vybrat-vhodnuyu-dver", "author": {"@type": "Organization", "name": "АрниСтрой"}, "publisher": {"@type": "Organization", "name": "АрниСтрой"}}, {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Главная", "item": "https://arnistroy.ru/"}, {"@type": "ListItem", "position": 2, "name": "Статьи", "item": "https://arnistroy.ru/stati"}, {"@type": "ListItem", "position": 3, "name": "Какая входная дверь лучше для квартиры", "item": "https://arnistroy.ru/stati-kak-vybrat-vhodnuyu-dver"}]}]</script>
 <section class="final" id="form" aria-labelledby="form-h">
@@ -1180,7 +1197,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
   dlg.addEventListener('click',function(e){if(e.target===dlg)dlg.close()});
   document.querySelectorAll('[data-form]').forEach(function(f){
     var ph=f.querySelector('input[type=tel]');
-    f.addEventListener('submit',function(e){e.preventDefault();if(ph.value.replace(/\D/g,'').length<10){ph.setCustomValidity('Введите номер телефона');ph.reportValidity();return}ph.setCustomValidity('');
+    f.addEventListener('submit',function(e){e.preventDefault();if(ph.value.replace(/\D/g,'').length<11){ph.setCustomValidity('Введите номер полностью: 10 цифр после +7');ph.reportValidity();return}ph.setCustomValidity('');
       // заявка → функция Supabase lead → почта и Telegram салона
       var box=f.closest('dialog,section'), h=box&&box.querySelector('h2,h3'), L=[];
       L.push('Заявка с сайта: '+(f.dataset.form||(h?h.textContent.trim():'форма')));

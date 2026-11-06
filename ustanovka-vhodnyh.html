@@ -666,6 +666,23 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
     </nav>
   </div>
 </header>
+<script>
+// Маска телефона на всех формах: +7 уже стоит, человек вводит 10 цифр; 8 или +7 в начале при вставке убираются.
+(function(){
+  function digits(v){var d=v.replace(/\D/g,'');if(/^\s*\+?7/.test(v))return d.slice(1,11);if(d.length>10&&(d[0]==='7'||d[0]==='8'))d=d.slice(1);return d.slice(0,10)}
+  function fmt(a){var s='+7 ';if(!a)return s;s+='('+a.slice(0,3);if(a.length>3)s+=') '+a.slice(3,6);if(a.length>6)s+='-'+a.slice(6,8);if(a.length>8)s+='-'+a.slice(8,10);return s}
+  function tel(e){return e&&e.tagName==='INPUT'&&e.type==='tel'}
+  function pos(s,n){if(!n)return 3;for(var i=3,c=0;i<s.length;i++){if(/\d/.test(s[i])&&++c===n)return i+1}return s.length}
+  function init(i){if(!i.value)i.value='+7 ';if(i.defaultValue!=='+7 ')i.defaultValue='+7 '}
+  document.addEventListener('input',function(e){var i=e.target;if(!tel(i))return;
+    var end=i.selectionStart>=i.value.length,n=digits(i.value.slice(0,i.selectionStart)).length,a=digits(i.value),v=fmt(a);i.value=v;i.setCustomValidity('');
+    var p=end?v.length:pos(v,n);try{i.setSelectionRange(p,p)}catch(x){}});
+  document.addEventListener('focusin',function(e){var i=e.target;if(!tel(i))return;init(i);setTimeout(function(){if(i.selectionStart<3)try{i.setSelectionRange(i.value.length,i.value.length)}catch(x){}},0)});
+  document.addEventListener('keydown',function(e){var i=e.target;if(tel(i)&&(e.key==='Backspace'||e.key==='Delete')&&i.selectionStart<=3&&i.selectionEnd<=3)e.preventDefault()});
+  function all(){document.querySelectorAll('input[type=tel]').forEach(init)}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',all);else all();
+}());
+</script>
 <div class="srch" id="srch" role="dialog" aria-modal="true" aria-label="Поиск по сайту"><div class="box"><div class="in"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="1.6"/></svg><input id="sQ" type="search" placeholder="Модель, фабрика или коллекция" autocomplete="off" aria-label="Что ищем"><button class="x" type="button" id="sX" aria-label="Закрыть">×</button></div><div class="res" id="sRes"></div></div></div>
 <script>
 // Поиск по сайту: модели (название, фабрика, коллекция) и страницы. Индекс search.js — каталог/make_search.py.
@@ -1181,7 +1198,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
   dlg.addEventListener('click',function(e){if(e.target===dlg)dlg.close()});
   document.querySelectorAll('[data-form]').forEach(function(f){
     var ph=f.querySelector('input[type=tel]');
-    f.addEventListener('submit',function(e){e.preventDefault();if(ph.value.replace(/\D/g,'').length<10){ph.setCustomValidity('Введите номер телефона');ph.reportValidity();return}ph.setCustomValidity('');
+    f.addEventListener('submit',function(e){e.preventDefault();if(ph.value.replace(/\D/g,'').length<11){ph.setCustomValidity('Введите номер полностью: 10 цифр после +7');ph.reportValidity();return}ph.setCustomValidity('');
       // заявка → функция Supabase lead → почта и Telegram салона
       var box=f.closest('dialog,section'), h=box&&box.querySelector('h2,h3'), L=[];
       L.push('Заявка с сайта: '+(f.dataset.form||(h?h.textContent.trim():'форма')));
