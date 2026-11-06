@@ -2,10 +2,17 @@
 <html lang="ru"><head><meta name="robots" content="noindex, nofollow"><style>.variants{display:none!important}mark.todo{background:none!important;color:inherit!important;padding:0!important}.todo-note{display:none!important}</style><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Доставка дверей в Ясногорском районе АрниСтрой</title>
 <link rel="icon" type="image/png" href="img/favicon.png">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600&display=swap">
 <style>
+/* шрифт со своего сервера: Google Fonts из России по мобильной сети тормозил показ страницы */
+@font-face{font-family:"Onest";font-style:normal;font-weight:300;font-display:swap;src:url(img/fonts/onest-cyrillic.woff2) format("woff2");unicode-range:U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116}
+@font-face{font-family:"Onest";font-style:normal;font-weight:300;font-display:swap;src:url(img/fonts/onest-latin.woff2) format("woff2");unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:"Onest";font-style:normal;font-weight:400;font-display:swap;src:url(img/fonts/onest-cyrillic.woff2) format("woff2");unicode-range:U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116}
+@font-face{font-family:"Onest";font-style:normal;font-weight:400;font-display:swap;src:url(img/fonts/onest-latin.woff2) format("woff2");unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:"Onest";font-style:normal;font-weight:500;font-display:swap;src:url(img/fonts/onest-cyrillic.woff2) format("woff2");unicode-range:U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116}
+@font-face{font-family:"Onest";font-style:normal;font-weight:500;font-display:swap;src:url(img/fonts/onest-latin.woff2) format("woff2");unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:"Onest";font-style:normal;font-weight:600;font-display:swap;src:url(img/fonts/onest-cyrillic.woff2) format("woff2");unicode-range:U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116}
+@font-face{font-family:"Onest";font-style:normal;font-weight:600;font-display:swap;src:url(img/fonts/onest-latin.woff2) format("woff2");unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+
 /* Layout: по мотивам Rimadesio + DRE — белый фон, крупные двери из каталога на белом, плотные заголовки,
    тёплый молочный только у двух блоков (калькулятор, как мы работаем). Двери открываются со стороны ручки. */
 :root{
@@ -1074,7 +1081,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
   function buildCnt(el){
     TYPES.forEach(function(t){
       var row=document.createElement('div');row.className='r';
-      row.innerHTML='<img src="img/'+t.img+'.jpg" alt=""><span><b>'+t.name+'</b><small>'+t.note+'</small></span>'+
+      row.innerHTML='<img loading="lazy" src="img/'+t.img+'.jpg" alt=""><span><b>'+t.name+'</b><small>'+t.note+'</small></span>'+
         '<span class="stp"><button type="button" data-d="-1" aria-label="Меньше: '+t.name+'">−</button><output data-id="'+t.id+'">0</output><button type="button" data-d="1" aria-label="Больше: '+t.name+'">+</button></span>';
       row.querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){st.cnt[t.id]=Math.max(0,Math.min(30,st.cnt[t.id]+(+b.dataset.d)));render()})});
       el.appendChild(row);
