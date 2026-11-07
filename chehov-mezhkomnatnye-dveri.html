@@ -684,6 +684,20 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
 @media (max-width:560px){.steps2{grid-template-columns:1fr!important}}
 
 </style>
+<style>
+/* Safari (iPhone) неверно считает высоту в процентах внутри блока с aspect-ratio — карточки налезали друг на друга (07.11.2026).
+   Размер двери задаём от ширины: так одинаково во всех браузерах. Блок стоит после стилей страниц, поэтому перекрывает их. */
+.pc .box .op,.cat .box .op,.sim .box .op,.card .box .op{width:49%;height:auto;aspect-ratio:9/20;max-height:100%}
+.stage:not(.scene) .op{width:50%;height:auto;aspect-ratio:9/20}
+.pc .two{height:auto;align-items:center}
+.pc .two .spr{width:44%;height:auto;aspect-ratio:200/450;flex:none}
+.pair{height:auto;align-items:flex-start}
+.pair figure{width:40%;height:auto}
+.pair .spr{width:100%;height:auto;aspect-ratio:200/450}
+.pc{min-width:0}
+.pc .row>*{min-width:0}
+.pc .n{overflow-wrap:anywhere}
+</style>
 
 <header class="top">
   <div class="bar1">
@@ -770,7 +784,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
 <div class="wrap">
   <nav class="crumbs" aria-label="Навигация"><a href="index.html">Главная</a><span>/</span><a href="dostavka.html">Доставка</a><span>/</span><a href="chehov.html">Чехов</a><span>/</span><span>Межкомнатные двери</span></nav>
   <div class="u-head">
-    <div class="txt"><h1>Межкомнатные двери в Чехове с установкой</h1><p class="lead">Межкомнатные двери в Чехове — купить с замером, доставкой и установкой. Каталог с ценами и образцы в салонах в Серпухове, в 30 минутах от Чехова.</p><ul class="facts2"><li><b>2338</b><span>моделей в каталоге</span></li><li><b>от 1 800 ₽</b><span>за полотно</span></li><li><b>от 4 500 ₽</b><span>монтаж межкомнатной</span></li><li><b>2 800 ₽</b><span>доставка в Чехове</span></li></ul><div class="u-cta"><button class="btn js-zamer" type="button">Вызвать замерщика</button><a class="btn ghost" href="mezhkomnatnye-dveri.html">Смотреть каталог</a></div></div>
+    <div class="txt"><h1>Межкомнатные двери в Чехове с установкой</h1><p class="lead">Межкомнатные двери в Чехове — купить с замером, доставкой и установкой. Каталог с ценами и образцы в салонах в Серпухове, в 30 минутах от Чехова.</p><ul class="facts2"><li><b>2338</b><span>моделей в каталоге</span></li><li><b>от 2 700 ₽</b><span>за полотно</span></li><li><b>от 4 500 ₽</b><span>монтаж межкомнатной</span></li><li><b>2 800 ₽</b><span>доставка в Чехове</span></li></ul><div class="u-cta"><button class="btn js-zamer" type="button">Вызвать замерщика</button><a class="btn ghost" href="mezhkomnatnye-dveri.html">Смотреть каталог</a></div></div>
     <div class="ph"><img loading="lazy" src="img/hero-corr.jpg" alt="Коридор с межкомнатными дверями" class="flip"></div>
   </div>
 </div>
@@ -781,7 +795,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
 </div></section>
 <section><div class="wrap kv">
   <div class="rv" style="display:grid;gap:14px"><h2 style="font-size:clamp(26px,2.6vw,36px)">Цена с установкой в Чехове</h2>
-    <dl class="cs-spec"><dt>Полотно</dt><dd>от 1 800 ₽ за полотно</dd><dt>Монтаж</dt><dd>от 4 500 ₽ — коробка, полотно, наличники</dd>
+    <dl class="cs-spec"><dt>Полотно</dt><dd>от 2 700 ₽ за полотно</dd><dt>Монтаж</dt><dd>от 4 500 ₽ — коробка, полотно, наличники</dd>
     <dt>Добор</dt><dd>от 1 100 ₽</dd><dt>Доставка</dt><dd>2 800 ₽</dd><dt>Замер</dt><dd>50% стоимости доставки, не меньше 500 ₽</dd></dl>
     <a class="arrow" href="kalkulyator.html">Рассчитать комплект</a></div>
   <div class="rv" style="display:grid;gap:14px"><h2 style="font-size:clamp(26px,2.6vw,36px)">Как вы получаете дверь</h2>
@@ -789,7 +803,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
 </div></section>
 <section class="grad"><div class="wrap"><div class="head split rv"><h2>Наши работы</h2><a class="arrow" href="obekty.html#chehov">Объект в Чехове</a></div><p class="muted rv">Двери после монтажа в домах и квартирах — Серпухов, район, Москва: фото, сроки и сложности каждого объекта.</p></div></section>
 <section class="grad" aria-labelledby="seo-h"><div class="wrap seo"><div class="txt rv"><h2 id="seo-h">Купить межкомнатные двери в Чехове</h2>
-      <p>Межкомнатные двери в Чехове — 2338 моделей в каталоге, от 1 800 ₽ за полотно. Вживую двери можно посмотреть в салоне на Московском шоссе, 49 в Серпухове.</p>
+      <p>Межкомнатные двери в Чехове — 2338 моделей в каталоге, от 2 700 ₽ за полотно. Вживую двери можно посмотреть в салоне на Московском шоссе, 49 в Серпухове.</p>
       <h2>Установка межкомнатных дверей в Чехове</h2>
       <p>Установка межкомнатных дверей в Чехове — от 4 500 ₽ за дверь. Межкомнатные двери в Чехове недорого с установкой — подборка <a href="mezhkomnatnye-dveri-nedorogie.html">недорогих дверей</a>.</p></div><aside class="rv" aria-label="Услуги">
       <b style="font-weight:500">Услуги</b>
@@ -866,7 +880,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
         <h3>Какой уровень отделки?</h3>
         <p class="hint">Цены за полотно — из нашего каталога.</p>
         <div class="opts">
-          <label class="opt"><input type="radio" name="tier" value="eco"><b>Эконом</b><small>Флекс-покрытие, экошпон. Межкомнатные от 1 800 ₽</small></label>
+          <label class="opt"><input type="radio" name="tier" value="eco"><b>Эконом</b><small>Флекс-покрытие, экошпон. Межкомнатные от 2 700 ₽</small></label>
           <label class="opt"><input type="radio" name="tier" value="std" checked><b>Стандарт</b><small>Экошпон, винил, эмалит, шпон. От 5 000 ₽</small></label>
           <label class="opt"><input type="radio" name="tier" value="prem"><b>Премиум</b><small>Эмаль, натуральный шпон, массив. От 12 000 ₽</small></label>
           <label class="opt idk"><input type="radio" name="tier" value="idk"><b>Не знаю</b><small>Посчитаем по среднему, подберём в салоне</small></label>
@@ -996,14 +1010,14 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
   // ===== калькулятор =====
   // Цены полотна — вилки по каталогу 29.10.2026 (2 484 межкомнатных, 285 входных; эконом — Браво и плёнки, премиум — до 90% каталога). Комплектующие, монтаж, доставка — от владельца 08.10.2026; монтаж скрытой, раздвижной, складной — примерно (уточняем).
   var TYPES=[
-    {id:'mezh',name:'Межкомнатные',img:'d-prima-white',note:'от 1 800 ₽ за полотно'},
-    {id:'vhod',name:'Входные',img:'d-vhod',note:'от 7 700 ₽'},
+    {id:'mezh',name:'Межкомнатные',img:'d-prima-white',note:'от 2 700 ₽ за полотно'},
+    {id:'vhod',name:'Входные',img:'d-vhod',note:'от 10 200 ₽'},
     {id:'skr',name:'Скрытые',img:'d-hidden',note:'под покраску'},
     {id:'razd',name:'Раздвижные',img:'d-bravo27',note:'купе и пеналы'},
     {id:'skl',name:'Складные',img:'d-dsk',note:'от 1 900 ₽'}
   ];
   var P={ // [мин, макс] за 1 дверь
-    leaf:{mezh:{eco:[1800,5000],std:[5000,12000],prem:[12000,30000]},vhod:{eco:[7625,25000],std:[25000,42000],prem:[42000,65000]},
+    leaf:{mezh:{eco:[2700,5000],std:[5000,12000],prem:[12000,30000]},vhod:{eco:[10200,25000],std:[25000,42000],prem:[42000,65000]},
           skr:{eco:[9000,14000],std:[14000,22000],prem:[22000,35000]},razd:{eco:[1800,5000],std:[5000,12000],prem:[12000,30000]},skl:{eco:[1900,3400],std:[3400,4500],prem:[4500,6900]}},
     kit:{mezh:{eco:[2750,2750],std:[4350,6000],prem:[6500,13750]},vhod:[0,0],skr:[14700,19200],razd:[3200,23250],skl:[0,0]},
     furn:{mezh:{eco:[1400,1400],std:[2300,2300],prem:[3600,3600]},vhod:[0,0],skr:[6400,8000],razd:[600,1400],skl:[0,0]},

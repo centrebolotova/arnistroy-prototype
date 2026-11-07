@@ -708,6 +708,20 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
 @media (max-width:560px){.art table{font-size:13px}.art th,.art td{padding-right:8px}}
 
 </style>
+<style>
+/* Safari (iPhone) неверно считает высоту в процентах внутри блока с aspect-ratio — карточки налезали друг на друга (07.11.2026).
+   Размер двери задаём от ширины: так одинаково во всех браузерах. Блок стоит после стилей страниц, поэтому перекрывает их. */
+.pc .box .op,.cat .box .op,.sim .box .op,.card .box .op{width:49%;height:auto;aspect-ratio:9/20;max-height:100%}
+.stage:not(.scene) .op{width:50%;height:auto;aspect-ratio:9/20}
+.pc .two{height:auto;align-items:center}
+.pc .two .spr{width:44%;height:auto;aspect-ratio:200/450;flex:none}
+.pair{height:auto;align-items:flex-start}
+.pair figure{width:40%;height:auto}
+.pair .spr{width:100%;height:auto;aspect-ratio:200/450}
+.pc{min-width:0}
+.pc .row>*{min-width:0}
+.pc .n{overflow-wrap:anywhere}
+</style>
 
 <header class="top">
   <div class="bar1">
@@ -905,7 +919,7 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
         <h3>Какой уровень отделки?</h3>
         <p class="hint">Цены за полотно — из нашего каталога.</p>
         <div class="opts">
-          <label class="opt"><input type="radio" name="tier" value="eco"><b>Эконом</b><small>Флекс-покрытие, экошпон. Межкомнатные от 1 800 ₽</small></label>
+          <label class="opt"><input type="radio" name="tier" value="eco"><b>Эконом</b><small>Флекс-покрытие, экошпон. Межкомнатные от 2 700 ₽</small></label>
           <label class="opt"><input type="radio" name="tier" value="std" checked><b>Стандарт</b><small>Экошпон, винил, эмалит, шпон. От 5 000 ₽</small></label>
           <label class="opt"><input type="radio" name="tier" value="prem"><b>Премиум</b><small>Эмаль, натуральный шпон, массив. От 12 000 ₽</small></label>
           <label class="opt idk"><input type="radio" name="tier" value="idk"><b>Не знаю</b><small>Посчитаем по среднему, подберём в салоне</small></label>
@@ -1035,14 +1049,14 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
   // ===== калькулятор =====
   // Цены полотна — вилки по каталогу 29.10.2026 (2 484 межкомнатных, 285 входных; эконом — Браво и плёнки, премиум — до 90% каталога). Комплектующие, монтаж, доставка — от владельца 08.10.2026; монтаж скрытой, раздвижной, складной — примерно (уточняем).
   var TYPES=[
-    {id:'mezh',name:'Межкомнатные',img:'d-prima-white',note:'от 1 800 ₽ за полотно'},
-    {id:'vhod',name:'Входные',img:'d-vhod',note:'от 7 700 ₽'},
+    {id:'mezh',name:'Межкомнатные',img:'d-prima-white',note:'от 2 700 ₽ за полотно'},
+    {id:'vhod',name:'Входные',img:'d-vhod',note:'от 10 200 ₽'},
     {id:'skr',name:'Скрытые',img:'d-hidden',note:'под покраску'},
     {id:'razd',name:'Раздвижные',img:'d-bravo27',note:'купе и пеналы'},
     {id:'skl',name:'Складные',img:'d-dsk',note:'от 1 900 ₽'}
   ];
   var P={ // [мин, макс] за 1 дверь
-    leaf:{mezh:{eco:[1800,5000],std:[5000,12000],prem:[12000,30000]},vhod:{eco:[7625,25000],std:[25000,42000],prem:[42000,65000]},
+    leaf:{mezh:{eco:[2700,5000],std:[5000,12000],prem:[12000,30000]},vhod:{eco:[10200,25000],std:[25000,42000],prem:[42000,65000]},
           skr:{eco:[9000,14000],std:[14000,22000],prem:[22000,35000]},razd:{eco:[1800,5000],std:[5000,12000],prem:[12000,30000]},skl:{eco:[1900,3400],std:[3400,4500],prem:[4500,6900]}},
     kit:{mezh:{eco:[2750,2750],std:[4350,6000],prem:[6500,13750]},vhod:[0,0],skr:[14700,19200],razd:[3200,23250],skl:[0,0]},
     furn:{mezh:{eco:[1400,1400],std:[2300,2300],prem:[3600,3600]},vhod:[0,0],skr:[6400,8000],razd:[600,1400],skl:[0,0]},
