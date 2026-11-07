@@ -107,6 +107,11 @@ body.clean .todo-note{display:none}
   .mnav a{text-decoration:none;padding:10px 0;border-bottom:1px solid var(--line)}
   .mnav .ph{display:grid;gap:6px;padding-top:14px;font-size:15px;color:var(--muted)}}
 .mnav .ph a{border:0;padding:6px 0;color:var(--ink)}
+.msub summary{padding:10px 0;border-bottom:1px solid var(--line);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center}
+.msub summary::-webkit-details-marker{display:none}
+.msub summary::after{content:"";width:7px;height:7px;border-right:1px solid;border-bottom:1px solid;transform:rotate(45deg);margin-right:4px}
+.msub[open] summary::after{transform:rotate(-135deg)}
+.msub a{display:block;padding:10px 0 10px 16px;font-size:16px}
 
 /* ===== первый экран: фото на всю ширину, текст слева ===== */
 .hero{position:relative;color:#fff;overflow:hidden;padding:0;min-height:clamp(560px,78vh,820px);display:grid;align-items:center}
@@ -739,14 +744,14 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
     <div class="wrap">
       <a class="logo" href="index.html" aria-label="АрниСтрой — на главную"><picture><source media="(prefers-color-scheme:dark)" srcset="img/logo-dark.svg"><img src="img/logo.svg" alt="АрниСтрой" width="77" height="48"></picture></a>
       <nav class="nav" aria-label="Меню">
-        <a href="index.html#catalog">Каталог</a><a href="primerka.html">Примерить дверь</a><a href="#calc" class="js-calc">Калькулятор</a><a href="ustanovka.html">Установка</a><div class="dd"><a href="o-nas.html" class="dd-t" aria-haspopup="true">О нас</a><div class="dd-m"><a href="o-nas.html">О компании</a><a href="obekty.html">Наши работы</a><a href="otzyvy.html">Отзывы</a><a href="stati.html">Статьи</a><a href="garantiya.html">Гарантия и возврат</a><a href="akcii.html">Акции</a><a href="magaziny.html">Магазины</a></div></div><a href="kuhni.html">Кухни</a><a href="kontakty.html">Контакты</a>
+        <div class="dd"><a href="index.html#catalog" class="dd-t" aria-haspopup="true">Каталог дверей</a><div class="dd-m"><a href="vhodnye-dveri.html">Входные двери</a><a href="mezhkomnatnye-dveri.html">Межкомнатные двери</a><a href="mezhkomnatnye-dveri-skrytye.html">Скрытые двери</a><a href="mezhkomnatnye-dveri-razdvizhnye.html">Раздвижные двери</a><a href="mezhkomnatnye-dveri-skladnye.html">Складные двери</a><a href="mezhkomnatnye-dveri-nestandartnye.html">Нестандартные двери</a><a href="furnitura.html">Фурнитура</a><a href="brendy.html">Фабрики</a></div></div><a href="primerka.html">Примерить дверь</a><a href="#calc" class="js-calc">Калькулятор</a><a href="ustanovka.html">Установка</a><div class="dd"><a href="o-nas.html" class="dd-t" aria-haspopup="true">О нас</a><div class="dd-m"><a href="o-nas.html">О компании</a><a href="obekty.html">Наши работы</a><a href="otzyvy.html">Отзывы</a><a href="stati.html">Статьи</a><a href="garantiya.html">Гарантия и возврат</a><a href="akcii.html">Акции</a><a href="magaziny.html">Магазины</a></div></div><a href="kuhni.html">Кухни</a><a href="kontakty.html">Контакты</a>
       </nav>
       <button class="sbtn" type="button" id="sOpen" aria-label="Поиск по сайту"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="1.6"/></svg><span>Поиск</span></button>
       <div class="acts"><button class="btn js-zamer" type="button">Вызвать замерщика</button></div>
       <button class="burger" type="button" aria-expanded="false" aria-controls="mnav" aria-label="Меню">☰</button>
     </div>
     <nav class="mnav" id="mnav" aria-label="Меню">
-      <a href="index.html#catalog">Каталог</a><a href="primerka.html">Примерить дверь</a><a href="#calc" class="js-calc">Калькулятор</a><a href="ustanovka.html">Установка</a><a href="obekty.html">Наши работы</a><a href="otzyvy.html">Отзывы</a><a href="stati.html">Статьи</a><a href="o-nas.html">О нас</a><a href="kuhni.html">Кухни</a><a href="kontakty.html">Контакты</a>
+      <details class="msub"><summary>Каталог дверей</summary><a href="vhodnye-dveri.html">Входные двери</a><a href="mezhkomnatnye-dveri.html">Межкомнатные двери</a><a href="mezhkomnatnye-dveri-skrytye.html">Скрытые двери</a><a href="mezhkomnatnye-dveri-razdvizhnye.html">Раздвижные двери</a><a href="mezhkomnatnye-dveri-skladnye.html">Складные двери</a><a href="mezhkomnatnye-dveri-nestandartnye.html">Нестандартные двери</a><a href="furnitura.html">Фурнитура</a><a href="brendy.html">Фабрики</a></details><a href="primerka.html">Примерить дверь</a><a href="#calc" class="js-calc">Калькулятор</a><a href="ustanovka.html">Установка</a><a href="obekty.html">Наши работы</a><a href="otzyvy.html">Отзывы</a><a href="stati.html">Статьи</a><a href="o-nas.html">О нас</a><a href="kuhni.html">Кухни</a><a href="kontakty.html">Контакты</a>
       <div class="ph num"><span>Московское ш. · <a href="tel:+79915958186">+7 (991) 595-81-86</a></span><span>Ивановское · <a href="tel:+79851555223">+7 (985) 155-52-23</a></span></div>
     </nav>
   </div>

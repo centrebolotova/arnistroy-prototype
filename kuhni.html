@@ -107,6 +107,11 @@ body.clean .todo-note{display:none}
   .mnav a{text-decoration:none;padding:10px 0;border-bottom:1px solid var(--line)}
   .mnav .ph{display:grid;gap:6px;padding-top:14px;font-size:15px;color:var(--muted)}}
 .mnav .ph a{border:0;padding:6px 0;color:var(--ink)}
+.msub summary{padding:10px 0;border-bottom:1px solid var(--line);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center}
+.msub summary::-webkit-details-marker{display:none}
+.msub summary::after{content:"";width:7px;height:7px;border-right:1px solid;border-bottom:1px solid;transform:rotate(45deg);margin-right:4px}
+.msub[open] summary::after{transform:rotate(-135deg)}
+.msub a{display:block;padding:10px 0 10px 16px;font-size:16px}
 
 /* ===== первый экран: фото на всю ширину, текст слева ===== */
 .hero{position:relative;color:#fff;overflow:hidden;padding:0;min-height:clamp(560px,78vh,820px);display:grid;align-items:center}
@@ -854,14 +859,14 @@ footer .fnav a{text-decoration:none}footer .fnav a:hover{color:var(--ink)}
     <div class="wrap">
       <a class="logo" href="index.html" aria-label="АрниСтрой — на главную"><picture><source media="(prefers-color-scheme:dark)" srcset="img/logo-dark.svg"><img src="img/logo.svg" alt="АрниСтрой" width="77" height="48"></picture></a>
       <nav class="nav" aria-label="Меню">
-        <a href="index.html#catalog">Каталог</a><a href="primerka.html">Примерить дверь</a><a href="#calc" class="js-calc">Калькулятор</a><a href="ustanovka.html">Установка</a><div class="dd"><a href="o-nas.html" class="dd-t" aria-haspopup="true">О нас</a><div class="dd-m"><a href="o-nas.html">О компании</a><a href="obekty.html">Наши работы</a><a href="otzyvy.html">Отзывы</a><a href="stati.html">Статьи</a><a href="garantiya.html">Гарантия и возврат</a><a href="akcii.html">Акции</a><a href="magaziny.html">Магазины</a></div></div><a href="kuhni.html">Кухни</a><a href="kontakty.html">Контакты</a>
+        <div class="dd"><a href="index.html#catalog" class="dd-t" aria-haspopup="true">Каталог дверей</a><div class="dd-m"><a href="vhodnye-dveri.html">Входные двери</a><a href="mezhkomnatnye-dveri.html">Межкомнатные двери</a><a href="mezhkomnatnye-dveri-skrytye.html">Скрытые двери</a><a href="mezhkomnatnye-dveri-razdvizhnye.html">Раздвижные двери</a><a href="mezhkomnatnye-dveri-skladnye.html">Складные двери</a><a href="mezhkomnatnye-dveri-nestandartnye.html">Нестандартные двери</a><a href="furnitura.html">Фурнитура</a><a href="brendy.html">Фабрики</a></div></div><a href="primerka.html">Примерить дверь</a><a href="#calc" class="js-calc">Калькулятор</a><a href="ustanovka.html">Установка</a><div class="dd"><a href="o-nas.html" class="dd-t" aria-haspopup="true">О нас</a><div class="dd-m"><a href="o-nas.html">О компании</a><a href="obekty.html">Наши работы</a><a href="otzyvy.html">Отзывы</a><a href="stati.html">Статьи</a><a href="garantiya.html">Гарантия и возврат</a><a href="akcii.html">Акции</a><a href="magaziny.html">Магазины</a></div></div><a href="kuhni.html">Кухни</a><a href="kontakty.html">Контакты</a>
       </nav>
       <button class="sbtn" type="button" id="sOpen" aria-label="Поиск по сайту"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="1.6"/></svg><span>Поиск</span></button>
       <div class="acts"><button class="btn js-zamer" type="button">Вызвать замерщика</button></div>
       <button class="burger" type="button" aria-expanded="false" aria-controls="mnav" aria-label="Меню">☰</button>
     </div>
     <nav class="mnav" id="mnav" aria-label="Меню">
-      <a href="index.html#catalog">Каталог</a><a href="primerka.html">Примерить дверь</a><a href="#calc" class="js-calc">Калькулятор</a><a href="ustanovka.html">Установка</a><a href="obekty.html">Наши работы</a><a href="otzyvy.html">Отзывы</a><a href="stati.html">Статьи</a><a href="o-nas.html">О нас</a><a href="kuhni.html">Кухни</a><a href="kontakty.html">Контакты</a>
+      <details class="msub"><summary>Каталог дверей</summary><a href="vhodnye-dveri.html">Входные двери</a><a href="mezhkomnatnye-dveri.html">Межкомнатные двери</a><a href="mezhkomnatnye-dveri-skrytye.html">Скрытые двери</a><a href="mezhkomnatnye-dveri-razdvizhnye.html">Раздвижные двери</a><a href="mezhkomnatnye-dveri-skladnye.html">Складные двери</a><a href="mezhkomnatnye-dveri-nestandartnye.html">Нестандартные двери</a><a href="furnitura.html">Фурнитура</a><a href="brendy.html">Фабрики</a></details><a href="primerka.html">Примерить дверь</a><a href="#calc" class="js-calc">Калькулятор</a><a href="ustanovka.html">Установка</a><a href="obekty.html">Наши работы</a><a href="otzyvy.html">Отзывы</a><a href="stati.html">Статьи</a><a href="o-nas.html">О нас</a><a href="kuhni.html">Кухни</a><a href="kontakty.html">Контакты</a>
       <div class="ph num"><span>Московское ш. · <a href="tel:+79915958186">+7 (991) 595-81-86</a></span><span>Ивановское · <a href="tel:+79851555223">+7 (985) 155-52-23</a></span></div>
     </nav>
   </div>
@@ -1084,6 +1089,8 @@ function expand(mods){const out=[];mods.forEach(([id,n])=>{for(let i=0;i<n;i++){
 function kind(n){if(/^Столешница/.test(n))return'top';if(!/^Шкаф/.test(n))return null;if(/пенал/i.test(n))return'pen';if(/верхн/i.test(n))return'up';if(/нижн/i.test(n))return'low';return null}
 // фото могут лежать в пачке на модель (демо по ссылке): «b/12.json#ключ»
 const BCACHE={};
+// крупные фото (1200 px) — для окна товара, полного экрана и шапки; в карточках остаются лёгкие
+const big=s=>typeof s==='string'?s.replace(/^img\/kuhni\/(?!l\/)/,'img/kuhni/l/').replace('/medium/','/large/'):s;
 function imgURL(s){if(!s||!/^b\//.test(s))return Promise.resolve(s);const [f,k]=s.split('#');return (BCACHE[f]||(BCACHE[f]=fetch(f).then(r=>r.json()))).then(b=>b[k])}
 function swapPhoto(box,src){const [a,b]=box.querySelectorAll('img');const on=a.classList.contains('off')?b:a,off=on===a?b:a;if(on.dataset.s===src)return;on.dataset.s=on.dataset.s||'';off.dataset.s=src;
   imgURL(src).then(u=>{if(off.dataset.s!==src)return;off.onload=()=>{off.classList.remove('off');on.classList.add('off')};off.src=u})}
@@ -1329,7 +1336,7 @@ function heroPick(){
   const vs=hero.v.filter(v=>v.c===hFac&&v.i);const v=vs.find(v=>bodyOf(v)===hBody&&!/stekl/.test(v.k||v.i))||vs.find(v=>bodyOf(v)===hBody)||vs[0];
   $('#heroPrice').innerHTML=rub(v.p)+(v.o?`<s>${rub(v.o)}</s>`:'');
   $('#heroColor').textContent=v.c;
-  swapPhoto($('#heroPhoto'),v.i.replace('/medium/','/large/'));
+  swapPhoto($('#heroPhoto'),big(v.i));
   $('#heroFac').querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.c===hFac));
   $('#heroBody').querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.b===hBody))}
 $('#heroFac').innerHTML=hFacs.map(c=>`<button type="button" data-c="${c}" style="--c:${swBg(c)}" title="${c}" aria-label="${c}"></button>`).join('');
@@ -1378,7 +1385,7 @@ let kmM=null,kmV=null,kmK=0;
 function kmDraw(){const m=kmM,v=kmV,ps=pics(v),cols=[...new Set(m.v.filter(x=>x.i).map(x=>x.c))],sz=m.z.split('*'),kind=m.g==='k'?'Кухня':'Прихожая';
   const old=v.o&&v.o>v.p?`<s class="num">${rub(v.o)}</s>`:'';
   kmD.innerHTML=`<button class="km-x" type="button" aria-label="Закрыть">×</button><div class="km-g">
-    <div class="km-g1"><div class="km-ph" role="button" tabindex="0" aria-label="Открыть фото на весь экран"><img loading="lazy" src="${ps[kmK]}" alt="${kind} ${m.n}, ${v.c}, фото ${kmK+1}"></div>
+    <div class="km-g1"><div class="km-ph" role="button" tabindex="0" aria-label="Открыть фото на весь экран"><img loading="lazy" src="${big(ps[kmK])}" onerror="this.onerror=null;this.src='${ps[kmK]}'" alt="${kind} ${m.n}, ${v.c}, фото ${kmK+1}"></div>
       ${ps.length>1?`<button class="nav prev" type="button" aria-label="Предыдущее фото">‹</button><button class="nav next" type="button" aria-label="Следующее фото">›</button><span class="cnt num">${kmK+1} / ${ps.length}</span>`:''}
       ${ps.length>1?`<div class="km-th">${ps.map((p,i)=>`<button type="button" data-i="${i}" aria-pressed="${i===kmK}" aria-label="Фото ${i+1}"><img src="${p}" alt="" loading="lazy"></button>`).join('')}</div>`:''}</div>
     <div class="km-i"><span class="muted">${kind}${m.s?' · серия '+m.s:''}</span><h2>${m.n}</h2><div class="km-p"><b class="num">${rub(v.p)}</b>${old}</div>
